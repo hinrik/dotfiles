@@ -56,6 +56,9 @@ set shiftwidth=4                   " 4 column indents
 set smarttab                       " Smart tabs
 set softtabstop=4                  " 4 column indents again...
 
+" Show ↪ at the beginning of wrapped lines
+let &sbr = nr2char(8618).' '
+
 " Always assume bash when filetype=sh
 let g:is_bash=1
 
