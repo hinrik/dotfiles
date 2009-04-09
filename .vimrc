@@ -2,7 +2,7 @@
 " Filename: .vimrc
 " Author: Hinrik Örn Sigurðsson <hinrik.sig at gmail dot com>
 " Last Change: Mar 31st 2009
-" URL: http://git.nix.is/?p=hinrik/dotfiles;a=blob_plain;f=.vimrc;hb=HEAD
+" URL: http://github.com/hinrik/dotfiles/blob/master/.vimrc
 
 " This needs to come first
 set nocompatible                   " Use Vim defaults, not vi

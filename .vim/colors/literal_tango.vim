@@ -3,7 +3,7 @@
 " Maintainer: Hinrik Örn Sigurðsson <hinrik.sig at gmail dot com>
 " Version: 1.6
 " Last Change: Dec 18th 2008
-" URLs: http://git.nix.is/?p=hinrik/dotfiles;a=blob_plain;f=.vim/colors/literal_tango.vim;hb=HEAD
+" URLs: http://github.com/hinrik/dotfiles/blob/master/.vim/colors/literal_tango.vim
 "       http://www.vim.org/scripts/script.php?script_id=2430
 " Installation: Drop this file in your $VIMRUNTIME/colors/ directory
 " Screenshot: http://img520.imageshack.us/img520/8683/literaltangove5.png
