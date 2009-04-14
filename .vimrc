@@ -125,7 +125,7 @@ hi User8 ctermbg=0 ctermfg=6 cterm=bold guibg=#2e3435 guifg=#06989a gui=bold
 " Here comes the status line
 set statusline=%1*%-2.2n%*                           " buffer number
 set statusline+=\ %t                                 " filename
-set statusline+=\ (%2*%{(&fenc==\"\"?&enc:&fenc)}%*) " encoding
+set statusline+=\ (%2*%{(&fenc==\"\"?&enc:&fenc)},%{&fileformat}%*) " encoding
 set statusline+=%(\ [%3*%H%R%M%*]%)                  " flags
 set statusline+=%=                                   " left-right alignment
 set statusline+=%(%4*%{SyntaxItem()}%*%)             " highlighting group
