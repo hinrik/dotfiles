@@ -1,8 +1,8 @@
 " Vim syntax file
 " Filename: .vimrc
 " Author: Hinrik Örn Sigurðsson <hinrik.sig at gmail dot com>
-" Last Change: Mar 31st 2009
-" URL: http://git.nix.is/?p=hinrik/dotfiles;a=blob_plain;f=.vimrc;hb=HEAD
+" Last Change: Apr 9th 2009
+" URL: http://github.com/hinrik/dotfiles/blob/master/.vimrc
 
 " This needs to come first
 set nocompatible                   " Use Vim defaults, not vi
@@ -28,7 +28,6 @@ set ignorecase                     " Do case-insensitive matching
 set incsearch                      " Highlight search results immediately
 set laststatus=2                   " Always show the status line
 set listchars=tab:>.               " Show tabs sensibly with 'list'
-set matchpairs+=<:>                " Allow % to bounce between angles too
 set number                         " Show line numbers on the side
 set numberwidth=3                  " Minimum size of line number column
 set pastetoggle=<F12>              " Toggle paste mode with F12

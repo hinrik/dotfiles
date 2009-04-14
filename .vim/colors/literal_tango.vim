@@ -1,12 +1,12 @@
 " Vim color file
 " Filename: literal_tango.vim
 " Maintainer: Hinrik Örn Sigurðsson <hinrik.sig at gmail dot com>
-" Version: 1.6
-" Last Change: Dec 18th 2008
-" URLs: http://git.nix.is/?p=hinrik/dotfiles;a=blob_plain;f=.vim/colors/literal_tango.vim;hb=HEAD
+" Version: 1.7
+" Last Change: Apr 10th 2008
+" URLs: http://github.com/hinrik/dotfiles/blob/master/.vim/colors/literal_tango.vim
 "       http://www.vim.org/scripts/script.php?script_id=2430
 " Installation: Drop this file in your $VIMRUNTIME/colors/ directory
-" Screenshot: http://img520.imageshack.us/img520/8683/literaltangove5.png
+" Screenshot: http://img134.imageshack.us/img134/9471/literaltango.png
 " License: GNU General Public License version 3 or (at your option) any
 "          later version as published by the Free Software Foundation
 "
@@ -22,6 +22,10 @@
 " Also make sure that background=dark in vim.
 "
 " Changelog:
+"
+" 1.7
+"   Used a brighter color for Include
+"   Made Function look distinct from Identifier
 "
 " 1.6
 "   Changed 'Label', 'SpecialKey', 'Type', 'SpecialChar', 'Delimiter',
@@ -60,6 +64,8 @@ let g:colors_name = "literal_tango"
 
 " 16 color terminal
 if &background == "dark"
+    hi Function     ctermfg=3
+    hi Include      ctermfg=2
     hi Constant     ctermfg=1
     hi Folded       ctermfg=2 ctermbg=NONE
     hi FoldColumn   ctermfg=2 ctermbg=NONE
@@ -97,6 +103,7 @@ if &background == "dark"
     hi PreProc      ctermfg=5
     hi Underlined   ctermfg=4 cterm=bold,underline
 elseif &background == "light"
+    " TODO
 endif
 
 " Tango palette
@@ -121,6 +128,8 @@ let s:white        = "#eeeeec"
 " GUI
 if &background == "dark"
     exe "hi Normal       guifg=".s:lightgrey    ." guibg=#000000"
+    exe "hi Function     guifg=".s:brown
+    exe "hi Include      guifg=".s:darkgreen
     exe "hi Folded       guifg=".s:darkgreen    ." guibg=NONE"
     exe "hi FoldColumn   guifg=".s:darkgreen    ." guibg=NONE"
     exe "hi LineNr       guifg=".s:darkgrey
@@ -170,4 +179,5 @@ if &background == "dark"
     exe "hi Error        guifg=".s:white        ." guibg=".s:darkred
     exe "hi Todo         guifg=".s:black        ." guibg=".s:brown
 elseif &background == "light"
+    " TODO
 endif
