@@ -100,8 +100,8 @@ if [[ "$TERM" == "linux" ]]; then
     conpalette tango-dark >& /dev/null
 fi
 
-# show colors in less(1)
-export LESS="-R"
+# some nice less(1) options
+export LESS="iMQRS"
 
 # keep a long history without duplicates
 export HISTSIZE=10000
