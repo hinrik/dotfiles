@@ -1,1 +1,1 @@
-/home/hinrik/src/pugs/util/perl6.vim
+/home/hinrik/src/vim-perl/syntax/perl6.vim

@@ -1,0 +1,1 @@
+/home/hinrik/src/vim-perl/ftplugin/perl6.vim
