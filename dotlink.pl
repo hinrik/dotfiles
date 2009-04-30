@@ -8,12 +8,12 @@ use File::Path qw<rmtree>;
 use Getopt::Long qw<:config auto_help bundling>;
 use Pod::Usage;
 
-our $VERSION = '0.07';
+our $VERSION = '0.08';
 
 GetOptions(
-    'd|dry-run' => \my $dry_run,
+    'n|dry-run' => \my $dry_run,
     'f|force'   => \my $force,
-    'V|version' => sub { print "dotlink.pl version $VERSION\n"; exit },
+    'v|version' => sub { print "dotlink.pl version $VERSION\n"; exit },
 ) or pod2usage();
 
 my $dir = defined $ARGV[0] ? $ARGV[0] : getcwd();
@@ -70,10 +70,10 @@ a specified directory.
 B<dotlink.pl> [options] [DIR]
 
  Options:
-  -d, --dry-run    Don't actually do anything
+  -n, --dry-run    Don't actually do anything
   -f, --force      Removes already existing files if found
   -h, --help       Display this help message
-  -V, --version    Display version information
+  -v, --version    Display version information
 
 DIR is the directory containing the files you want to link. Defaults to
 the current directory.
