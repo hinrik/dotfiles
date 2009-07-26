@@ -117,7 +117,7 @@ export HISTIGNORE="ls:cd:cd ..:..*: *"
 export FIGNORE="CVS:.svn:.git"
 
 export EDITOR="vim"
-export PERLDOC="-MPod::Text::Color"
+export PERLDOC="-MPod::Text::Ansi"
 
 # do an ls after every successful cd
 function cd {
