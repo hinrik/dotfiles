@@ -1,7 +1,7 @@
 " Vim syntax file
 " Filename: .vimrc
 " Author: Hinrik Örn Sigurðsson <hinrik.sig at gmail dot com>
-" Last Change: Apr 9th 2009
+" Last Change: Jul 26th 2009
 " URL: http://github.com/hinrik/dotfiles/blob/master/.vimrc
 
 " This needs to come first
@@ -72,6 +72,9 @@ map ,T <Esc>:!prove -vl % \|vimpager<CR>
 
 " I keep hitting Q by accident, might as well remap it
 map Q :q
+
+" map C-l to :nohl (disables current search highlighting)
+nnoremap <silent> <C-l> :nohl<CR><C-l>
 
 " Color stuff
 if &t_Co > 2 || has("gui_running")
