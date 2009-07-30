@@ -18,12 +18,7 @@
   (require 'centered-cursor-mode)
   (global-centered-cursor-mode +1))
 
-;; scroll one line at a time, keeping the cursor in the middle
-;;(add-hook 'post-command-hook
-;;    (lambda ()
-;;        (recenter '("don't redraw"))))
-
-;; same with mouse scrolling
+;; do mouse scrolling one line at a time
 (setq mouse-wheel-scroll-amount '(1 ((shift) . 1) ((control))))
 
 ;; show matching parens
