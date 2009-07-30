@@ -1,5 +1,8 @@
 ;; don't show the welcome message
-(setq inhibit-startup-message t)
+(setq inhibit-startup-screen t)
+
+;; don't show the *scratch* buffer messahe
+(setq initial-scratch-message nil)
 
 ;; change "yes or no" to "y or n"
 (fset 'yes-or-no-p 'y-or-n-p)
