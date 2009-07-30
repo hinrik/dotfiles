@@ -1,3 +1,6 @@
+;; load paths
+(setq load-path (cons "~/.emacs.d" load-path))
+
 ;; don't show the welcome message
 (setq inhibit-startup-screen t)
 
@@ -10,15 +13,18 @@
 ;; no bells, ever
 (setq ring-bell-function 'ignore)
 
+;; center the cursor when scrolling
+(and
+  (require 'centered-cursor-mode)
+  (global-centered-cursor-mode +1))
 
 ;; scroll one line at a time, keeping the cursor in the middle
-(add-hook 'post-command-hook
-    (lambda ()
-        (recenter '("don't redraw"))))
+;;(add-hook 'post-command-hook
+;;    (lambda ()
+;;        (recenter '("don't redraw"))))
 
 ;; same with mouse scrolling
 (setq mouse-wheel-scroll-amount '(1 ((shift) . 1) ((control))))
-
 
 ;; show matching parens
 (require 'paren)
