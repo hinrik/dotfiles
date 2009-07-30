@@ -10,15 +10,15 @@
 ;; no bells, ever
 (setq ring-bell-function 'ignore)
 
-;; scroll one line at a time
-(setq scroll-step 1)
 
-;; scroll when 7 lines away from page end
-;; TODO: >7 doesn't work, find a way to increase it
-(setq scroll-margin 7)
+;; scroll one line at a time, keeping the cursor in the middle
+(add-hook 'post-command-hook
+    (lambda ()
+        (recenter '("don't redraw"))))
 
 ;; same with mouse scrolling
 (setq mouse-wheel-scroll-amount '(1 ((shift) . 1) ((control))))
+
 
 ;; show matching parens
 (require 'paren)
