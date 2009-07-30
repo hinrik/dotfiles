@@ -30,6 +30,7 @@
 ;; no menu bar or tool bar
 (menu-bar-mode -1)
 (tool-bar-mode -1)
+(scroll-bar-mode -1)
 
 ;; default gui font
 (add-to-list 'default-frame-alist '(font . "Mono-7"))
