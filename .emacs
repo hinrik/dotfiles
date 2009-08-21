@@ -21,6 +21,15 @@
 ;; do mouse scrolling one line at a time
 (setq mouse-wheel-scroll-amount '(1 ((shift) . 1) ((control))))
 
+;; keep backup files in ~/.tmp/emacs
+(setq backup-directory-alist
+      (list
+        (cons ".*" (expand-file-name "~/.tmp/emacs/"))))
+
+;; same with autosave files
+(setq auto-save-file-name-transforms
+      `((".*" ,(expand-file-name "~/.tmp/emacs/") t)))
+
 ;; show matching parens
 (require 'paren)
 (show-paren-mode t)
