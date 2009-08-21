@@ -42,6 +42,13 @@
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
 
+;; show line numbers
+(require 'linum)
+(global-linum-mode 1)
+
+;; add some space between the line numbers and the text
+(setq linum-format "%d ")
+
 ;; default gui font
 (add-to-list 'default-frame-alist '(font . "Mono-7"))
 
