@@ -9,8 +9,8 @@ set nocompatible                   " Use Vim defaults, not vi
 
 " General stuff
 set backspace=indent,eol,start     " Allow backspacing over everything
-set backupdir^=~/.tmp//            " Store backup files in ~/.tmp
-set directory^=~/.tmp//            " Store swap files in ~/.tmp
+set backupdir^=~/.tmp/vim//        " Store backup files in ~/.tmp/vim
+set directory^=~/.tmp/vim//        " Store swap files in ~/.tmp/vim
 set display+=lastline              " show last line even if it doesn't fit
 set display+=uhex                  " show unprintable chars as hex numbers
 set encoding=utf-8                 " Use UTF-8 for everything
