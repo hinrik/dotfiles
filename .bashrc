@@ -6,6 +6,9 @@ fi
 # away with old aliases
 \unalias -a
 
+# disable software flow control
+stty -ixon
+
 # programmable completion
 if [[ -f /etc/bash_completion ]]; then
     source /etc/bash_completion
@@ -74,20 +77,20 @@ if [[ $has_color ]]; then
         PS1='\[\e[1;35m\]\h\[\e[m\] \[\e[1;34m\]\W\[\e[m\] (\[\e[;33m\]$(dir_info)\[\e[m\]) \[\e[1;32m\]\$\[\e[m\] '
     fi
 
-    alias ls='ls --color=auto'
+    alias ls='ls --group-directories-first --color=auto'
     alias grep='grep --colour=auto'
 else
     PS1='\h \W ($(dir_info)) \$ '
+    alias ls='ls --group-directories-first'
 fi
 
 # some nice shell options
 shopt -s checkwinsize cdspell dotglob histappend nocaseglob no_empty_cmd_completion
 
-alias perl6="/home/hinrik/src/rakudo/perl6"
+alias perl6="~/src/rakudo/perl6"
 alias ..="cd .."
 alias ...="cd ../.."
 alias ....="cd ../../.."
-alias la="ls -A"
 alias ll="ls -lh"
 alias d2u="sed 's/$//'"
 alias u2d="sed 's/$//'"
@@ -152,3 +155,7 @@ function svn_uplog {
             echo "No changes."
     fi
 }
+
+# make info(1) work like man(1), until I can be bothered to learn
+# how to use info/emacs
+function info { /usr/bin/info "$@" --subnodes -o - 2> /dev/null | less ; }
