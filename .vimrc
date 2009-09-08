@@ -41,6 +41,7 @@ set sidescrolloff=5                " Scroll when 5 columns from the side
 set smartcase                      " Case-sensitive matching when desired
 set splitbelow                     " new windows appear below
 set splitright                     " ...and to the right
+set title                          " set the terminal title
 set viminfo='20,\"500              " Keep a .viminfo file
 set visualbell t_vb=               " No terminal bells or screen flashes
 set wildmenu                       " Show a menu when tab-completing
