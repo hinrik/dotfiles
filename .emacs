@@ -42,6 +42,16 @@
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
 
+;; set frame title
+;; TODO: make it say e.g. "fstab * (/etc) - emacs"
+(setq frame-title-format "%f %& emacs")
+
+;; set terminal title
+(when (and (not window-system)
+               (string-match "^xterm" (getenv "TERM")))
+      (require 'xterm-title)
+      (xterm-title-mode 1))
+
 ;; show line numbers
 (require 'linum)
 (global-linum-mode 1)
