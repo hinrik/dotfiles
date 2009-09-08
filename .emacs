@@ -46,8 +46,8 @@
 (require 'linum)
 (global-linum-mode 1)
 
-;; add some space between the line numbers and the text
-(setq linum-format "%d ")
+;; add space between the line numbers and the text, and right-justify
+(setq linum-format (lambda (line) (propertize (format (let ((w (length (number-to-string (count-lines (point-min) (point-max)))))) (concat "%" (number-to-string w) "d ")) line) 'face 'linum)))
 
 ;; default gui font
 (add-to-list 'default-frame-alist '(font . "Mono-7"))
