@@ -111,6 +111,12 @@ function! SyntaxItem()
     return synIDattr(synID(line("."),col("."),1),"name")
 endfunction
 
+" be evil and override the statusline highlighting
+hi StatusLine   ctermfg=NONE ctermbg=0 cterm=bold
+hi StatusLineNC ctermfg=NONE ctermbg=0 cterm=NONE
+hi StatusLine   guifg=#d3d7cf guibg=#2e3436 gui=bold
+hi StatusLineNC guifg=#d3d7cf guibg=#2e3436 gui=NONE
+
 " Current statusline, assumes literal_tango colorscheme.
 hi User1 ctermbg=0 ctermfg=1 cterm=bold guibg=#2e3435 guifg=#ef2929 gui=bold
 hi User2 ctermbg=0 ctermfg=2 cterm=bold guibg=#2e3435 guifg=#8ae234 gui=bold
@@ -147,7 +153,7 @@ let g:nc_statusline =
       \ '%3', '%7', 'g'),
     \ '%4', '%8', 'g')
 
-" If we need don't use both BufEnter/BufLeave and WinEnter/WinLeave then
+" If need don't use both BufEnter/BufLeave and WinEnter/WinLeave then
 " we'll get wrong colors after opening and closing windows.
 autocmd BufEnter * let &l:statusline = g:c_statusline
 autocmd WinEnter * let &l:statusline = g:c_statusline
