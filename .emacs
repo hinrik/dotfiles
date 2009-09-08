@@ -4,7 +4,7 @@
 ;; don't show the welcome message
 (setq inhibit-startup-screen t)
 
-;; don't show the *scratch* buffer messahe
+;; don't show the *scratch* buffer message
 (setq initial-scratch-message nil)
 
 ;; change "yes or no" to "y or n"
