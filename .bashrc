@@ -62,8 +62,9 @@ if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
     fi
 
     alias grep='grep --color=auto'
-    alias grep='grep --color=auto'
-    alias grep='fgrep --color=auto'
+    alias egrep='egrep --color=auto'
+    alias fgrep='fgrep --color=auto'
+    alias rgrep='rgrep --color=auto'
 else
     PS1='\h \W ($(dir_info)) \$ '
     alias ls='ls --group-directories-first'
