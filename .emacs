@@ -74,7 +74,7 @@
 (defalias 'perl-mode 'cperl-mode)
 
 ;; Indent style
-(setq cperl-tab-always-indent t ; TAB anywhere on the line indents
+(setq cperl-tab-always-indent nil ; always let me insert tabs
       cperl-indent-left-aligned-comments t ; The above goes for C<#> comments too
       cperl-auto-newline nil ; Automatically insert newline
       cperl-close-paren-offset -4
