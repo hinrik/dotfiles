@@ -1,6 +1,9 @@
 ;; load paths
 (setq load-path (cons "~/.emacs.d" load-path))
 
+;; prefer UTF-8 encoding
+(set-language-environment "UTF-8")
+
 ;; don't show the welcome message
 (setq inhibit-startup-screen t)
 
@@ -48,9 +51,9 @@
 
 ;; set terminal title
 (when (and (not window-system)
-               (string-match "^xterm" (getenv "TERM")))
-      (require 'xterm-title)
-      (xterm-title-mode 1))
+           (string-match "^xterm" (getenv "TERM")))
+  (require 'xterm-title)
+  (xterm-title-mode 1))
 
 ;; show line numbers
 (require 'linum)
