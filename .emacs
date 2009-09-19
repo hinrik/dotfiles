@@ -82,3 +82,10 @@
 (add-hook
    'shell-mode-hook
    'ansi-color-for-comint-mode-on)
+
+;; slime
+(setq inferior-lisp-program "/usr/bin/sbcl")
+(setq slime-net-coding-system 'utf-8-unix)
+(add-to-list 'load-path "~/src/slime/")
+(require 'slime)
+(slime-setup '(slime-fancy))
