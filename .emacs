@@ -56,15 +56,21 @@
 ;;;; Indentation
 
 ;; use spaces, not tabs
-(setq indent-tabs-mode nil)
 (setq-default indent-tabs-mode nil)
-
 ;; 4 spaces per indent
 (setq default-tab-width 4)
-(setq tab-width 4)
+
+;; these are annoying
+(setq tab-always-indent nil)
+(setq backward-delete-char-untabify-method nil)
 
 ;; auto-indent the next line
 (define-key global-map (kbd "RET") 'newline-and-indent)
+
+;; TODO: bind backspace to a function which does the following:
+;; if indent-tabs-mode is nil and we're backspacing over whitespace,
+;; erase whitespace until we get to a position which is a multiple of
+;; default-tab-width (like 'softtabstop' in vim)
 
 ;;;; Languages
 
@@ -73,14 +79,10 @@
 ;; use cperl-mode instead of perl-mode
 (defalias 'perl-mode 'cperl-mode)
 
-;; Indent style
-(setq cperl-tab-always-indent nil ; always let me insert tabs
-      cperl-indent-left-aligned-comments t ; The above goes for C<#> comments too
-      cperl-auto-newline nil ; Automatically insert newline
-      cperl-close-paren-offset -4
-      cperl-indent-level 4 ; one tab?!
-      cperl-indent-parens-as-block t ; "Foo->new( key => q[val],", not lined up with the (
-      cperl-continued-statement-offset 0) ; C<sub foo\n {\n ...> sucks
+;; indenting
+(setq cperl-indent-level 4                  ; 4-space indents
+      cperl-tab-always-indent nil           ; always let me indent further
+      cperl-continued-statement-offset 0)   ; don't reindent multiline statements
 
 ;;;; Packages
 
