@@ -145,3 +145,9 @@ function svn_uplog {
 # make info(1) work like man(1), until I can be bothered to learn
 # how to use info/emacs
 function info { /usr/bin/info "$@" --subnodes -o - 2> /dev/null | less ; }
+
+# install Common Lisp packages from the command line
+function asdf_install {
+    sbcl --eval "(asdf:operate 'asdf:load-op :asdf-install)" --eval "(asdf-install:install :$1)" --eval "(quit)"
+}
+
