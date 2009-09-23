@@ -29,7 +29,9 @@ set incsearch                      " Highlight search results immediately
 set laststatus=2                   " Always show the status line
 set listchars=tab:>.               " Show tabs sensibly with 'list'
 set number                         " Show line numbers on the side
-set numberwidth=3                  " Minimum size of line number column
+if has("numberwidth")
+    set numberwidth=3              " Minimum size of line number column
+endif
 set pastetoggle=<F12>              " Toggle paste mode with F12
 set report=0                       " Report all changes
 set ruler                          " Always show the bottom ruler
@@ -85,8 +87,10 @@ if &t_Co > 2 || has("gui_running")
 endif
 
 " Give windows equal space after resizing or opening a new window
-autocmd VimResized * wincmd =
 autocmd BufWinEnter * wincmd =
+if version >= 700
+    autocmd VimResized * wincmd =
+endif
 
 " Only enforce textwidth on plain text files
 autocmd FileType text setlocal textwidth=78
