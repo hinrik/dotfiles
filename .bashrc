@@ -48,11 +48,17 @@ function dir_info() {
     ls -Ahs|head -n1|awk '{print $2}'
 }
 
+if $(ls --help|grep group-directories-first); then
+    group_dirs=' --group-directories-first';
+else
+    group_dirs=
+fi
+
 # check if we support colors
 if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
     if [ -x /usr/bin/dircolors ]; then
         test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
-        alias ls='ls --group-directories-first --color=auto'
+        alias ls="ls$group_dirs --color=auto"
     fi
 
     if [[ ${EUID} == 0 ]] ; then
@@ -67,7 +73,7 @@ if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
     alias rgrep='rgrep --color=auto'
 else
     PS1='\h \W ($(dir_info)) \$ '
-    alias ls='ls --group-directories-first'
+    alias ls="ls$group_dirs"
 fi
 
 # some nice shell options
