@@ -48,8 +48,8 @@ function dir_info() {
     ls -Ahs|head -n1|awk '{print $2}'
 }
 
-if $(ls --help|grep group-directories-first); then
-    group_dirs=' --group-directories-first';
+if ls --help|grep group-directories-first >&/dev/null; then
+    group_dirs=" --group-directories-first"
 else
     group_dirs=
 fi
