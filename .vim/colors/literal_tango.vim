@@ -1,8 +1,8 @@
 " Vim color file
 " Filename: literal_tango.vim
 " Maintainer: Hinrik Örn Sigurðsson <hinrik.sig at gmail dot com>
-" Version: 1.7
-" Last Change: Apr 10th 2008
+" Version: 1.8
+" Last Change: Sep 23rd 2009
 " URLs: http://github.com/hinrik/dotfiles/blob/master/.vim/colors/literal_tango.vim
 "       http://www.vim.org/scripts/script.php?script_id=2430
 " Installation: Drop this file in your $VIMRUNTIME/colors/ directory
@@ -22,6 +22,10 @@
 " Also make sure that background=dark in vim.
 "
 " Changelog:
+"
+" 1.8
+"   Only use 'guisp' when spelling support is compiled in,
+"   avoids warnings on vim startup.
 "
 " 1.7
 "   Used a brighter color for Include
@@ -160,10 +164,12 @@ if &background == "dark"
     exe "hi DiffDelete   gui=NONE guifg=NONE guibg=".s:black
     exe "hi DiffText     guibg=".s:black
     exe "hi SignColumn   guibg=NONE guifg=".s:brown
-    exe "hi SpellBad     guisp=".s:darkred
-    exe "hi SpellCap     guisp=".s:darkblue
-    exe "hi SpellRare    guisp=".s:darkmagenta
-    exe "hi SpellLocal   guisp=".s:darkcyan
+    if has("spell")
+        exe "hi SpellBad     guisp=".s:darkred
+        exe "hi SpellCap     guisp=".s:darkblue
+        exe "hi SpellRare    guisp=".s:darkmagenta
+        exe "hi SpellLocal   guisp=".s:darkcyan
+    endif
     exe "hi Pmenu        guibg=".s:black
     exe "hi PmenuSel     guifg=".s:black        ." guibg=".s:lightgrey
     exe "hi PmenuSbar    guibg=".s:lightgrey
