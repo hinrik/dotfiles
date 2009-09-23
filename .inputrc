@@ -5,9 +5,15 @@ set output-meta on
 # some defaults / modifications for the emacs mode
 $if mode=emacs
 
-# allow the use of the Home/End keys
+# allow the use of the Home/End keys on all platforms
 "\e[1~": beginning-of-line
 "\e[4~": end-of-line
+"\e[7~": beginning-of-line
+"\e[8~": end-of-line
+"\eOH": beginning-of-line
+"\eOF": end-of-line
+"\e[H": beginning-of-line
+"\e[F": end-of-line
 
 # allow the use of the Delete/Insert keys
 "\e[3~": delete-char
