@@ -157,3 +157,12 @@ function asdf_install {
     sbcl --eval "(asdf:operate 'asdf:load-op :asdf-install)" --eval "(asdf-install:install :$1)" --eval "(quit)"
 }
 
+# good for links that keep dropping your ssh connections
+function keepalive {
+    [ -z $1 ] && interval=60 || interval=$1
+    while true; do
+        date
+        sleep $interval
+    done
+}
+
