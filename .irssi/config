@@ -84,6 +84,7 @@ chatnets = {
   };
   OFTC = { 
     type = "IRC";
+    nick = "literal";
     max_kicks = "1";
     max_msgs = "3";
     max_whois = "30";
