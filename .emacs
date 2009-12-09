@@ -67,6 +67,25 @@
 ;; auto-indent the next line
 (define-key global-map (kbd "RET") 'newline-and-indent)
 
+(global-set-key (kbd "DEL") 'backward-delete-whitespace-to-column)
+(add-hook 'cperl-mode-hook (lambda () (define-key cperl-mode-map (kbd "DEL") 'backward-delete-whitespace-to-column)))
+
+(defun backward-delete-whitespace-to-column ()
+  "delete back to the previous column of whitespace, or just one char if that's not possible"
+  (interactive)
+  (if indent-tabs-mode
+      (call-interactively 'backward-delete-char-untabify)
+    ;; let's get to work
+    (let ((movement (% (current-column) tab-width))
+          (p (point)))
+      ;; brain freeze, should be easier to calculate goal
+      (when (= movement 0) (setq movement tab-width))
+      (if (save-excursion
+            (backward-char movement)
+            (string-match "^\\s-+$" (buffer-substring-no-properties (point) p)))
+          (delete-region (- p movement) p)
+        (call-interactively 'backward-delete-char-untabify)))))
+
 ;; TODO: bind backspace to a function which does the following:
 ;; if indent-tabs-mode is nil and we're backspacing over whitespace,
 ;; erase whitespace until we get to a position which is a multiple of
@@ -84,7 +103,7 @@
       cperl-tab-always-indent nil           ; always let me indent further
       cperl-continued-statement-offset 0)   ; don't reindent multiline statements
 
-;;;; Packages
+;;;; Other packages
 
 ;;;;; linum.el
 
@@ -126,7 +145,7 @@
 ;; this theme looks alright
 (color-theme-salmon-font-lock)
 
-;; these are sort of ok
+;; these are sort of ok, but they all have a light background
 ;;(color-theme-gtk-ide)
 ;;(color-theme-jedit-grey)
 ;;(color-theme-rotor)
