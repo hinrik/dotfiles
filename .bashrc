@@ -92,7 +92,9 @@ alias play="mplayer -subdelay -0.700 -delay -0.200 -monitoraspect 1.65 -ao alsa:
 alias scp="rsync --rsh=ssh --archive --append --human-readable --progress --times"
 
 if [[ "$TERM" == "linux" ]]; then
-    conpalette tango-dark >& /dev/null
+    if type conpalette >&/dev/null; then
+        conpalette tango-dark
+    fi
 fi
 
 # some nice less(1) options
