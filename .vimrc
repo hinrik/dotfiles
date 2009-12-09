@@ -73,6 +73,10 @@ let perl_string_as_statement=1     " Make quoting operators stand out
 map ,t <Esc>:!prove -vl %<CR>
 map ,T <Esc>:!prove -vl % \|vimpager<CR>
 
+" PerlTidy
+map ,pt <Esc>:%! perltidy<CR>
+map ,ptv <Esc>:'<,'>! perltidy<CR>
+
 " I keep hitting Q by accident, might as well remap it
 map Q :q
 
