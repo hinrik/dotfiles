@@ -1,0 +1,4 @@
+#!/bin/bash
+
+# comes with File::LinkDir
+link-files -a $(basename $0) --source . --dest $HOME "$@"
