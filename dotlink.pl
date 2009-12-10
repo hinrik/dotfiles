@@ -30,7 +30,6 @@ while (defined (my $file = readdir $dir_handle)) {
         next if (stat "$home/$file")[1] == (stat "$dir/$file")[1];
     }
     
-    my $action;
     if (-e "$home/$file" || -l "$home/$file") {
         if (!$force) {
             $dry_run
