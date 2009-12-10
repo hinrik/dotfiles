@@ -3,7 +3,7 @@
 use strict;
 use warnings;
 
-use Cwd qw<getcwd>;
+use Cwd qw<abs_path getcwd>;
 use File::Path qw<remove_tree>;
 use Getopt::Long qw<:config auto_help bundling>;
 use Pod::Usage;
@@ -16,7 +16,7 @@ GetOptions(
     'v|version' => sub { print "dotlink.pl version $VERSION\n"; exit },
 ) or pod2usage();
 
-my $dir = defined $ARGV[0] ? $ARGV[0] : getcwd();
+my $dir = defined $ARGV[0] ? abs_path($ARGV[0]) : getcwd();
 my $home = $ENV{HOME};
 
 opendir my $dir_handle, $dir or die "Can't open the dir $dir: $!; aborted";
@@ -33,39 +33,41 @@ while (defined (my $file = readdir $dir_handle)) {
     if (-e "$home/$file" || -l "$home/$file") {
         if (!$force) {
             $dry_run
-                ? print "--force is off, will not overwrite '$home/$file'\n"
+                ? print "--force is off, would not overwrite '$home/$file'\n"
                 : print "--force is off, not overwriting '$home/$file'\n"
             ;
             next;
         }
         
-        $dry_run
-            ? print "Will overwrite '$home/$file'\n"
-            : print "Overwriting '$home/$file'\n"
-        ;
+        if ($dry_run) {
+            print "Would overwrite '$home/$file'\n";
+            next;
+        }
+        else {
+            print "Overwriting '$home/$file'\n";
 
-        next if $dry_run;
-        if (-d "$home/$file") {
-            eval { remove_tree("$home/$file") };
-            if ($@) {
-                warn "Failed to remove directory '$home/$file': $@\n";
+            if (-d "$home/$file") {
+                eval { remove_tree("$home/$file") };
+                if ($@) {
+                    warn "Failed to remove directory '$home/$file': $@\n";
+                    next;
+                }
+            }
+            elsif (!unlink("$home/$file")) {
+                warn "Failed to remove file '$home/$file': $!\n";
                 next;
             }
-        }
-        elsif (!unlink("$home/$file")) {
-            warn "Failed to remove file '$home/$file': $!\n";
-            next;
         }
     }
     else {
         $dry_run
-            ? print "Will create '$home/$file'\n"
+            ? print "Would create '$home/$file'\n"
             : print "Creating '$home/$file'\n"
         ;
     }
     
     next if $dry_run;
-    symlink "$dir/$file", "$home/$file" or warn "Can't create symlink '$home/$file': $!\n";
+    symlink "$dir/$file", "$home/$file" or warn "Can't create '$home/$file': $!\n";
 }
 
 =head1 NAME
