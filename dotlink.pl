@@ -4,7 +4,7 @@ use strict;
 use warnings;
 
 use Cwd qw<getcwd>;
-use File::Path qw<rmtree>;
+use File::Path qw<remove_tree>;
 use Getopt::Long qw<:config auto_help bundling>;
 use Pod::Usage;
 
@@ -44,10 +44,18 @@ while (defined (my $file = readdir $dir_handle)) {
             : print "Overwriting '$home/$file'\n"
         ;
 
-        -d "$home/$file"
-            ? do { rmtree "$home/$file" if !$dry_run }
-            : do { unlink "$home/$file" if !$dry_run }
-        ;
+        next if $dry_run;
+        if (-d "$home/$file") {
+            eval { remove_tree("$home/$file") };
+            if ($@) {
+                warn "Failed to remove directory '$home/$file': $@\n";
+                next;
+            }
+        }
+        elsif (!unlink("$home/$file")) {
+            warn "Failed to remove file '$home/$file': $!\n";
+            next;
+        }
     }
     else {
         $dry_run
@@ -55,8 +63,9 @@ while (defined (my $file = readdir $dir_handle)) {
             : print "Creating '$home/$file'\n"
         ;
     }
-
-    symlink "$dir/$file", "$home/$file" if !$dry_run;
+    
+    next if $dry_run;
+    symlink "$dir/$file", "$home/$file" or warn "Can't create symlink '$home/$file': $!\n";
 }
 
 =head1 NAME
