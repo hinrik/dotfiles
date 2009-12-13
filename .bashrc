@@ -77,7 +77,7 @@ else
 fi
 
 # some nice shell options
-shopt -s checkwinsize cdspell dotglob histappend nocaseglob no_empty_cmd_completion
+shopt -s checkwinsize cdspell dotglob histappend no_empty_cmd_completion
 
 alias perl6="~/src/rakudo/perl6"
 alias ..="cd .."
