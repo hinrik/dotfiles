@@ -12,7 +12,7 @@ servers = (
     autoconnect = "yes";
   },
   {
-    address = "irc.freenode.net";
+    address = "holmes.freenode.net";
     chatnet = "FreeNode";
     port = "6667";
     autoconnect = "yes";
@@ -30,7 +30,12 @@ servers = (
     port = "6667";
     autoconnect = "yes";
   },
-  { address = "irc.oftc.net"; chatnet = "OFTC"; port = "6667"; },
+  {
+    address = "irc.oftc.net";
+    chatnet = "OFTC";
+    port = "6667";
+    autoconnect = "yes";
+  },
   {
     address = "irc.gamesurge.net";
     chatnet = "GameSurge";
@@ -125,7 +130,6 @@ channels = (
   { name = "#vim"; chatnet = "FreeNode"; autojoin = "yes"; },
   { name = "#emacs"; chatnet = "FreeNode"; autojoin = "yes"; },
   { name = "#ufraw"; chatnet = "FreeNode"; autojoin = "yes"; },
-  { name = "#git"; chatnet = "FreeNode"; autojoin = "yes"; },
 
   { name = "#irc.pm"; chatnet = "MAGnet"; autojoin = "yes"; },
   { name = "#perl"; chatnet = "MAGnet"; autojoin = "yes"; },
