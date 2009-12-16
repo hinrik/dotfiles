@@ -162,7 +162,7 @@ let g:nc_statusline =
       \ '%3', '%7', 'g'),
     \ '%4', '%8', 'g')
 
-" If need don't use both BufEnter/BufLeave and WinEnter/WinLeave then
+" If we don't use both BufEnter/BufLeave and WinEnter/WinLeave then
 " we'll get wrong colors after opening and closing windows.
 autocmd BufEnter * let &l:statusline = g:c_statusline
 autocmd WinEnter * let &l:statusline = g:c_statusline
