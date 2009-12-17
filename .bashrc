@@ -87,7 +87,7 @@ alias ll="ls -lh"
 alias d2u="sed 's/$//'"
 alias u2d="sed 's/$//'"
 alias lsofnames="lsof | awk '!/^\$/ && /\// { print \$9 }' | sort -u"
-alias myip="lynx -dump -hiddenlinks=ignore -nolist http://checkip.dyndns.org:8245/ | awk '{ print \$4 }' | sed '/^$/d; s/^[ ]*//g; s/[ ]*$//g'"
+alias myip="wget -q -O- http://checkip.dyndns.org:8245 | perl -pe 's/.*?(\d+\.\d+\.\d+\.\d+).*/\$1/'"
 alias play="mplayer -subdelay -0.700 -delay -0.200 -monitoraspect 1.65 -ao alsa:device=iec958=1" # -vf expand=1280:::::1.65 -ac hwac3,hwdts
 alias scp="rsync --rsh=ssh --archive --append --human-readable --progress --times"
 
