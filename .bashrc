@@ -67,6 +67,8 @@ if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
         PS1='\[\e[1;35m\]\h\[\e[m\] \[\e[1;34m\]\W\[\e[m\] (\[\e[;33m\]$(dir_info)\[\e[m\]) \[\e[1;32m\]\$\[\e[m\] '
     fi
 
+    export PERLDOC="-MPod::Text::Ansi"
+
     alias grep='grep --color=auto'
     alias egrep='egrep --color=auto'
     alias fgrep='fgrep --color=auto'
@@ -114,7 +116,6 @@ export HISTIGNORE="ls:cd:cd ..:..*: *"
 export FIGNORE="CVS:.svn:.git"
 
 export EDITOR="vim"
-export PERLDOC="-MPod::Text::Ansi"
 
 # do an ls after every successful cd
 function cd {
