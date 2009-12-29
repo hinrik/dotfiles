@@ -89,7 +89,6 @@ alias u2d="sed 's/$//'"
 alias lsofnames="lsof | awk '!/^\$/ && /\// { print \$9 }' | sort -u"
 alias myip="wget -q -O- 'http://www.moanmyip.com/' | perl -0777 -pe 's[.*<div class=\"ip\">(.*?)</div>.*][\$1\n]s'"
 alias mmyip="mplayer http://moanmyip.com/output/\$(myip).mp3"
-alias play="mplayer -subdelay -0.700 -delay -0.200 -monitoraspect 1.65 -ao alsa:device=iec958=1" # -vf expand=1280:::::1.65 -ac hwac3,hwdts
 alias scp="rsync --rsh=ssh --archive --append --human-readable --progress --times"
 
 if [[ "$TERM" == "linux" ]]; then
