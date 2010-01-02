@@ -1,4 +1,9 @@
 #!/bin/bash
 
-# comes with File::LinkDir
+if ! type lsdfdss >&/dev/null; then
+    echo 'File::LinkDir is not installed. You can install it with'
+    echo '"cpanp -i File::LinkDir" or "cpan File::LinkDir"'
+    exit 1
+fi
+
 link-files -a $(basename $0) --source . --dest $HOME "$@"
