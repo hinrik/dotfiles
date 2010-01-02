@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if ! type lsdfdss >&/dev/null; then
+if ! type link-files >&/dev/null; then
     echo 'File::LinkDir is not installed. You can install it with'
     echo '"cpanp -i File::LinkDir" or "cpan File::LinkDir"'
     exit 1
