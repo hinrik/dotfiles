@@ -31,6 +31,19 @@ $if mode=emacs
 "\e\e[C": forward-word
 "\e\e[D": backward-word
 
+# reserve all Alt+digit combos for gnome-terminal or irssi
+"\e-":
+"\e0":
+"\e1":
+"\e2":
+"\e3":
+"\e4":
+"\e5":
+"\e6":
+"\e7":
+"\e8":
+"\e9":
+
 # append slash to tab-completed dir symlinks
 set mark-symlinked-directories on
 
