@@ -1,5 +1,5 @@
 # show some info at the bottom
-caption always "%{= kw}%-w%{= gW}%n %t%{-}%+w %-= %{= r}%H%{-} %{= g}%l%{-} %D %Y-%m-%d %c:%s"
+caption always "%{= kw}%-w%{= gW}%n %t%{-}%+w %-= %{= r}%H%{-} %{= g}%l%{-} %c:%s"
 
 # TODO: look into 'hardstatus'
 #hardstatus alwayslastline
