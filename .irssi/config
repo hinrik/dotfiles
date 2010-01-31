@@ -134,6 +134,8 @@ channels = (
   { name = "#lost-trivia"; chatnet = "Rizon"; autojoin = "yes"; },
 
   { name = "#avar"; chatnet = "FreeNode"; autojoin = "yes"; },
+  { name = "#failo"; chatnet = "FreeNode"; autojoin = "yes"; },
+  { name = "#hailo"; chatnet = "FreeNode"; autojoin = "yes"; },
   { name = "#ideologies"; chatnet = "FreeNode"; autojoin = "yes"; },
   { name = "#perl"; chatnet = "FreeNode"; autojoin = "yes"; },
   { name = "#perl6"; chatnet = "FreeNode"; autojoin = "yes"; },
