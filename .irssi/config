@@ -149,6 +149,7 @@ channels = (
   { name = "#perl-help"; chatnet = "MAGnet"; autojoin = "yes"; },
   { name = "#email"; chatnet = "MAGnet"; autojoin = "yes"; },
   { name = "#poe"; chatnet = "MAGnet"; autojoin = "yes"; },
+  { name = "#moose"; chatnet = "MAGnet"; autojoin = "yes"; },
   { name = "#padre"; chatnet = "MAGnet"; autojoin = "yes"; },
   { name = "#catalyst"; chatnet = "MAGnet"; autojoin = "yes"; },
   { name = "#tpm"; chatnet = "MAGnet"; autojoin = "yes"; },
