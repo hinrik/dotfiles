@@ -16,5 +16,6 @@
     up = pull --stat --rebase # like svn does
     lo = log --decorate --abbrev-commit --color-words
     staged = diff --cached
+    tree = log --graph --pretty=oneline --abbrev-commit --decorate
 [push]
     default = tracking
