@@ -59,6 +59,9 @@ if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
     if [ -x /usr/bin/dircolors ]; then
         test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
         alias ls="ls$group_dirs --color=auto"
+
+        # old versions of tree(1) don't use colors by default
+        alias tree="tree -C"
     fi
 
     if [[ ${EUID} == 0 ]] ; then
