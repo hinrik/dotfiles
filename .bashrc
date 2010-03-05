@@ -94,7 +94,6 @@ alias u2d="sed 's/$//'"
 alias lsofnames="lsof | awk '!/^\$/ && /\// { print \$9 }' | sort -u"
 alias myip="wget -q -O- 'http://www.moanmyip.com/' | perl -0777 -pe 's[.*<div class=\"ip\">(.*?)</div>.*][\$1\n]s'"
 alias mmyip="mplayer http://moanmyip.com/output/\$(myip).mp3"
-alias scp="rsync --rsh=ssh --archive --append --human-readable --progress --times"
 
 if [[ "$TERM" == "linux" ]]; then
     if type conpalette >&/dev/null; then
@@ -131,6 +130,20 @@ function cd {
 # recursive mkdir and cd if successful
 function mkcd {
     mkdir -p "$@" && builtin cd "$@"
+}
+
+# Sync files based on content. Useful for dynamically changing files.
+function scp {
+    rsync --rsh=ssh --archive --human-readable --progress "$@"
+}
+
+# Append to files based on file size. Useful large, static or append-only
+# files since it skips the expensive hash check. Also retry the transfer
+# if it times out.
+function leech {
+    cmd="rsync --rsh=ssh --append --archive --human-readable --progress $@"
+    $cmd
+    while [[ $? == 30 ]]; do sleep 5 && $cmd; done
 }
 
 # delete untracked files/dirs
