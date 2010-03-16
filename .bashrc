@@ -6,9 +6,6 @@ fi
 # away with old aliases
 \unalias -a
 
-# disable software flow control
-stty -ixon
-
 # programmable completion
 if [[ -f /etc/bash_completion ]]; then
     source /etc/bash_completion
