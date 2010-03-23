@@ -138,9 +138,9 @@ function scp {
 # files since it skips the expensive hash check. Also retry the transfer
 # if it times out.
 function leech {
-    cmd="rsync --rsh=ssh --append --archive --human-readable --progress $@"
-    $cmd
-    while [[ $? == 30 ]]; do sleep 5 && $cmd; done
+    cmd="rsync --rsh=ssh --append --archive --human-readable --progress"
+    $cmd "$@"
+    while [[ $? == 30 ]]; do sleep 5 && $cmd "$@"; done
 }
 
 # delete untracked files/dirs
