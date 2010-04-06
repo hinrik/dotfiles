@@ -1,7 +1,7 @@
 " Vim syntax file
 " Filename: .vimrc
 " Author: Hinrik Örn Sigurðsson <hinrik.sig at gmail dot com>
-" Last Change: Jul 26th 2009
+" Last Change: Apr 6th 2010
 " URL: http://github.com/hinrik/dotfiles/blob/master/.vimrc
 
 " This needs to come first
@@ -146,6 +146,7 @@ set statusline+=\ (%2*%{(&fenc==\"\"?&enc:&fenc)},%{&fileformat}%*) " encoding
 set statusline+=%(\ [%3*%H%R%M%*]%)                  " flags
 set statusline+=%=                                   " left-right alignment
 set statusline+=%(%4*%{SyntaxItem()}%*%)             " highlighting group
+set statusline+=\ %{getfperm(expand('%'))}           " file permissions
 set statusline+=\ %-14.(%l/%L,%v%)                   " line/column number
 set statusline+=\ %P                                 " % through file
 
