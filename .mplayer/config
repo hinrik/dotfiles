@@ -2,4 +2,5 @@
 # Fixes playback when playlist and media file use the same URL.
 user-agent=NSPlayer/4.1.0.3856
 
-
+# use PulseAudio. It sometimes defaults to OSS which hogs the sound card
+ao=pulse
