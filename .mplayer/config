@@ -1,0 +1,5 @@
+# Pretend to be Window Media Player.
+# Fixes playback when playlist and media file use the same URL.
+user-agent=NSPlayer/4.1.0.3856
+
+
