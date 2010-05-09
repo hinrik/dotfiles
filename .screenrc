@@ -11,8 +11,8 @@ altscreen on
 # no visual bell, thanks
 vbell off
 
-# keep a long scroll buffer
-defscrollback 10000
+# keep a decent amount of scrollback
+defscrollback 1000
 
 # window numbering should start at 1, not 0
 bind c screen 1
