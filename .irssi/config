@@ -99,6 +99,7 @@ chatnets = {
     max_kicks = "1";
     max_msgs = "3";
     max_whois = "30";
+    autosendcmd = "/quote NICKSERV identify blabla";
   };
   GameSurge = {
     type = "IRC";
