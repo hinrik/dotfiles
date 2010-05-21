@@ -26,18 +26,18 @@ esac
 # if we're inside an svn working directory, print the current svn revision
 # or else print the total size of all files in the directory
 function dir_info() {
-    if type git >&/dev/null; then
-        local git_branch=$(git branch 2>/dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/\1/')
-        if [[ -n $git_branch ]]; then
-            echo $git_branch
-            return 0
-        fi
-    fi
-
     if type svn >&/dev/null; then
         local svn_rev=$(svn info 2>/dev/null | grep ^Revision | awk '{ print $2 }')
         if [[ -n $svn_rev ]]; then
             echo "r$svn_rev"
+            return 0
+        fi
+    fi
+
+    if type git >&/dev/null; then
+        local git_branch=$(git branch 2>/dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/\1/')
+        if [[ -n $git_branch ]]; then
+            echo $git_branch
             return 0
         fi
     fi
