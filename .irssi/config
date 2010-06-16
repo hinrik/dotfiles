@@ -17,7 +17,12 @@ servers = (
     port = "6667";
     autoconnect = "yes";
   },
-  { address = "irc.efnet.org"; chatnet = "EFNet"; port = "6667"; },
+  {
+    address = "irc.efnet.org";
+    chatnet = "EFNet";
+    port = "6667";
+    autoconnect = "yes";
+  },
   { 
     address = "irc.undernet.org";
     chatnet = "Undernet";
@@ -27,6 +32,12 @@ servers = (
   {
     address = "irc.quakenet.org";
     chatnet = "QuakeNet";
+    port = "6667";
+    autoconnect = "yes";
+  },
+  {
+    address = "irc.zibings.net";
+    chatnet = "zibings";
     port = "6667";
     autoconnect = "yes";
   },
@@ -58,6 +69,11 @@ chatnets = {
   FreeNode = {
     type = "IRC";
     nick = "literal";
+    autosendcmd = "/quote NICKSERV identify blabla";
+  };
+  CrypticHaven = {
+    type = "IRC";
+    nick = "Hinrik";
     autosendcmd = "/quote NICKSERV identify blabla";
   };
   MAGnet = { type = "IRC"; };
@@ -93,7 +109,7 @@ chatnets = {
     max_msgs = "3";
     max_whois = "30";
   };
-  OFTC = { 
+  OFTC = {
     type = "IRC";
     nick = "literal";
     max_kicks = "1";
@@ -113,7 +129,7 @@ chatnets = {
     max_msgs = "3";
     max_whois = "30";
   };
-  Rizon = { 
+  Rizon = {
     type = "IRC";
     max_kicks = "1";
     max_msgs = "3";
@@ -127,6 +143,7 @@ chatnets = {
     max_whois = "30";
   };
   SILC = { type = "SILC"; };
+  zibings = { type = "IRC"; };
 };
 
 channels = (
@@ -144,6 +161,14 @@ channels = (
   { name = "#vim"; chatnet = "FreeNode"; autojoin = "yes"; },
   { name = "#emacs"; chatnet = "FreeNode"; autojoin = "yes"; },
   { name = "#ufraw"; chatnet = "FreeNode"; autojoin = "yes"; },
+  { name = "#darktable"; chatnet = "FreeNode"; autojoin = "yes"; },
+  { name = "#lua"; chatnet = "FreeNode"; autojoin = "yes"; },
+  { name = "#rockbox"; chatnet = "FreeNode"; autojoin = "yes"; },
+  {
+    name = "#rockbox-community";
+    chatnet = "FreeNode";
+    autojoin = "yes";
+  },
 
   { name = "#irc.pm"; chatnet = "MAGnet"; autojoin = "yes"; },
   { name = "#perl"; chatnet = "MAGnet"; autojoin = "yes"; },
@@ -151,15 +176,28 @@ channels = (
   { name = "#email"; chatnet = "MAGnet"; autojoin = "yes"; },
   { name = "#poe"; chatnet = "MAGnet"; autojoin = "yes"; },
   { name = "#moose"; chatnet = "MAGnet"; autojoin = "yes"; },
+  { name = "#reflex"; chatnet = "MAGnet"; autojoin = "yes"; },
   { name = "#padre"; chatnet = "MAGnet"; autojoin = "yes"; },
   { name = "#catalyst"; chatnet = "MAGnet"; autojoin = "yes"; },
   { name = "#tpm"; chatnet = "MAGnet"; autojoin = "yes"; },
   { name = "#bots"; chatnet = "MAGnet"; autojoin = "yes"; },
 
+  { name = "#parkour"; chatnet = "EFNet"; autojoin = "yes"; },
+
+  { name = "#Foundation"; chatnet = "zibings"; autojoin = "yes"; },
+
   { name = "#lydraedi"; chatnet = "IRCnet"; autojoin = "yes"; },
   { name = "#niceland"; chatnet = "IRCnet"; autojoin = "yes"; },
+  { name = "#parkour"; chatnet = "IRCnet"; autojoin = "yes"; },
+  { name = "#gvendur"; chatnet = "IRCnet"; autojoin = "yes"; },
 
-  { name = "#superdudez"; chatnet = "QuakeNet"; autojoin = "yes"; }
+  { name = "#superdudez"; chatnet = "QuakeNet"; autojoin = "yes"; },
+
+  { 
+    name = "#CrypticHaven";
+    chatnet = "CrypticHaven";
+    autojoin = "yes";
+  },
 
   { name = "#linode"; chatnet = "OFTC"; autojoin = "yes"; }
 );
