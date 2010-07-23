@@ -1,5 +1,8 @@
 test -f ~v-perlbrew/perl5/perlbrew/etc/bashrc && source ~v-perlbrew/perl5/perlbrew/etc/bashrc
 
+cpus=$(grep -c ^processor /proc/cpuinfo)
+export HARNESS_OPTIONS="j$((2*$cpus+1))"
+
 if [[ $- != *i* ]] ; then
     # Shell is non-interactive.  Be done now!
     return
