@@ -1,3 +1,5 @@
+test -f ~v-perlbrew/perl5/perlbrew/etc/bashrc && source ~v-perlbrew/perl5/perlbrew/etc/bashrc
+
 if [[ $- != *i* ]] ; then
     # Shell is non-interactive.  Be done now!
     return
@@ -184,4 +186,3 @@ function keepalive {
         sleep $interval
     done
 }
-
