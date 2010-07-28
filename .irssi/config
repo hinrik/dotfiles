@@ -152,6 +152,7 @@ channels = (
   { name = "#lost-trivia"; chatnet = "Rizon"; autojoin = "yes"; },
 
   { name = "#avar"; chatnet = "FreeNode"; autojoin = "yes"; },
+  { name = "##bikes"; chatnet = "FreeNode"; autojoin = "yes"; },
   { name = "#failo"; chatnet = "FreeNode"; autojoin = "yes"; },
   { name = "#hailo"; chatnet = "FreeNode"; autojoin = "yes"; },
   { name = "#hakkavelin"; chatnet = "FreeNode"; autojoin = "yes"; },
