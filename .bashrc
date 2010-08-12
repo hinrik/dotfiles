@@ -140,14 +140,14 @@ function mkcd {
 
 # Sync files based on content. Useful for dynamically changing files.
 function scp {
-    rsync --rsh=ssh --archive --human-readable --progress "$@"
+    rsync --rsh=ssh --archive --no-group --human-readable --progress "$@"
 }
 
 # Append to files based on file size. Useful large, static or append-only
 # files since it skips the expensive hash check. Also retry the transfer
 # if it times out.
 function leech {
-    cmd="rsync --rsh=ssh --append --archive --human-readable --progress"
+    cmd="rsync --rsh=ssh --append --archive --no-group --human-readable --progress"
     $cmd "$@"
     while [[ $? == 30 ]]; do sleep 5 && $cmd "$@"; done
 }
