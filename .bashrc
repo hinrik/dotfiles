@@ -11,9 +11,15 @@ fi
 # away with old aliases
 \unalias -a
 
-# programmable completion
-if [[ -f /etc/bash_completion ]]; then
-    source /etc/bash_completion
+# bash completion
+if test -f /dev/shm/bash_dyncompletion
+then
+    # Lightspeed from Debian bug
+    # http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=467231
+    . /dev/shm/bash_dyncompletion
+elif test -f /etc/bash_completion
+then
+    . /etc/bash_completion
 fi
 
 # Change the window title of X terminals 
