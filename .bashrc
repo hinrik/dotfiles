@@ -46,13 +46,23 @@ function dir_info() {
     fi
 
     if type git >&/dev/null; then
-        local git_branch=$(git symbolic-ref HEAD 2>/dev/null | sed -e 's/refs\/heads\///')
-        if [[ -n $git_branch ]]; then
-            echo $git_branch
-            return 0
+        if test -n "$(type -t __git_ps1)"; then
+            # We can hopefully use __git_ps1 which comes with git's
+            # bash completion support
+            local git_info=$(__git_ps1 "%s")
+            if test -n "$git_info"; then
+                echo $git_info
+                return 0
+            fi
+        else
+            # Fall back on something dumb
+            local git_info=$(git symbolic-ref HEAD 2>/dev/null | sed -e 's!refs/heads!!')
+            if test -n $git_info; then
+                echo $git_branch
+                return 0
+            fi
         fi
     fi
-
 
     
     ls -Ahs|head -n1|awk '{print $2}'
