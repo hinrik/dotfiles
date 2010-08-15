@@ -68,13 +68,6 @@ function dir_info() {
     ls -Ahs|head -n1|awk '{print $2}'
 }
 
-# Colors on a per-server basis based on a simple
-# checksum. Inspired by http://geofft.mit.edu/blog/sipb/125
-function hostname_color() {
-    echo $((31 + $(hostname | cksum | cut -c1-3) % 6))
-    return 0
-}
-
 if ls --help|grep group-directories-first >&/dev/null; then
     group_dirs=" --group-directories-first"
 else
@@ -91,10 +84,14 @@ if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
         alias tree="tree -C"
     fi
 
+    # Colors on a per-server basis based on a simple
+    # checksum. Inspired by http://geofft.mit.edu/blog/sipb/125
+    __hostname_color=$((31 + $(hostname | cksum | cut -c1-3) % 6))
+
     if [[ ${EUID} == 0 ]] ; then
-        PS1='\[\e[1;$(hostname_color)m\]\h\[\e[m\] \[\e[1;34m\]\W\[\e[m\] (\[\e[;33m\]$(dir_info)\[\e[m\]) \[\e[1;31m\]\$\[\e[m\] '
+        PS1='\[\e[1;${__hostname_color}m\]\h\[\e[m\] \[\e[1;34m\]\W\[\e[m\] (\[\e[;33m\]$(dir_info)\[\e[m\]) \[\e[1;31m\]\$\[\e[m\] '
     else
-        PS1='\[\e[1;$(hostname_color)m\]\h\[\e[m\] \[\e[1;34m\]\W\[\e[m\] (\[\e[;33m\]$(dir_info)\[\e[m\]) \[\e[1;32m\]\$\[\e[m\] '
+        PS1='\[\e[1;${__hostname_color}m\]\h\[\e[m\] \[\e[1;34m\]\W\[\e[m\] (\[\e[;33m\]$(dir_info)\[\e[m\]) \[\e[1;32m\]\$\[\e[m\] '
     fi
 
     export PERLDOC="-MPod::Text::Ansi"
