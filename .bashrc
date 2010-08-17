@@ -31,21 +31,29 @@ esac
 # if we're inside an svn working directory, print the current svn revision
 # or else print the total size of all files in the directory
 function dir_info() {
-    if type svn >&/dev/null; then
-        local svn_rev=$(svn info 2>/dev/null | grep ^Revision | awk '{ print $2 }')
-        if [[ -n $svn_rev ]]; then
+    # Test SVN first, because I'm more likely to have a svn checkout
+    # inside a git repository (e.g. my ~/ in Git) than the other way
+    # around.
+    if test -f .svn/entries; then
+        # Performance hack, calling svn info takes longer than just
+        # grabbing the fourth line from .svn/entries
+        local svn_rev=$(sed '4q;d' .svn/entries)
+        
+        if test -n $svn_rev; then
             echo "r$svn_rev"
             return 0
         fi
     fi
 
     if type git >&/dev/null; then
-        local git_branch=$(git branch 2>/dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/\1/')
+        local git_branch=$(git symbolic-ref HEAD 2>/dev/null | sed -e 's/refs\/heads\///')
         if [[ -n $git_branch ]]; then
             echo $git_branch
             return 0
         fi
     fi
+
+
     
     ls -Ahs|head -n1|awk '{print $2}'
 }
