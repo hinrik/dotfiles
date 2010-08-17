@@ -6,14 +6,14 @@
 ;; prefer UTF-8 encoding
 (set-language-environment "UTF-8")
 
-;; keep backup files in ~/.tmp/emacs
+;; keep backup files in ~/.emacs.d/tmp
 (setq backup-directory-alist
       (list
-        (cons ".*" (expand-file-name "~/.tmp/emacs/"))))
+        (cons ".*" (expand-file-name "~/.emacs.d/tmp/"))))
 
 ;; same with autosave files
 (setq auto-save-file-name-transforms
-      `((".*" ,(expand-file-name "~/.tmp/emacs/") t)))
+      `((".*" ,(expand-file-name "~/.emacs.d/tmp/") t)))
 
 ;;;; UI gripes
 
