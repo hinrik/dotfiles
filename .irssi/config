@@ -1,5 +1,12 @@
 servers = (
   {
+    address = "secure.wikileaks.org";
+    chatnet = "Wikileaks";
+    port = "9999";
+    autoconnect = "yes";
+    use_ssl = "yes";
+  },
+  {
     address = "open.ircnet.net";
     chatnet = "IRCnet";
     port = "6667";
@@ -144,6 +151,7 @@ chatnets = {
   };
   SILC = { type = "SILC"; };
   zibings = { type = "IRC"; };
+  Wikileaks = { type = "IRC"; nick = "literal"; };
 };
 
 channels = (
@@ -374,5 +382,6 @@ settings = {
   history = { scrollback_lines = "100000"; };
   "fe-common/core" = { autolog = "yes"; };
   "fe-text" = { actlist_sort = "refnum"; };
+  "perl/core/scripts" = { aidle_ircnets = "Wikileaks"; };
 };
 logs = { };
