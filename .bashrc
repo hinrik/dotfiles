@@ -63,7 +63,7 @@ function dir_info() {
         else
             # Fall back on something dumb
             local git_info=$(git symbolic-ref HEAD 2>/dev/null | sed -e 's!refs/heads/!!')
-            if test -n $git_info; then
+            if test -n "$git_info"; then
                 echo $git_info
                 return 0
             fi
