@@ -80,7 +80,8 @@ else
 fi
 
 # check if we support colors
-if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
+if type tput >/dev/null 2>&1 && test "$(tput colors)" -gt 2
+then
     if [ -x /usr/bin/dircolors ]; then
         test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
         alias ls="ls$group_dirs --color=auto"
