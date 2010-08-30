@@ -70,8 +70,7 @@ function dir_info() {
         fi
     fi
 
-    
-    ls -Ahs|head -n1|awk '{print $2}'
+    ls -Alhs | head -n1 | cut -d' ' -f2
 }
 
 if ls --help|grep group-directories-first >&/dev/null; then
