@@ -78,10 +78,9 @@ chatnets = {
     nick = "literal";
     autosendcmd = "/quote NICKSERV identify blabla";
   };
-  CrypticHaven = {
+  SynIRC = {
     type = "IRC";
     nick = "Hinrik";
-    autosendcmd = "/quote NICKSERV identify blabla";
   };
   MAGnet = { type = "IRC"; };
   IRCnet = {
@@ -156,11 +155,10 @@ chatnets = {
 
 channels = (
   { name = "#lostpedia"; chatnet = "Rizon"; autojoin = "yes"; },
-  { name = "#darkufo"; chatnet = "Rizon"; autojoin = "yes"; },
-  { name = "#lost-trivia"; chatnet = "Rizon"; autojoin = "yes"; },
 
   { name = "#avar"; chatnet = "FreeNode"; autojoin = "yes"; },
   { name = "##bikes"; chatnet = "FreeNode"; autojoin = "yes"; },
+  { name = "##cycling"; chatnet = "FreeNode"; autojoin = "yes"; },
   { name = "#failo"; chatnet = "FreeNode"; autojoin = "yes"; },
   { name = "#hailo"; chatnet = "FreeNode"; autojoin = "yes"; },
   { name = "#hakkavelin"; chatnet = "FreeNode"; autojoin = "yes"; },
@@ -172,12 +170,9 @@ channels = (
   { name = "#ufraw"; chatnet = "FreeNode"; autojoin = "yes"; },
   { name = "#darktable"; chatnet = "FreeNode"; autojoin = "yes"; },
   { name = "#lua"; chatnet = "FreeNode"; autojoin = "yes"; },
+  { name = "#love"; chatnet = "FreeNode"; autojoin = "yes"; },
   { name = "#rockbox"; chatnet = "FreeNode"; autojoin = "yes"; },
-  {
-    name = "#rockbox-community";
-    chatnet = "FreeNode";
-    autojoin = "yes";
-  },
+  { name = "#rockbox-community"; chatnet = "FreeNode"; autojoin = "yes"; },
 
   { name = "#irc.pm"; chatnet = "MAGnet"; autojoin = "yes"; },
   { name = "#perl"; chatnet = "MAGnet"; autojoin = "yes"; },
@@ -192,23 +187,21 @@ channels = (
   { name = "#bots"; chatnet = "MAGnet"; autojoin = "yes"; },
 
   { name = "#parkour"; chatnet = "EFNet"; autojoin = "yes"; },
+  { name = "#perl"; chatnet = "EFNet"; autojoin = "yes"; },
+  { name = "#perlhelp"; chatnet = "EFNet"; autojoin = "yes"; },
 
   { name = "#Foundation"; chatnet = "zibings"; autojoin = "yes"; },
 
   { name = "#lydraedi"; chatnet = "IRCnet"; autojoin = "yes"; },
   { name = "#niceland"; chatnet = "IRCnet"; autojoin = "yes"; },
   { name = "#parkour"; chatnet = "IRCnet"; autojoin = "yes"; },
-  { name = "#gvendur"; chatnet = "IRCnet"; autojoin = "yes"; },
 
   { name = "#superdudez"; chatnet = "QuakeNet"; autojoin = "yes"; },
+  { name = "#hetzner"; chatnet = "QuakeNet"; autojoin = "yes"; },
 
-  { 
-    name = "#CrypticHaven";
-    chatnet = "CrypticHaven";
-    autojoin = "yes";
-  },
+  { name = "#linode"; chatnet = "OFTC"; autojoin = "yes"; },
 
-  { name = "#linode"; chatnet = "OFTC"; autojoin = "yes"; }
+  { name = "#bikes"; chatnet = "SynIRC"; autojoin = "yes"; }
 );
 
 aliases = {
