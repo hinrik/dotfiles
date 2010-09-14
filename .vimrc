@@ -1,7 +1,6 @@
 " Vim syntax file
 " Filename: .vimrc
 " Author: Hinrik Örn Sigurðsson <hinrik.sig at gmail dot com>
-" Last Change: Apr 6th 2010
 " URL: http://github.com/hinrik/dotfiles/blob/master/.vimrc
 
 " This needs to come first
