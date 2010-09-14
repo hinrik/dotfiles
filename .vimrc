@@ -27,7 +27,10 @@ set hlsearch                       " highlight all pattern matches
 set ignorecase                     " Do case-insensitive matching
 set incsearch                      " Highlight search results immediately
 set laststatus=2                   " Always show the status line
-set listchars=tab:>.               " Show tabs sensibly with 'list'
+set listchars=tab:>.               " Show tabs in list mode
+set listchars+=trail:.             " Show trailing spaces in list mode
+set listchars+=extends:$           " Show $ when a line extends off-screen
+set listchars+=nbsp:.              " Show non-breaking spaces in list mode
 set number                         " Show line numbers on the side
 if has("numberwidth")
     set numberwidth=3              " Minimum size of line number column
