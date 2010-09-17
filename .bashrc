@@ -139,10 +139,7 @@ export HISTSIZE=10000
 export HISTFILESIZE=10000
 export HISTCONTROL="ignoreboth"
 export HISTTIMEFORMAT="%Y-%m-%d %H:%M:%S  "
-
-# ignore some boring stuff. The " *" bit ignores all command lines
-# starting with whitespace, useful to selectively avoid the history
-export HISTIGNORE="ls:cd:cd ..:..*: *"
+export HISTIGNORE="ls:cd:cd ..:..*:"
 
 # ignore these while tab-completing
 export FIGNORE="CVS:.svn:.git"
