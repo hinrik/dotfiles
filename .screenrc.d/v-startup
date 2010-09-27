@@ -19,4 +19,6 @@ bind c screen 1
 bind 0 select 10
 
 sessionname v-startup
-screen -t irc 1 irssi
+screen -t irc       1 irssi
+screen -t magic-bon 2 bondage -d -w src/lost-transcript-bot
+screen -t magic-bot 3 src/lost-quote-bot/lost-ts.pl
