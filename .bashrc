@@ -80,7 +80,10 @@ else
 fi
 
 # check if we support colors
-if type tput >/dev/null && test "$(tput colors)" -gt 2
+if type tput >/dev/null &&
+    tput_colors="$(tput colors)" &&
+    test -n "$tput_colors" &&
+    test "$tput_colors" -gt 2
 then
     if [ -x /usr/bin/dircolors ]; then
         test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
