@@ -27,7 +27,7 @@ set ignorecase                     " Do case-insensitive matching
 set incsearch                      " Highlight search results immediately
 set laststatus=2                   " Always show the status line
 set list listchars=                " Enable list mode
-set listchars=tab:▸\               " Show tabs normally
+set listchars=tab:▸\               " Indicate tabs with ▸
 set listchars+=trail:.             " Show trailing spaces as .
 set listchars+=extends:$           " Show $ when a line extends off-screen
 set listchars+=nbsp:.              " Show non-breaking spaces as .
