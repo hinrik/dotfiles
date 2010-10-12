@@ -200,6 +200,8 @@ channels = (
   { name = "#hetzner"; chatnet = "QuakeNet"; autojoin = "yes"; },
 
   { name = "#linode"; chatnet = "OFTC"; autojoin = "yes"; },
+  { name = "#debian-devel"; chatnet = "OFTC"; autojoin = "yes"; },
+  { name = "#debian-mentors"; chatnet = "OFTC"; autojoin = "yes"; },
 
   { name = "#bikes"; chatnet = "SynIRC"; autojoin = "yes"; }
 );
