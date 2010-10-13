@@ -34,8 +34,9 @@
 
 ;; no menu/tool/scroll bars
 (menu-bar-mode -1)
-(tool-bar-mode -1)
-(scroll-bar-mode -1)
+(when window-system
+    (tool-bar-mode -1)
+    (scroll-bar-mode -1))
 
 ;; set frame title
 ;; TODO: make it say e.g. "fstab * (/etc) - emacs"
