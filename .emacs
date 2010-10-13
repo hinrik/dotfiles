@@ -38,6 +38,9 @@
     (tool-bar-mode -1)
     (scroll-bar-mode -1))
 
+;; set a decent window size for the GUI
+(setq initial-frame-alist (append '((width . 85) (height . 40)) initial-frame-alist))
+
 ;; set frame title
 ;; TODO: make it say e.g. "fstab * (/etc) - emacs"
 (setq frame-title-format "%f %& emacs")
