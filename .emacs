@@ -44,8 +44,10 @@
 ;; no menu/tool/scroll bars
 (menu-bar-mode -1)
 (when window-system
-    (tool-bar-mode -1)
-    (scroll-bar-mode -1))
+  (set-fringe-mode 0)
+  (tool-bar-mode -1)
+  (scroll-bar-mode -1))
+
 
 ;; set a decent window size for the GUI
 (setq initial-frame-alist (append '((width . 85) (height . 40)) initial-frame-alist))
