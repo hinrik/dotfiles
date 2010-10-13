@@ -1,7 +1,16 @@
 ;;;; General
 
 ;; load paths
-(setq load-path (cons "~/.emacs.d" load-path))
+(defvar my-libraries nil "My library paths to add to `load-path'")
+(progn
+  (setq
+    my-libraries
+    (list
+      (concat my-libraries "~/.emacs.d/elisp/xterm-title")
+      (concat my-libraries "~/.emacs.d/elisp/color-theme-tangotango")
+      (concat my-libraries "~/.emacs.d/elisp/centered-cursor-mode")))
+  (dolist (library my-libraries)
+    (add-to-list 'load-path library)))
 
 ;; prefer UTF-8 encoding
 (set-language-environment "UTF-8")
