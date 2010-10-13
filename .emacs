@@ -145,14 +145,5 @@
 ;;;;; color-theme.el
 
 (require 'color-theme)
-
-;; this theme looks alright
-(color-theme-salmon-font-lock)
-
-;; these are sort of ok, but they all have a light background
-;;(color-theme-gtk-ide)
-;;(color-theme-jedit-grey)
-;;(color-theme-rotor)
-;;(color-theme-sitaramv-nt)
-;;(color-theme-emacs-21)
-
+(require 'color-theme-tangotango)
+(color-theme-tangotango)
