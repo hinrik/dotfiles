@@ -43,7 +43,7 @@
 (setq frame-title-format "%f %& emacs")
 
 ;; default gui font
-(add-to-list 'default-frame-alist '(font . "Mono-7"))
+(add-to-list 'default-frame-alist '(font . "Mono-8"))
 
 ;; use syntax highlighting everywhere
 (global-font-lock-mode t)
