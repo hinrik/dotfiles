@@ -1,4 +1,5 @@
 test -f ~v-perlbrew/perl5/perlbrew/etc/bashrc && source ~v-perlbrew/perl5/perlbrew/etc/bashrc
+test -f ~/perl5/perlbrew/etc/bashrc && source ~/perl5/perlbrew/etc/bashrc
 
 cpus=$(grep -c ^processor /proc/cpuinfo)
 export HARNESS_OPTIONS="j$((2*$cpus+1))"
