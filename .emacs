@@ -65,6 +65,16 @@
 ;; show column number
 (setq column-number-mode t)
 
+;; show trailing whitespace
+(setq-default show-trailing-whitespace t)
+
+;; Draw tabs with the same color as trailing whitespace
+(add-hook 'font-lock-mode-hook
+          (lambda ()
+            (font-lock-add-keywords
+                nil
+                '(("\t" 0 'trailing-whitespace prepend)))))
+
 ; Make home key go to beginning of indentation when possible
 (require 'misc-cmds)
 (global-set-key [home] 'beginning-or-indentation)
