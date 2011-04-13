@@ -8,6 +8,9 @@ caption always "%{= kw}%-w%{= gW}%n %t%{-}%+w %-= %{= r}%H%{-} %{= g}%l%{-} %c:%
 # clear the screen properly when vim (et al) exits
 altscreen on
 
+# no startup message please
+startup_message off
+
 # don't close windows with a non-zero exit status automatically
 zombie ar onerror
 
