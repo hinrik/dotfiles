@@ -58,6 +58,9 @@
 ;; TODO: make it say e.g. "fstab * (/etc) - emacs"
 (setq frame-title-format "%f %& emacs")
 
+;; show column number
+(setq column-number-mode t)
+
 ;; use syntax highlighting everywhere
 (global-font-lock-mode t)
 (add-hook
