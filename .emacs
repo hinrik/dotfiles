@@ -61,6 +61,10 @@
 ;; show column number
 (setq column-number-mode t)
 
+;; automatically format paragraphs in text mode
+(global-set-key (kbd "C-c q") 'refill-mode)
+(add-hook 'text-mode-hook (lambda () (refill-mode 1)))
+
 ;; use syntax highlighting everywhere
 (global-font-lock-mode t)
 (add-hook
@@ -120,6 +124,14 @@
       cperl-tab-always-indent nil           ; always let me indent further
       cperl-continued-statement-offset 0)   ; don't reindent multiline statements
 
+;; automatically format comment paragraphs
+(add-hook 'c-mode-common-hook
+          (lambda ()
+            (auto-fill-mode 1)
+            (set (make-local-variable 'fill-nobreak-predicate)
+                 (lambda ()
+                   (not (eq (get-text-property (point) 'face)
+                            'font-lock-comment-face))))))
 ;;;; Other packages
 
 ;;;;; linum.el
