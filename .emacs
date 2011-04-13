@@ -32,6 +32,12 @@
 ;; don't show the *scratch* buffer message
 (setq initial-scratch-message nil)
 
+;; start in text-mode by default
+(setq initial-major-mode 'text-mode)
+
+;; use text-mode for unknown file types
+(setq default-major-mode 'text-mode)
+
 ;; change "yes or no" to "y or n"
 (fset 'yes-or-no-p 'y-or-n-p)
 
