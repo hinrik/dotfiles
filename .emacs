@@ -8,6 +8,7 @@
     (list
       (concat my-libraries "~/.emacs.d/elisp/xterm-title")
       (concat my-libraries "~/.emacs.d/elisp/color-theme-tangotango")
+      (concat my-libraries "~/.emacs.d/elisp/misc-cmds")
       (concat my-libraries "~/.emacs.d/elisp/centered-cursor-mode")))
   (dolist (library my-libraries)
     (add-to-list 'load-path library)))
@@ -63,6 +64,11 @@
 
 ;; show column number
 (setq column-number-mode t)
+
+; Make home key go to beginning of indentation when possible
+(require 'misc-cmds)
+(global-set-key [home] 'beginning-or-indentation)
+(substitute-key-definition 'beginning-of-line 'beginning-or-indentation global-map)
 
 ;; automatically format paragraphs in text mode
 (setq-default fill-column 75)
