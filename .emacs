@@ -41,23 +41,16 @@
 ;; do mouse scrolling one line at a time
 (setq mouse-wheel-scroll-amount '(1 ((shift) . 1) ((control))))
 
-;; no menu/tool/scroll bars
+;; no menubar
 (menu-bar-mode -1)
+
+;; no fringes in the gui
 (when window-system
-  (set-fringe-mode 0)
-  (tool-bar-mode -1)
-  (scroll-bar-mode -1))
-
-
-;; set a decent window size for the GUI
-(setq initial-frame-alist (append '((width . 85) (height . 40)) initial-frame-alist))
+  (set-fringe-mode 0))
 
 ;; set frame title
 ;; TODO: make it say e.g. "fstab * (/etc) - emacs"
 (setq frame-title-format "%f %& emacs")
-
-;; default gui font
-(add-to-list 'default-frame-alist '(font . "Mono-8"))
 
 ;; use syntax highlighting everywhere
 (global-font-lock-mode t)

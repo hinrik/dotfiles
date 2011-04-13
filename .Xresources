@@ -1,0 +1,5 @@
+Emacs.menuBar: off
+Emacs.verticalScrollBars: off
+Emacs.toolBar: off
+Emacs.font: Mono-8
+Emacs.geometry: 85x40
