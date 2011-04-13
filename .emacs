@@ -62,8 +62,9 @@
 (setq column-number-mode t)
 
 ;; automatically format paragraphs in text mode
-(global-set-key (kbd "C-c q") 'refill-mode)
-(add-hook 'text-mode-hook (lambda () (refill-mode 1)))
+(setq-default fill-column 75)
+(global-set-key (kbd "C-c q") 'auto-fill-mode)
+(add-hook 'text-mode-hook (lambda () (auto-fill-mode 1)))
 
 ;; use syntax highlighting everywhere
 (global-font-lock-mode t)
