@@ -50,6 +50,9 @@
 ;; no menubar
 (menu-bar-mode -1)
 
+;; give all windows equal space
+(add-hook 'window-configuration-change-hook 'balance-windows)
+
 ;; no fringes in the gui
 (when window-system
   (set-fringe-mode 0))
