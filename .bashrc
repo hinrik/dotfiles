@@ -158,8 +158,8 @@ fi
 export LESS="iMQRS"
 
 # keep a long history without duplicates
-export HISTSIZE=10000
-export HISTFILESIZE=10000
+export HISTSIZE=100000
+export HISTFILESIZE=100000
 export HISTCONTROL="ignoreboth"
 export HISTTIMEFORMAT="%Y-%m-%d %H:%M:%S  "
 export HISTIGNORE="ls:cd:cd ..:..*:"
