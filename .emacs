@@ -111,21 +111,20 @@
 (global-set-key (kbd "DEL") 'backward-delete-whitespace-to-column)
 (add-hook 'cperl-mode-hook (lambda () (define-key cperl-mode-map (kbd "DEL") 'backward-delete-whitespace-to-column)))
 
+;; http://stackoverflow.com/questions/1450169/how-do-i-emulate-vims-softtabstop-in-emacs
 (defun backward-delete-whitespace-to-column ()
-  "delete back to the previous column of whitespace, or just one char if that's not possible"
+  "delete back to the previous column of whitespace, or as much whitespace as possible,
+or just one char if that's not possible"
   (interactive)
   (if indent-tabs-mode
       (call-interactively 'backward-delete-char-untabify)
-    ;; let's get to work
     (let ((movement (% (current-column) tab-width))
           (p (point)))
-      ;; brain freeze, should be easier to calculate goal
       (when (= movement 0) (setq movement tab-width))
-      (if (save-excursion
-            (backward-char movement)
-            (string-match "^\\s-+$" (buffer-substring-no-properties (point) p)))
-          (delete-region (- p movement) p)
-        (call-interactively 'backward-delete-char-untabify)))))
+      (save-match-data
+        (if (string-match "\\w*\\(\\s-+\\)$" (buffer-substring-no-properties (- p movement) p))
+            (backward-delete-char-untabify (- (match-end 1) (match-beginning 1)))
+        (call-interactively 'backward-delete-char-untabify))))))
 
 ;; TODO: bind backspace to a function which does the following:
 ;; if indent-tabs-mode is nil and we're backspacing over whitespace,
