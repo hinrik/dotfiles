@@ -19,7 +19,7 @@ servers = (
     autoconnect = "yes";
   },
   {
-    address = "holmes.freenode.net";
+    address = "kornbluth.freenode.net";
     chatnet = "FreeNode";
     port = "6667";
     autoconnect = "yes";
