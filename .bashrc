@@ -237,3 +237,7 @@ function keepalive {
         sleep $interval
     done
 }
+
+function nixmail {
+    mail -a "From: Hinrik Örn Sigurðsson <hinrik@nix.is>" -b hinrik.sig@gmail.com "$@"
+}
