@@ -1,10 +1,6 @@
 # show some info at the bottom
 caption always "%{= kw}%-w%{= gW}%n %t%{-}%+w %-= %{= r}%H%{-} %{= g}%l%{-} %c:%s"
 
-# TODO: look into 'hardstatus'
-#hardstatus alwayslastline
-#hardstatus string "%{= kb}[ %=%{w}%?%-Lw%?%{C}(%{W}%n*%f %t%?(%u)%?%{C})%{w}%?%+Lw%?%?%= %{b}][%{C} %Y.%m.%d %{W}%0c %{b}]"
-
 # clear the screen properly when vim (et al) exits
 altscreen on
 
@@ -20,5 +16,3 @@ bind 0 select 10
 
 sessionname v-startup
 screen -t irc       1 irssi
-screen -t magic-bon 2 bondage -d -w src/lost-transcript-bot
-screen -t magic-bot 3 src/lost-quote-bot/lost-ts.pl
