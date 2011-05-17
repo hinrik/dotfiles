@@ -1,4 +1,4 @@
-test -f ~v-perlbrew/perl5/perlbrew/etc/bashrc && source ~v-perlbrew/perl5/perlbrew/etc/bashrc
+test -f ~v-perlbrew/perl5/perlbrew/etc/bashrc && HOME=/home/v-perlbrew source ~v-perlbrew/perl5/perlbrew/etc/bashrc
 test -f ~/perl5/perlbrew/etc/bashrc && source ~/perl5/perlbrew/etc/bashrc
 
 cpus=$(grep -c ^processor /proc/cpuinfo)
