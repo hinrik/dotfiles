@@ -229,6 +229,20 @@ function asdf-install {
     sbcl --eval "(require :asdf)" --eval "(asdf:operate 'asdf:load-op :asdf-install)" --eval "(asdf-install:install :$1)" --eval "(quit)"
 }
 
+# install a Common Lisp package with Quicklisp which is superior to asdf
+function ql-install {
+    [[ -f ~/quicklisp/setup.lisp ]] || ql-bootstrap
+    sbcl --load ~/quicklisp/setup.lisp --eval "(ql:quickload \"$1\")" --eval "(quit)"
+}
+
+# bootstrap quicklisp
+function ql-bootstrap {
+    temp=$(tempfile)
+    curl https://github.com/quicklisp/quicklisp-bootstrap/raw/master/quicklisp.lisp > $temp
+    sbcl --load $temp --eval "(quicklisp-quickstart:install)" --eval "(quit)"
+    rm $temp
+}
+
 # good for links that keep dropping your ssh connections
 function keepalive {
     [ -z $1 ] && interval=60 || interval=$1
