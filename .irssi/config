@@ -41,16 +41,8 @@ servers = (
     port = "6667";
     autoconnect = "yes";
   },
-  {
-    address = "irc.zibings.net";
-    chatnet = "zibings";
-    port = "6667";
-  },
-  {
-    address = "irc.oftc.net";
-    chatnet = "OFTC";
-    port = "6667";
-  },
+  { address = "irc.zibings.net"; chatnet = "zibings"; port = "6667"; },
+  { address = "irc.oftc.net"; chatnet = "OFTC"; port = "6667"; },
   {
     address = "irc.gamesurge.net";
     chatnet = "GameSurge";
@@ -74,10 +66,7 @@ chatnets = {
     nick = "literal";
     autosendcmd = "/quote NICKSERV identify blabla";
   };
-  SynIRC = {
-    type = "IRC";
-    nick = "Hinrik";
-  };
+  SynIRC = { type = "IRC"; nick = "Hinrik"; };
   MAGnet = { type = "IRC"; };
   IRCnet = {
     type = "IRC";
