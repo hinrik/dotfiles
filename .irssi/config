@@ -358,3 +358,10 @@ settings = {
   "perl/core/scripts" = { aidle_ircnets = "Wikileaks"; };
 };
 logs = { };
+hilights = (
+  { text = "bot -channels #poe -full"; nick = "yes"; word = "yes"; },
+  { text = "irc -channels #poe -full"; nick = "yes"; word = "yes"; },
+  { text = "hinrik -full"; nick = "yes"; word = "yes"; },
+  { text = "bot -channels #perl -full"; nick = "yes"; word = "yes"; },
+  { text = "irc -channels #perl -full"; nick = "yes"; word = "yes"; }
+);
