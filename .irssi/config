@@ -282,7 +282,6 @@ statusbar = {
         window = { };
         window_empty = { };
         lag = { priority = "-1"; };
-        act = { priority = "10"; };
         more = { priority = "-1"; alignment = "right"; };
         barend = { priority = "100"; alignment = "right"; };
       };
@@ -346,7 +345,10 @@ settings = {
   history = { scrollback_lines = "100000"; };
   "fe-common/core" = { autolog = "yes"; };
   "fe-text" = { actlist_sort = "refnum"; };
-  "perl/core/scripts" = { aidle_ircnets = "Wikileaks"; };
+  "perl/core/scripts" = {
+    aidle_ircnets = "Wikileaks";
+    awl_automode = "= fifo";
+  };
 };
 logs = { };
 hilights = (
