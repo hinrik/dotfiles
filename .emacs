@@ -126,11 +126,6 @@ or just one char if that's not possible"
             (backward-delete-char-untabify (- (match-end 1) (match-beginning 1)))
         (call-interactively 'backward-delete-char-untabify))))))
 
-;; TODO: bind backspace to a function which does the following:
-;; if indent-tabs-mode is nil and we're backspacing over whitespace,
-;; erase whitespace until we get to a position which is a multiple of
-;; default-tab-width (like 'softtabstop' in vim)
-
 ;;;; Languages
 
 ;;;;; Perl
