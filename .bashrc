@@ -225,8 +225,8 @@ function svn_uplog {
 function info { /usr/bin/info "$@" --subnodes -o - 2> /dev/null | less ; }
 
 # install Common Lisp packages from the command line
-function asdf_install {
-sbcl --eval "(require :asdf)" --eval "(asdf:operate 'asdf:load-op :asdf-install)" --eval "(asdf-install:install :$1)" --eval "(quit)"
+function asdf-install {
+    sbcl --eval "(require :asdf)" --eval "(asdf:operate 'asdf:load-op :asdf-install)" --eval "(asdf-install:install :$1)" --eval "(quit)"
 }
 
 # good for links that keep dropping your ssh connections
