@@ -164,6 +164,7 @@ channels = (
   { name = "#poe"; chatnet = "MAGnet"; autojoin = "yes"; },
   { name = "#reflex"; chatnet = "MAGnet"; autojoin = "yes"; },
   { name = "#bots"; chatnet = "MAGnet"; autojoin = "yes"; },
+  { name = "#moose"; chatnet = "MAGnet"; autojoin = "yes"; },
 
   { name = "#perl"; chatnet = "EFNet"; autojoin = "yes"; },
   { name = "#perlhelp"; chatnet = "EFNet"; autojoin = "yes"; },
