@@ -346,7 +346,7 @@ settings = {
   };
   history = { scrollback_lines = "100000"; };
   "fe-common/core" = { autolog = "yes"; };
-  "fe-text" = { actlist_sort = "refnum"; };
+  "fe-text" = { actlist_sort = "level"; };
   "perl/core/scripts" = { aidle_ircnets = "Wikileaks"; };
 };
 logs = { };
