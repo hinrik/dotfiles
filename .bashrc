@@ -182,6 +182,11 @@ function mkcd {
     mkdir -p "$@" && builtin cd "$@"
 }
 
+# "du -h", sorted (http://www.perlmonks.org/?node_id=746356)
+function duh {
+    perl -e'%h=map{/.\s/;7x(ord$&&10)+$`,$_}`du -h @ARGV`;die@h{sort%h}' -- "$@"
+}
+
 # Sync files based on content. Useful for dynamically changing files.
 function scp {
     rsync --rsh=ssh --archive --no-group --human-readable --progress "$@"
