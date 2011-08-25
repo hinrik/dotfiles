@@ -20,6 +20,12 @@ maybe_add_path() {
     fi
 }
 
+# Ruby stuff
+maybe_add_path /var/lib/gems/1.8/bin
+
+# custom binaries
+maybe_add_path $HOME/local/bin
+
 # bash completion
 if test -f /dev/shm/bash_dyncompletion
 then
