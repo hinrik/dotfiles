@@ -12,6 +12,14 @@ fi
 # away with old aliases
 \unalias -a
 
+# add to PATH if the dir exists
+maybe_add_path() {
+    if test -d $1
+    then
+        PATH=$1:$PATH
+    fi
+}
+
 # bash completion
 if test -f /dev/shm/bash_dyncompletion
 then
