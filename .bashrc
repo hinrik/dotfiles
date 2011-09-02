@@ -215,6 +215,16 @@ function leech {
     while [[ $? == 30 ]]; do sleep 5 && $cmd "$@"; done
 }
 
+# an alias which accepts something similar to rsync, but uses lftp parallel
+# get to speed it up when your per-connection speed is limited
+function mleech {
+    local server=${1%%:*}
+    local source_path=${1#*:}
+    local dest_path=${2:-./}
+    local conns=${3:-4}      # default to 4 connections
+    lftp sftp://$server -e "pget -c -n $conns $source_path -o $dest_path; exit"
+}
+
 # delete untracked files/dirs
 function svn_clean {
     svn status "$1" | grep '^\?' | cut -c8- | \
