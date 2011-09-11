@@ -50,3 +50,13 @@ set mark-symlinked-directories on
 # ignore case when tab-completing
 set completion-ignore-case on
 
+# only show the uncompleted parts of the available completions
+set completion-prefix-display-length 2
+
+# show possible tab completions immediately
+set show-all-if-ambiguous on
+set show-all-if-unmodified on
+
+# cycle through available completions
+Control-j: menu-complete-backward
+Control-k: menu-complete
