@@ -206,9 +206,9 @@ function scp {
     rsync --rsh=ssh --archive --no-group --human-readable --progress "$@"
 }
 
-# Append to files based on file size. Useful large, static or append-only
-# files since it skips the expensive hash check. Also retry the transfer
-# if it times out.
+# Append to files based on file size. Useful for large, static or
+# append-only files since it skips the expensive hash check. Also retry
+# the transfer if it times out.
 function leech {
     cmd="rsync --rsh=ssh --append --archive --no-group --human-readable --progress"
     $cmd "$@"
@@ -227,8 +227,8 @@ function mleech {
     lftp sftp://$server -e "glob -- pget -c -n $conns $source_path -o $dest_path; exit"
 }
 
-# use rsync's bash completion for the mleech command, so we can tab-complete
-# remote paths
+# use rsync's bash completion for the leech/mleech commands, so we can
+# tab-complete remote paths
 [[ -z $BASH_COMPLETION ]] || complete -F _rsync -o nospace leech mleech
 
 # delete untracked files/dirs
