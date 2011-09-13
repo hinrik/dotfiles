@@ -225,9 +225,9 @@ function mleech {
     lftp sftp://$server -e "pget -c -n $conns $source_path -o $dest_path; exit"
 }
 
-# use scp's bash completion for the mleech command, so we can tab-complete
+# use rsync's bash completion for the mleech command, so we can tab-complete
 # remote paths
-[[ -z $BASH_COMPLETION ]] || complete -F _scp -o nospace leech mleech
+[[ -z $BASH_COMPLETION ]] || complete -F _rsync -o nospace leech mleech
 
 # delete untracked files/dirs
 function svn_clean {
