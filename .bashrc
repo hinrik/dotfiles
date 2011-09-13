@@ -215,14 +215,16 @@ function leech {
     while [[ $? == 30 ]]; do sleep 5 && $cmd "$@"; done
 }
 
-# an alias which accepts something similar to rsync, but uses lftp parallel
-# get to speed it up when your per-connection speed is limited
+# a function which accepts similar arguments to rsync, but uses lftp to
+# download a file over multiple parallel connections, for when your
+# per-connection speed is limited. CAVEAT: it can only transfer files, not
+# directories
 function mleech {
     local server=${1%%:*}
     local source_path=${1#*:}
     local dest_path=${2:-./}
     local conns=${3:-4}      # default to 4 connections
-    lftp sftp://$server -e "pget -c -n $conns $source_path -o $dest_path; exit"
+    lftp sftp://$server -e "glob -- pget -c -n $conns $source_path -o $dest_path; exit"
 }
 
 # use rsync's bash completion for the mleech command, so we can tab-complete
