@@ -102,8 +102,8 @@ endif
 " Only enforce textwidth on plain text files
 autocmd FileType text setlocal textwidth=78
 
-" Use 2-column indenting in Ruby
-autocmd FileType ruby,eruby setlocal shiftwidth=2 softtabstop=2
+" Use 2-column indenting in Ruby, ERB, SASS, HAML, and YAML
+autocmd FileType ruby,eruby,sass,haml,yaml setlocal shiftwidth=2 softtabstop=2
 
 " Jump to the last known position when reopening a file
 autocmd BufReadPost *
