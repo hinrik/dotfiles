@@ -66,11 +66,12 @@ let &sbr = nr2char(8618).' '
 " Always assume bash when filetype=sh
 let g:is_bash=1
 
-" Perl syntax
+" Language-specific syntax highlighting
 let perl_include_pod=1             " Pod highlighting
 let perl_fold=1                    " Fold Perl constructs by default
 let perl_nofold_packages=1         " Not packages, though
 let perl_string_as_statement=1     " Make quoting operators stand out
+let ruby_operators=1               " Highlight operators in Ruby
 
 " Perl testing
 map ,t <Esc>:!prove -vl %<CR>
