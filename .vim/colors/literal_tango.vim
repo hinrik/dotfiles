@@ -25,6 +25,7 @@
 "
 " 1.9
 "   Make booleans look different from other constants such as strings
+"   Make the Underlined class just be underlined, not colored
 "
 " 1.8
 "   Only use 'guisp' when spelling support is compiled in,
@@ -109,7 +110,7 @@ if &background == "dark"
     hi SpecialChar  ctermfg=3
     hi Statement    cterm=NONE
     hi PreProc      ctermfg=5
-    hi Underlined   ctermfg=4 cterm=bold,underline
+    hi Underlined   ctermfg=7 cterm=underline
 elseif &background == "light"
     " TODO
 endif
@@ -186,7 +187,7 @@ if &background == "dark"
     exe "hi Special      guifg=".s:darkcyan
     exe "hi Exception    guifg=".s:darkcyan
     exe "hi SpecialChar  guifg=".s:brown
-    exe "hi Underlined   guifg=".s:lightblue
+    exe "hi Underlined   guifg=".s:lightgrey
     exe "hi Error        guifg=".s:white        ." guibg=".s:darkred
     exe "hi Todo         guifg=".s:black        ." guibg=".s:brown
 elseif &background == "light"
