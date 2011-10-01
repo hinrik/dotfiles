@@ -193,3 +193,5 @@ if &background == "dark"
 elseif &background == "light"
     " TODO
 endif
+
+" vim:sts=4:sw=4:expandtab
