@@ -1,8 +1,8 @@
 " Vim color file
 " Filename: literal_tango.vim
 " Maintainer: Hinrik Örn Sigurðsson <hinrik.sig at gmail dot com>
-" Version: 1.8
-" Last Change: Sep 23rd 2009
+" Version: 1.9
+" Last Change: Oct 1st 2011
 " URLs: http://github.com/hinrik/dotfiles/blob/master/.vim/colors/literal_tango.vim
 "       http://www.vim.org/scripts/script.php?script_id=2430
 " Installation: Drop this file in your $VIMRUNTIME/colors/ directory
@@ -22,6 +22,9 @@
 " Also make sure that background=dark in vim.
 "
 " Changelog:
+"
+" 1.9
+"   Make booleans look different from other constants such as strings
 "
 " 1.8
 "   Only use 'guisp' when spelling support is compiled in,
@@ -69,6 +72,7 @@ let g:colors_name = "literal_tango"
 " 16 color terminal
 if &background == "dark"
     hi Function     ctermfg=3
+    hi Boolean      ctermfg=3
     hi Include      ctermfg=2
     hi Constant     ctermfg=1
     hi Folded       ctermfg=2 ctermbg=NONE
@@ -133,6 +137,7 @@ let s:white        = "#eeeeec"
 if &background == "dark"
     exe "hi Normal       guifg=".s:lightgrey    ." guibg=#000000"
     exe "hi Function     guifg=".s:brown
+    exe "hi Boolean      guifg=".s:brown
     exe "hi Include      guifg=".s:darkgreen
     exe "hi Folded       guifg=".s:darkgreen    ." guibg=NONE"
     exe "hi FoldColumn   guifg=".s:darkgreen    ." guibg=NONE"
