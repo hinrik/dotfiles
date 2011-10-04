@@ -1,10 +1,14 @@
 test -f ~v-perlbrew/perl5/perlbrew/etc/bashrc && HOME=/home/v-perlbrew source ~v-perlbrew/perl5/perlbrew/etc/bashrc
 test -f ~/perl5/perlbrew/etc/bashrc && source ~/perl5/perlbrew/etc/bashrc
 
+# use a custom Ruby installation managed by rbenv or rvm
 if test -d ~/.rbenv
 then
     export PATH="$HOME/.rbenv/bin:$PATH"
     eval "$(rbenv init -)"
+elif test -s "$HOME/.rvm/scripts/rvm"
+then
+    source "$HOME/.rvm/scripts/rvm"
 fi
 
 cpus=$(grep -c ^processor /proc/cpuinfo)
