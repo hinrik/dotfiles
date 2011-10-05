@@ -4,7 +4,7 @@ test -f ~/perl5/perlbrew/etc/bashrc && source ~/perl5/perlbrew/etc/bashrc
 # use a custom Ruby installation managed by rbenv or rvm
 if test -d ~/.rbenv
 then
-    export PATH="$HOME/.rbenv/bin:$PATH"
+    export PATH="$PATH:$HOME/.rbenv/bin"
     eval "$(rbenv init -)"
 elif test -s "$HOME/.rvm/scripts/rvm"
 then
@@ -29,9 +29,6 @@ maybe_add_path() {
         PATH=$1:$PATH
     fi
 }
-
-# Ruby stuff
-maybe_add_path /var/lib/gems/1.8/bin
 
 # custom binaries
 maybe_add_path $HOME/local/bin
