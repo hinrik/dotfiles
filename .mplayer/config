@@ -5,3 +5,9 @@ user-agent=NSPlayer/4.1.0.3856
 
 # use PulseAudio. It sometimes defaults to OSS which hogs the sound card
 ao=pulse
+
+# a 16MB cache to fix skipping
+cache=16384
+
+# rebuild indexes in case we're watching a partial file, to allow seeking
+idx=1
