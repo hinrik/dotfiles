@@ -233,7 +233,7 @@ function mleech {
     local server=${1%%:*}
     local source_path=${1#*:}
     local dest_path=${2:-./}
-    local conns=${3:-4}      # default to 4 connections
+    local conns=${3:-6}      # default to 6 connections
     lftp sftp://$server -e "glob -- pget -c -n $conns $source_path -o $dest_path; exit"
 }
 
