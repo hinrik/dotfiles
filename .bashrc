@@ -241,6 +241,10 @@ function mleech {
 # tab-complete remote paths
 [[ -z $BASH_COMPLETION ]] || complete -F _rsync -o nospace leech mleech
 
+# pass through digital AC3/DTS audio to iec958/spdif output
+alias dmplayer="mplayer -ao alsa:device=iec958=1 -ac hwac3,hwdts"
+[[ -z $BASH_COMPLETION ]] || complete -F _mplayer dmplayer
+
 # delete untracked files/dirs
 function svn_clean {
     svn status "$1" | grep '^\?' | cut -c8- | \
