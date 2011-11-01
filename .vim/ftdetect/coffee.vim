@@ -1,0 +1,1 @@
+/home/hinrik/src/vim-coffee-script/ftdetect/coffee.vim
