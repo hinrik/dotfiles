@@ -1,0 +1,1 @@
+/home/hinrik/src/lilypond/vim/lilypond-ftplugin.vim
