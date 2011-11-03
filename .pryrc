@@ -1,3 +1,10 @@
 # show the Ruby version in the prompt
 # stolen from https://github.com/lucapette/dotfiles/blob/master/pryrc
-Pry.prompt = [proc { |obj, nest_level, _| "#{RUBY_VERSION} (#{obj}):#{nest_level} > " }, proc { |obj, nest_level, _| "#{RUBY_VERSION} (#{obj}):#{nest_level} * " }]
+require 'rainbow'
+include Sickill::Rainbow
+Pry.prompt = [
+    proc { |obj, nest_level, _| "#{obj}".foreground(:yellow)+":"+"#{nest_level}".foreground(:magenta)+" >> ".foreground(:green) },
+    proc { |obj, nest_level, _| "#{obj}".foreground(:yellow)+":"+"#{nest_level}".foreground(:magenta)+"  | ".foreground(:green) }
+]
+
+# vim: ft=ruby
