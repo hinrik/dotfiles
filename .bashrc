@@ -175,6 +175,10 @@ if [[ "$TERM" == "linux" ]]; then
     fi
 fi
 
+# I want to be able to use Ctrl+s and Ctrl+C in rtorrent
+stty start undef
+stty stop undef
+
 # some nice less(1) options
 export LESS="iMQRS"
 
