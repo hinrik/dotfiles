@@ -1,10 +1,8 @@
 # show the Ruby version in the prompt
 # stolen from https://github.com/lucapette/dotfiles/blob/master/pryrc
-require 'rainbow'
-include Sickill::Rainbow
 Pry.prompt = [
-    proc { |obj, nest_level, _| "#{obj}".foreground(:yellow)+":"+"#{nest_level}".foreground(:magenta)+" >> ".foreground(:green) },
-    proc { |obj, nest_level, _| "#{obj}".foreground(:yellow)+":"+"#{nest_level}".foreground(:magenta)+"  | ".foreground(:green) }
+  proc { |obj, nest_level, _| "\e[33m#{obj}\e[m:\e[35m#{nest_level}\e[m >> " },
+  proc { |obj, nest_level, _| "\e[33m#{obj}\e[m:\e[35m#{nest_level}\e[m  \e[32m|\e[m " }
 ]
 
 # vim: ft=ruby
