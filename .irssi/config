@@ -6,7 +6,7 @@ servers = (
     use_ssl = "yes";
   },
   {
-    address = "ircnet.eversible.com";
+    address = "irc.hi.is";
     chatnet = "IRCnet";
     port = "6667";
     autoconnect = "yes";
