@@ -1,8 +1,7 @@
 # show the Ruby version in the prompt
-# stolen from https://github.com/lucapette/dotfiles/blob/master/pryrc
 Pry.prompt = [
-  proc { |obj, nest_level, _| "\e[33m#{obj}\e[m:\e[35m#{nest_level}\e[m >> " },
-  proc { |obj, nest_level, _| "\e[33m#{obj}\e[m:\e[35m#{nest_level}\e[m  \e[32m|\e[m " }
+  proc { |obj, nest_level, _| "\x01\e[33m\x02#{obj}\x01\e[m\x02:\x01\e[35m\x02#{nest_level}\x01\e[m\x02 >> " },
+  proc { |obj, nest_level, _| "\x01\e[33m\x02#{obj}\x01\e[m\x02:\x01\e[35m\x02#{nest_level}\x01\e[m\x02  \x01\e[32m\x02|\x01\e[m\x02 " }
 ]
 
 # vim: ft=ruby
