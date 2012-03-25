@@ -1,3 +1,6 @@
+# use a login shell
+shell -${SHELL}
+
 # show some info at the bottom
 caption always "%{= kw}%-w%{= gW}%n %t%{-}%+w %-= %{= r}%H%{-} %{= g}%l%{-} %c:%s  "
 
