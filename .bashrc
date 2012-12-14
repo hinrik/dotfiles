@@ -310,3 +310,5 @@ function keepalive {
 function nixmail {
     mail -a "From: Hinrik Örn Sigurðsson <hinrik@nix.is>" -b hinrik.sig@gmail.com "$@"
 }
+
+PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
