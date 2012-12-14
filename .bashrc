@@ -1,3 +1,10 @@
+if [[ "$TERM" == "linux" ]]; then
+    if type conpalette >&/dev/null; then
+        conpalette tango-dark
+    fi
+    exec screen
+fi
+
 test -f ~v-perlbrew/perl5/perlbrew/etc/bashrc && HOME=/home/v-perlbrew source ~v-perlbrew/perl5/perlbrew/etc/bashrc
 test -f ~/perl5/perlbrew/etc/bashrc && source ~/perl5/perlbrew/etc/bashrc
 
@@ -169,12 +176,6 @@ alias u2d="sed 's/$//'"
 alias lsofnames="lsof | awk '!/^\$/ && /\// { print \$9 }' | sort -u"
 alias myip="wget -q -O- 'http://www.moanmyip.com/' | perl -0777 -pe 's[.*<div class=\"ip\">(.*?)</div>.*][\$1\n]s'"
 alias mmyip="mplayer http://moanmyip.com/output/\$(myip).mp3"
-
-if [[ "$TERM" == "linux" ]]; then
-    if type conpalette >&/dev/null; then
-        conpalette tango-dark
-    fi
-fi
 
 # I want to be able to use Ctrl+s and Ctrl+C in rtorrent
 stty start undef
