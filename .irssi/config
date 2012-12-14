@@ -347,7 +347,12 @@ settings = {
   history = { scrollback_lines = "100000"; };
   "fe-common/core" = { autolog = "yes"; };
   "fe-text" = { actlist_sort = "level"; };
-  "perl/core/scripts" = { aidle_ircnets = "Wikileaks"; };
+  "perl/core/scripts" = {
+    aidle_ircnets = "Wikileaks";
+    ascii_figlet_path = "/usr/bin/figlet";
+    ascii_default_font = "standard.flf";
+    ascii_default_colormode = "1";
+  };
 };
 logs = { };
 hilights = (
