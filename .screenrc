@@ -20,6 +20,9 @@ zombie ar onerror
 # no visual bell, thanks
 vbell off
 
+# prevent programs from hanging while waiting on input in some situatiosn
+defnonblock on
+
 # keep a decent amount of scrollback
 defscrollback 1000
 
