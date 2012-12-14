@@ -351,7 +351,10 @@ settings = {
     recode_out_default_charset = "UTF-8";
   };
   history = { scrollback_lines = "100000"; };
-  "fe-common/core" = { autolog = "yes"; };
+  "fe-common/core" = {
+    autolog = "yes";
+    show_nickmode = "no";
+  };
   "fe-text" = { actlist_sort = "level"; };
   "perl/core/scripts" = {
     aidle_ircnets = "Wikileaks";
