@@ -46,14 +46,17 @@ export LUA_PATH="lib/?.lua;$LUA_PATH"
 export PATH="$HOME/.luarocks/bin:$PATH"
 
 # bash completion
-if test -f /dev/shm/bash_dyncompletion
+if test -z $BASH_COMPLETION
 then
-    # Lightspeed from Debian bug
-    # http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=467231
-    . /dev/shm/bash_dyncompletion
-elif test -f /etc/bash_completion
-then
-    . /etc/bash_completion
+    if test -f /dev/shm/bash_dyncompletion
+    then
+        # Lightspeed from Debian bug
+        # http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=467231
+        . /dev/shm/bash_dyncompletion
+    elif test -f /etc/bash_completion
+    then
+        . /etc/bash_completion
+    fi
 fi
 
 # Change the window title of X terminals 
