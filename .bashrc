@@ -130,8 +130,9 @@ then
         test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
         alias ls="ls$group_dirs --color=auto"
 
-        # old versions of tree(1) don't use colors by default
-        alias tree="tree -C"
+        # old versions of tree(1) don't use colors by default,
+        # and we want directories at the top
+        alias tree="tree -C --dirsfirst"
     fi
 
     # Colors on a per-server basis based on a simple
