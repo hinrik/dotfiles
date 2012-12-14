@@ -60,3 +60,6 @@ set show-all-if-unmodified on
 # cycle through available completions
 Control-j: menu-complete-backward
 Control-k: menu-complete
+
+# no bells
+set bell-style none
