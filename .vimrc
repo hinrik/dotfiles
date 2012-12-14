@@ -100,6 +100,9 @@ if version >= 700
     autocmd VimResized * wincmd =
 endif
 
+" My *.md files are Markdown, not Modula 2
+autocmd BufRead,BufNewFile *.md setfiletype markdown
+
 " Only enforce textwidth on plain text files
 autocmd FileType text setlocal textwidth=78
 
