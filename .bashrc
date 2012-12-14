@@ -40,6 +40,10 @@ maybe_add_path() {
 # custom binaries
 maybe_add_path $HOME/local/bin
 
+eval $(luarocks path)
+export LUA_PATH="lib/?.lua;$LUA_PATH"
+export PATH="$HOME/.luarocks/bin:$PATH"
+
 # bash completion
 if test -f /dev/shm/bash_dyncompletion
 then
