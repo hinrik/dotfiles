@@ -5,6 +5,11 @@ if [[ "$TERM" == "linux" ]]; then
     screen
 fi
 
+if [[ "$TERM" == "screen.linux" ]]; then
+    # older terminfo doesn't recognize screen.linux
+    export TERM=screen
+fi
+
 test -f ~v-perlbrew/perl5/perlbrew/etc/bashrc && HOME=/home/v-perlbrew source ~v-perlbrew/perl5/perlbrew/etc/bashrc
 test -f ~/perl5/perlbrew/etc/bashrc && source ~/perl5/perlbrew/etc/bashrc
 
