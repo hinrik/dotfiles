@@ -1,5 +1,11 @@
 servers = (
   {
+    address = "irc.pirateirc.net";
+    chatnet = "pirateirc";
+    port = "6667";
+    autoconnect = "yes";
+  },
+  {
     address = "secure.wikileaks.org";
     chatnet = "Wikileaks";
     port = "9999";
@@ -64,6 +70,10 @@ chatnets = {
   FreeNode = {
     type = "IRC";
     nick = "literal";
+    autosendcmd = "/quote NICKSERV identify blabla";
+  };
+  pirateirc = {
+    type = "IRC";
     autosendcmd = "/quote NICKSERV identify blabla";
   };
   SynIRC = { type = "IRC"; nick = "Hinrik"; };
@@ -139,35 +149,31 @@ chatnets = {
 };
 
 channels = (
-  { name = "#lostpedia"; chatnet = "Rizon"; autojoin = "yes"; },
+  { name = "#piano"; chatnet = "Rizon"; autojoin = "yes"; },
 
   { name = "#avar"; chatnet = "FreeNode"; autojoin = "yes"; },
   { name = "##bikes"; chatnet = "FreeNode"; autojoin = "yes"; },
   { name = "#failo"; chatnet = "FreeNode"; autojoin = "yes"; },
   { name = "#hailo"; chatnet = "FreeNode"; autojoin = "yes"; },
-  { name = "#hakkavelin"; chatnet = "FreeNode"; autojoin = "yes"; },
   { name = "#ideologies"; chatnet = "FreeNode"; autojoin = "yes"; },
   { name = "#lilypond"; chatnet = "FreeNode"; autojoin = "yes"; },
   { name = "#poe"; chatnet = "FreeNode"; autojoin = "yes"; },
-  { name = "#perl"; chatnet = "FreeNode"; autojoin = "yes"; },
-  { name = "#perl6"; chatnet = "FreeNode"; autojoin = "yes"; },
-  { name = "#vim"; chatnet = "FreeNode"; autojoin = "yes"; },
   { name = "#emacs"; chatnet = "FreeNode"; autojoin = "yes"; },
-  { name = "#bots"; chatnet = "FreeNode"; autojoin = "yes"; },
-  { name = "#irssi"; chatnet = "FreeNode"; autojoin = "yes"; },
-  { name = "#lisp"; chatnet = "FreeNode"; autojoin = "yes"; },
-  { name = "#jibble"; chatnet = "FreeNode"; autojoin = "yes"; },
+  { name = "#/r/bicycling"; chatnet = "FreeNode"; autojoin = "yes"; },
+  { name = "#celluloid"; chatnet = "FreeNode"; autojoin = "yes"; },
+  { name = "#cinch"; chatnet = "FreeNode"; autojoin = "yes"; },
+  { name = "#lua"; chatnet = "FreeNode"; autojoin = "yes"; },
+
   { name = "#irc.pm"; chatnet = "MAGnet"; autojoin = "yes"; },
   { name = "#perl"; chatnet = "MAGnet"; autojoin = "yes"; },
-  { name = "#perl-help"; chatnet = "MAGnet"; autojoin = "yes"; },
   { name = "#p5p"; chatnet = "MAGnet"; autojoin = "yes"; },
   { name = "#poe"; chatnet = "MAGnet"; autojoin = "yes"; },
-  { name = "#reflex"; chatnet = "MAGnet"; autojoin = "yes"; },
   { name = "#bots"; chatnet = "MAGnet"; autojoin = "yes"; },
-  { name = "#moose"; chatnet = "MAGnet"; autojoin = "yes"; },
+  { name = "#p5p"; chatnet = "MAGnet"; autojoin = "yes"; },
+  { name = "#bot-basicbot"; chatnet = "MAGnet"; autojoin = "yes"; },
 
-  { name = "#perl"; chatnet = "EFNet"; autojoin = "yes"; },
-  { name = "#perlhelp"; chatnet = "EFNet"; autojoin = "yes"; },
+  { name = "#ispp"; chatnet = "pirateirc"; autojoin = "yes"; },
+  { name = "#ispp-meetings"; chatnet = "pirateirc"; autojoin = "yes"; },
 
   { name = "#niceland"; chatnet = "IRCnet"; autojoin = "yes"; },
 
