@@ -298,8 +298,8 @@ function ql-install {
 # bootstrap quicklisp
 function ql-bootstrap {
     temp=$(mktemp -t quicklisp.XXXXXXXXXX)
-    curl https://github.com/quicklisp/quicklisp-bootstrap/raw/master/quicklisp.lisp > $temp
-    sbcl --load $temp --eval "(quicklisp-quickstart:install)" --eval "(quit)"
+    curl http://beta.quicklisp.org/quicklisp.lisp > $temp
+    sbcl --load $temp --eval "(quicklisp-quickstart:install)" --eval "(ql:add-to-init-file)" --eval "(quit)"
     rm $temp
 }
 
