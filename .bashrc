@@ -1,15 +1,3 @@
-if [[ "$TERM" == "linux" ]]; then
-    if type conpalette >&/dev/null; then
-        conpalette tango-dark
-    fi
-    screen
-fi
-
-if [[ "$TERM" == "screen.linux" ]]; then
-    # older terminfo doesn't recognize screen.linux
-    export TERM=screen
-fi
-
 test -f ~v-perlbrew/perl5/perlbrew/etc/bashrc && HOME=/home/v-perlbrew source ~v-perlbrew/perl5/perlbrew/etc/bashrc
 test -f ~/perl5/perlbrew/etc/bashrc && source ~/perl5/perlbrew/etc/bashrc
 
@@ -23,17 +11,6 @@ then
     source "$HOME/.rvm/scripts/rvm"
     PATH=$PATH:$HOME/.rvm/bin
 fi
-
-cpus=$(grep -c ^processor /proc/cpuinfo)
-export HARNESS_OPTIONS="j$((2*$cpus+1))"
-
-if [[ $- != *i* ]] ; then
-    # Shell is non-interactive.  Be done now!
-    return
-fi
-
-# away with old aliases
-\unalias -a
 
 # add to PATH if the dir exists
 maybe_add_path() {
@@ -49,6 +26,29 @@ maybe_add_path $HOME/local/bin
 eval $(luarocks path)
 export LUA_PATH="lib/?.lua;$LUA_PATH"
 export PATH="$HOME/.luarocks/bin:$PATH"
+
+if [[ "$TERM" == "linux" ]]; then
+    if type conpalette >&/dev/null; then
+        conpalette tango-dark
+    fi
+    screen
+fi
+
+if [[ "$TERM" == "screen.linux" ]]; then
+    # older terminfo doesn't recognize screen.linux
+    export TERM=screen
+fi
+
+cpus=$(grep -c ^processor /proc/cpuinfo)
+export HARNESS_OPTIONS="j$((2*$cpus+1))"
+
+if [[ $- != *i* ]] ; then
+    # Shell is non-interactive.  Be done now!
+    return
+fi
+
+# away with old aliases
+\unalias -a
 
 # bash completion
 if test -z $BASH_COMPLETION
