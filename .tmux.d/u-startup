@@ -1,3 +1,4 @@
 #!/usr/bin/env bash
 
-tmux new-session -d -s u-startup irssi
+tmux -u new-session -d -s u-startup -n irc irssi
+tmux select-window -t u-startup:1
