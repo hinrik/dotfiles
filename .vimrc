@@ -101,7 +101,7 @@ if version >= 700
 endif
 
 " My *.md files are Markdown, not Modula 2
-autocmd BufRead,BufNewFile *.md setfiletype markdown
+autocmd BufRead,BufNewFile *.md set filetype=markdown
 
 " Only enforce textwidth on plain text files
 autocmd FileType text setlocal textwidth=78
