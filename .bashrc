@@ -31,7 +31,6 @@ if [[ "$TERM" == "linux" ]]; then
     if type conpalette >&/dev/null; then
         conpalette tango-dark
     fi
-    screen
 fi
 
 if [[ "$TERM" == "screen.linux" ]]; then
