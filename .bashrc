@@ -228,7 +228,7 @@ function duh {
 
 # Sync files based on content. Useful for dynamically changing files.
 function scp {
-    rsync --rsh=ssh --archive --no-group --human-readable --progress "$@"
+    rsync --rsh=ssh --archive --no-group --human-readable --progress --copy-unsafe-links "$@"
 }
 
 # Append to files based on file size. Useful for large, static or
