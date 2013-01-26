@@ -22,3 +22,9 @@
 [submodule ".vim/bundle/vim-markdown"]
 	path = .vim/bundle/vim-markdown
 	url = https://github.com/tpope/vim-markdown.git
+[submodule ".vim/bundle/vim-yaml"]
+	path = .vim/bundle/vim-yaml
+	url = https://github.com/avakhov/vim-yaml.git
+[submodule ".vim/bundle/color-scheme-literal-tango"]
+	path = .vim/bundle/color-scheme-literal-tango
+	url = https://github.com/hinrik/color-scheme-literal-tango.git

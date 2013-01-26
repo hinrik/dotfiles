@@ -3,6 +3,12 @@
 " Author: Hinrik Örn Sigurðsson <hinrik.sig at gmail dot com>
 " URL: http://github.com/hinrik/dotfiles/blob/master/.vimrc
 
+" add bundles with pathogen
+if filereadable(expand("~/.vim/bundle/vim-pathogen/autoload/pathogen.vim"))
+    runtime bundle/vim-pathogen/autoload/pathogen.vim
+    execute pathogen#infect()
+endif
+
 " General stuff
 set backspace=indent,eol,start     " Allow backspacing over everything
 set backupdir^=~/.vim/tmp/         " Store backup files in ~/.vim/tmp/
@@ -121,12 +127,6 @@ if has("gui_running")
     if has("gui_gtk2")
         set guifont=Mono\ 8.5
     endif
-endif
-
-" add bundles with pathogen
-if filereadable(expand("~/.vim/bundle/vim-pathogen/autoload/pathogen.vim"))
-    runtime bundle/vim-pathogen/autoload/pathogen.vim
-    execute pathogen#infect()
 endif
 
 " Identify the highlight group of the currect cursor position
