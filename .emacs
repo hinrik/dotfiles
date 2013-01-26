@@ -6,6 +6,8 @@
   (setq
     my-libraries
     (list
+      (concat my-libraries "~/.emacs.d/elisp/slime")
+      (concat my-libraries "~/.emacs.d/elisp/xterm-frobs")
       (concat my-libraries "~/.emacs.d/elisp/xterm-title")
       (concat my-libraries "~/.emacs.d/elisp/color-theme-tangotango")
       (concat my-libraries "~/.emacs.d/elisp/misc-cmds")
@@ -52,7 +54,8 @@
 (menu-bar-mode -1)
 
 ;; give all windows equal space
-(add-hook 'window-configuration-change-hook 'balance-windows)
+;; TODO: In emacs24 this causes "Lisp nesting exceeds `max-lisp-eval-depth'
+;(add-hook 'window-configuration-change-hook 'balance-windows)
 
 ;; no fringes in the gui
 (when window-system
@@ -177,7 +180,6 @@ or just one char if that's not possible"
 
 (setq inferior-lisp-program "/usr/bin/sbcl")
 (setq slime-net-coding-system 'utf-8-unix)
-(add-to-list 'load-path "~/src/slime/")
 (require 'slime)
 (slime-setup '(slime-fancy))
 

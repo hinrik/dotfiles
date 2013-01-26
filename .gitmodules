@@ -40,3 +40,6 @@
 [submodule ".emacs.d/elisp/centered-cursor-mode"]
 	path = .emacs.d/elisp/centered-cursor-mode
 	url = https://github.com/emacsmirror/centered-cursor-mode
+[submodule ".emacs.d/elisp/slime"]
+	path = .emacs.d/elisp/slime
+	url = https://github.com/nablaone/slime.git
