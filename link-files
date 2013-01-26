@@ -4,6 +4,7 @@ for dotfile in $(find . -maxdepth 1 -mindepth 1 | cut -b3-)
 do
     if [[ "$dotfile" != $(basename "$0") ]] \
         && [[ "$dotfile" != ".git" ]] \
+        && [[ "$dotfile" != ".gitignore" ]] \
         && [[ "$dotfile" != ".gitmodules" ]] \
         && [[ "$dotfile" != ".svn" ]]
     then
