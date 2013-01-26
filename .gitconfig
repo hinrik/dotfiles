@@ -6,6 +6,7 @@
     ui = auto
 [github]
     login = hinrik
+    user = hinrik
 [alias]
     br = branch -a -v
     st = status
