@@ -1,9 +1,21 @@
 #!/bin/bash
 
-if ! type link-files >&/dev/null; then
-    echo 'File::LinkDir is not installed. You can install it with'
-    echo '"cpanp -i File::LinkDir" or "cpan File::LinkDir"'
-    exit 1
-fi
-
-link-files -a $(basename $0) --source . --dest $HOME "$@"
+for dotfile in $(find . -maxdepth 1 -mindepth 1 | cut -b3-)
+do
+    if [[ "$dotfile" != $(basename "$0") ]] \
+        && [[ "$dotfile" != ".git" ]] \
+        && [[ "$dotfile" != ".gitmodules" ]] \
+        && [[ "$dotfile" != ".svn" ]]
+    then
+        fulldotfile=$(readlink -f "$dotfile")
+        homedotfile="$HOME/$dotfile"
+        if [[ -e "$homedotfile" ]]; then
+            if [[ "$fulldotfile" != $(readlink -f "$homedotfile") ]]; then
+                echo "Not overriding existing file '$homedotfile'"
+            fi
+        else
+            echo "Creating symlink '$homedotfile'"
+            ln -s "$fulldotfile" "$homedotfile"
+        fi
+    fi
+done
