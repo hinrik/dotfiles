@@ -3,9 +3,6 @@
 " Author: Hinrik Örn Sigurðsson <hinrik.sig at gmail dot com>
 " URL: http://github.com/hinrik/dotfiles/blob/master/.vimrc
 
-" This needs to come first
-set nocompatible                   " Use Vim defaults, not vi
-
 " General stuff
 set backspace=indent,eol,start     " Allow backspacing over everything
 set backupdir^=~/.vim/tmp/         " Store backup files in ~/.vim/tmp/
