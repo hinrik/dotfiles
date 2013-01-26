@@ -48,7 +48,8 @@
 (setq ring-bell-function 'ignore)
 
 ;; do mouse scrolling one line at a time
-(setq mouse-wheel-scroll-amount '(1 ((shift) . 1) ((control))))
+(when window-system
+  (setq mouse-wheel-scroll-amount '(1 ((shift) . 1) ((control)))))
 
 ;; no menubar
 (menu-bar-mode -1)
@@ -164,9 +165,10 @@ or just one char if that's not possible"
 ;;;;; centered-cursor-mode.el
 
 ;; center the cursor when scrolling
-(and
-  (require 'centered-cursor-mode)
-  (global-centered-cursor-mode +1))
+(when window-system
+  (and
+    (require 'centered-cursor-mode)
+    (global-centered-cursor-mode +1)))
 
 ;;;;; xterm-title.el
 
