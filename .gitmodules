@@ -28,3 +28,15 @@
 [submodule ".vim/bundle/color-scheme-literal-tango"]
 	path = .vim/bundle/color-scheme-literal-tango
 	url = https://github.com/hinrik/color-scheme-literal-tango.git
+[submodule ".emacs.d/elisp/xterm-frobs"]
+	path = .emacs.d/elisp/xterm-frobs
+	url = https://github.com/emacsmirror/xterm-frobs
+[submodule ".emacs.d/elisp/xterm-title"]
+	path = .emacs.d/elisp/xterm-title
+	url = https://github.com/emacsmirror/xterm-title
+[submodule ".emacs.d/elisp/misc-cmds"]
+	path = .emacs.d/elisp/misc-cmds
+	url = https://github.com/emacsmirror/misc-cmds
+[submodule ".emacs.d/elisp/centered-cursor-mode"]
+	path = .emacs.d/elisp/centered-cursor-mode
+	url = https://github.com/emacsmirror/centered-cursor-mode
