@@ -12,7 +12,7 @@ servers = (
     use_ssl = "yes";
   },
   {
-    address = "irc.hi.is";
+    address = "open.ircnet.net";
     chatnet = "IRCnet";
     port = "6667";
     autoconnect = "yes";
