@@ -126,6 +126,12 @@ if has("gui_running")
     endif
 endif
 
+" add bundles with pathogen
+if filereadable(expand("~/.vim/bundle/vim-pathogen/autoload/pathogen.vim"))
+    runtime bundle/vim-pathogen/autoload/pathogen.vim
+    execute pathogen#infect()
+endif
+
 " Identify the highlight group of the currect cursor position
 function! SyntaxItem()
     return synIDattr(synID(line("."),col("."),1),"name")

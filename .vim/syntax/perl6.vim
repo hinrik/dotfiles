@@ -1,1 +1,0 @@
-/home/hinrik/src/vim-perl/syntax/perl6.vim

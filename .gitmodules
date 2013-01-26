@@ -1,3 +1,24 @@
 [submodule ".emacs.d/elisp/color-theme-tangotango"]
 	path = .emacs.d/elisp/color-theme-tangotango
 	url = http://github.com/juba/color-theme-tangotango.git
+[submodule ".vim/bundle/lilyvim"]
+	path = .vim/bundle/lilyvim
+	url = https://github.com/lfairy/lilyvim.git
+[submodule ".vim/bundle/vim-pathogen"]
+	path = .vim/bundle/vim-pathogen
+	url = https://github.com/tpope/vim-pathogen.git
+[submodule ".vim/bundle/vim-coffee-script"]
+	path = .vim/bundle/vim-coffee-script
+	url = https://github.com/kchmck/vim-coffee-script.git
+[submodule ".vim/bundle/vim-perl"]
+	path = .vim/bundle/vim-perl
+	url = https://github.com/vim-perl/vim-perl.git
+[submodule ".vim/bundle/perl_synwrite.vim"]
+	path = .vim/bundle/perl_synwrite.vim
+	url = https://github.com/vim-scripts/perl_synwrite.vim.git
+[submodule ".vim/bundle/tmux.vim"]
+	path = .vim/bundle/tmux.vim
+	url = https://github.com/zaiste/tmux.vim.git
+[submodule ".vim/bundle/vim-markdown"]
+	path = .vim/bundle/vim-markdown
+	url = https://github.com/tpope/vim-markdown.git

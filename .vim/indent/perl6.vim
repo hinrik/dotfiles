@@ -1,1 +1,0 @@
-/home/hinrik/src/vim-perl/indent/perl6.vim
