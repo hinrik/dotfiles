@@ -27,12 +27,6 @@ eval $(luarocks path)
 export LUA_PATH="lib/?.lua;$LUA_PATH"
 export PATH="$HOME/.luarocks/bin:$PATH"
 
-if [[ "$TERM" == "linux" ]]; then
-    if type conpalette >&/dev/null; then
-        conpalette tango-dark
-    fi
-fi
-
 if [[ "$TERM" == "screen.linux" ]]; then
     # older terminfo doesn't recognize screen.linux
     export TERM=screen
@@ -44,6 +38,12 @@ export HARNESS_OPTIONS="j$((2*$cpus+1))"
 if [[ $- != *i* ]] ; then
     # Shell is non-interactive.  Be done now!
     return
+fi
+
+if [[ "$TERM" == "linux" ]]; then
+    if type conpalette >&/dev/null; then
+        conpalette tango-dark
+    fi
 fi
 
 # away with old aliases
