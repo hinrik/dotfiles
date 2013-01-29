@@ -46,6 +46,15 @@ if [[ "$TERM" == "linux" ]]; then
     fi
 fi
 
+if [[ -z "$TMUX" ]]; then
+    session="$(hostname -s)-main"
+    if tmux has-session -t $session 2>/dev/null; then
+        exec tmux attach -t $session
+    else
+        exec tmux new -s $session
+    fi
+fi
+
 # away with old aliases
 \unalias -a
 
