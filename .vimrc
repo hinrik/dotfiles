@@ -3,10 +3,30 @@
 " Author: Hinrik Örn Sigurðsson <hinrik.sig at gmail dot com>
 " URL: http://github.com/hinrik/dotfiles/blob/master/.vimrc
 
-" add bundles with pathogen
-if filereadable(expand("~/.vim/bundle/vim-pathogen/autoload/pathogen.vim"))
-    runtime bundle/vim-pathogen/autoload/pathogen.vim
-    execute pathogen#infect()
+" Download vundle
+if !isdirectory(expand("~/.vim/bundle/vundle"))
+    !mkdir -p ~/.vim/bundle
+    !git clone git://github.com/gmarik/vundle.git ~/.vim/bundle/vundle
+    let s:bootstrap=1
+endif
+
+" Load bundles with vundle
+set runtimepath+=~/.vim/bundle/vundle/
+call vundle#rc()
+Bundle 'avakhov/vim-yaml'
+Bundle 'gmarik/vundle'
+Bundle 'hinrik/color-scheme-literal-tango'
+Bundle 'kchmck/vim-coffee-script'
+Bundle 'lfairy/lilyvim'
+Bundle 'vim-perl/vim-perl'
+Bundle 'vim-scripts/perl_synwrite.vim'
+Bundle 'tpope/vim-markdown'
+Bundle 'zaiste/tmux.vim'
+
+" Bootstrap vundle
+if exists("s:bootstrap") && s:bootstrap
+    unlet s:bootstrap
+    BundleInstall
 endif
 
 " General stuff
