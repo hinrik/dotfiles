@@ -1,19 +1,36 @@
 ;;;; General
 
-;; load paths
-(defvar my-libraries nil "My library paths to add to `load-path'")
-(progn
-  (setq
-    my-libraries
-    (list
-      (concat my-libraries "~/.emacs.d/elisp/slime")
-      (concat my-libraries "~/.emacs.d/elisp/xterm-frobs")
-      (concat my-libraries "~/.emacs.d/elisp/xterm-title")
-      (concat my-libraries "~/.emacs.d/elisp/color-theme-tangotango")
-      (concat my-libraries "~/.emacs.d/elisp/misc-cmds")
-      (concat my-libraries "~/.emacs.d/elisp/centered-cursor-mode")))
-  (dolist (library my-libraries)
-    (add-to-list 'load-path library)))
+;; Manage elisp packages with el-get
+(setq el-get-user-package-directory "~/.emacs.d/el-get-init/")
+(add-to-list 'load-path "~/.emacs.d/el-get/el-get")
+
+(unless (require 'el-get nil 'noerror)
+  (with-current-buffer
+      (url-retrieve-synchronously
+       "https://raw.github.com/dimitri/el-get/master/el-get-install.el")
+    (goto-char (point-max))
+    (eval-print-last-sexp)))
+
+(setq el-get-sources
+  '((:name xterm-frobs
+        :type http
+        :url "http://www.splode.com/~friedman/software/emacs-lisp/src/xterm-frobs.el")
+    (:name xterm-title
+        :type http
+        :url "http://www.splode.com/~friedman/software/emacs-lisp/src/xterm-title.el")))
+
+(setq
+  my-el-get-packages
+  '(el-get
+    centered-cursor-mode
+    color-theme
+    color-theme-tangotango
+    misc-cmds
+    slime
+    xterm-frobs
+    xterm-title))
+
+(el-get 'sync my-el-get-packages)
 
 ;; prefer UTF-8 encoding
 (set-language-environment "UTF-8")
@@ -78,11 +95,6 @@
             (font-lock-add-keywords
                 nil
                 '(("\t" 0 'trailing-whitespace prepend)))))
-
-; Make home key go to beginning of indentation when possible
-(require 'misc-cmds)
-(global-set-key [home] 'beginning-or-indentation)
-(substitute-key-definition 'beginning-of-line 'beginning-or-indentation global-map)
 
 ;; automatically format paragraphs in text mode
 (setq-default fill-column 75)
@@ -161,32 +173,3 @@ or just one char if that's not possible"
 
 ;; add space between the line numbers and the text, and right-justify
 (setq linum-format (lambda (line) (propertize (format (let ((w (length (number-to-string (count-lines (point-min) (point-max)))))) (concat "%" (number-to-string w) "d ")) line) 'face 'linum)))
-
-;;;;; centered-cursor-mode.el
-
-;; center the cursor when scrolling
-(when window-system
-  (and
-    (require 'centered-cursor-mode)
-    (global-centered-cursor-mode +1)))
-
-;;;;; xterm-title.el
-
-;; set terminal title
-(when (and (not window-system)
-           (string-match "^xterm" (getenv "TERM")))
-  (require 'xterm-title)
-  (xterm-title-mode 1))
-
-;;;;; slime.el
-
-(setq inferior-lisp-program "/usr/bin/sbcl")
-(setq slime-net-coding-system 'utf-8-unix)
-(require 'slime)
-(slime-setup '(slime-fancy))
-
-;;;;; color-theme.el
-
-(require 'color-theme)
-(require 'color-theme-tangotango)
-(color-theme-tangotango)

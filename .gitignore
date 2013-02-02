@@ -4,3 +4,5 @@
 .emacs.d/auto-save-list
 .irssi/config.autosave
 .vim/bundle/
+.emacs.d/el-get/
+*.elc
