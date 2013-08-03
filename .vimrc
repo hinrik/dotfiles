@@ -87,10 +87,8 @@ set softtabstop=4                  " 4 column indents again...
 " Show ↪ at the beginning of wrapped lines
 let &sbr = nr2char(8618).' '
 
-" Always assume bash when filetype=sh
-let g:is_bash=1
-
 " Language-specific syntax highlighting
+let g:is_bash=1                    " Always assume bash when filetype=sh
 let perl_include_pod=1             " Pod highlighting
 let perl_fold=1                    " Fold Perl constructs by default
 let perl_nofold_packages=1         " Not packages, though
