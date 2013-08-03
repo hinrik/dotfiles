@@ -18,6 +18,7 @@ Bundle 'gmarik/vundle'
 Bundle 'hinrik/color-scheme-literal-tango'
 Bundle 'kchmck/vim-coffee-script'
 Bundle 'lfairy/lilyvim'
+Bundle 'vim-scripts/VimClojure'
 Bundle 'slim-template/vim-slim'
 Bundle 'vim-perl/vim-perl'
 Bundle 'vim-scripts/perl_synwrite.vim'
@@ -94,6 +95,8 @@ let perl_fold=1                    " Fold Perl constructs by default
 let perl_nofold_packages=1         " Not packages, though
 let perl_string_as_statement=1     " Make quoting operators stand out
 let ruby_operators=1               " Highlight operators in Ruby
+let vimclojureHighlightBuiltins=1  " Highlight Clojure builtins
+let vimclojure#ParenRainbow=1      " Distinct nested parens in Clojure
 
 " Perl testing
 map ,t <Esc>:!prove -vl %<CR>
