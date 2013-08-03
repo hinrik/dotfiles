@@ -15,6 +15,7 @@ set runtimepath+=~/.vim/bundle/vundle/
 call vundle#rc()
 Bundle 'avakhov/vim-yaml'
 Bundle 'gmarik/vundle'
+Bundle 'hail2u/vim-css3-syntax'
 Bundle 'hinrik/color-scheme-literal-tango'
 Bundle 'kchmck/vim-coffee-script'
 Bundle 'lfairy/lilyvim'
