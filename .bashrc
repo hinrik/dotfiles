@@ -46,7 +46,8 @@ if [[ "$TERM" == "linux" ]]; then
     fi
 fi
 
-if [[ $SSH_CONNECTION != "" && -z "$TMUX" ]]; then
+# attach to or start main tmux session on ssh login
+if [[ $SSH_CONNECTION != "" && $SHLVL == 1 && -z "$TMUX" ]]; then
     session="$(hostname -s)-main"
     if tmux has-session -t $session 2>/dev/null; then
         tmux attach -t $session
