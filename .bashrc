@@ -250,16 +250,43 @@ function leech {
     while [[ $? == 30 ]]; do sleep 5 && $cmd "$@"; done
 }
 
-# a function which accepts similar arguments to rsync, but uses lftp to
-# download a file over multiple parallel connections, for when your
-# per-connection speed is limited. CAVEAT: it can only transfer files, not
-# directories
+# a function which accepts similar arguments to scp/rsync, but uses lftp to
+# transmit files over multiple parallel connections, for when your
+# per-connection speed is limited. A third argument specifies the number of
+# connections to use (default is 6, max is 8). Usage examples:
+#
+# mleech host:some/file /tmp/
+# mleech local_file host:
+# mleech foo host:/bar/ 8
 function mleech {
-    local server=${1%%:*}
-    local source_path=${1#*:}
-    local dest_path=${2:-./}
-    local conns=${3:-6}      # default to 6 connections
-    lftp sftp://$server -e "glob -- pget -c -n $conns $source_path -o $dest_path; exit"
+    local conns=${3:-6}
+
+    if [[ $1 =~ ^[[:alpha:]]+: && ! $2 =~ ^[[:alpha:]]+: ]]; then
+        # get
+        local remote=${1%%:*}
+        local source_path=${1#*:}
+        local dest_path=${2:-./}
+
+        if ssh $remote "test -d $source_path"; then
+            dest_path="${dest_path:-.}/"
+            lftp sftp://$remote -e "glob -- mirror -c --use-pget-n=$conns $source_path $dest_path; exit"
+        else
+            lftp sftp://$remote -e "glob -- pget -c -n $conns $source_path -o $dest_path; exit"
+        fi
+    elif [[ $2 =~ ^[[:alpha:]]+: && ! $1 =~ ^[[:alpha:]]+: ]]; then
+        # put
+        local remote=${2%%:*}
+        local source_path=${1#*:}
+        local dest_path=${2#*:}
+
+        if test -d $source_path; then
+            dest_path="${dest_path:-.}/"
+            lftp sftp://$remote -e "glob -- mirror -R -c --use-pget-n=$conns $source_path $dest_path; exit"
+        else
+            # TODO: lftp has no parallel "put" command for a single file
+            lftp sftp://$remote -e "glob -- put -c $source_path -o $dest_path; exit"
+        fi
+    fi
 }
 
 # use rsync's bash completion for the leech/mleech commands, so we can
