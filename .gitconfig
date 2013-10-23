@@ -17,7 +17,7 @@
     pu = pull --stat
     up = pull --stat --rebase # like svn does
     lo = log --decorate --abbrev-commit --stat
-    slog = log --decorate --abbrev-commit --pretty=oneline --reverse
+    slog = log --graph --decorate --abbrev-commit --pretty=oneline
     staged = diff --cached
     tree = log --graph --pretty=oneline --abbrev-commit --decorate
 [push]
