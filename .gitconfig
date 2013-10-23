@@ -21,7 +21,7 @@
     staged = diff --cached
     tree = log --graph --pretty=oneline --abbrev-commit --decorate
 [push]
-    default = tracking
+    default = upstream
 [sendemail]
     smtpserver = smtp.gmail.com
     smtpssl = 1
