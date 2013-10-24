@@ -128,6 +128,9 @@ endif
 " My *.md files are Markdown, not Modula 2
 autocmd BufRead,BufNewFile *.md set filetype=markdown
 
+" My *.comp files are Mason
+autocmd BufRead,BufNewFile *.comp set filetype=mason
+
 " Only enforce textwidth on plain text files
 autocmd FileType text setlocal textwidth=78
 
