@@ -55,6 +55,7 @@ set laststatus=2                   " Always show the status line
 set listchars+=trail:.             " Show trailing spaces as .
 set listchars+=extends:$           " Show $ when a line extends off-screen
 set listchars+=nbsp:.              " Show non-breaking spaces as .
+set modeline                       " Adhere to modelines
 set number                         " Show line numbers on the side
 if has("numberwidth")
     set numberwidth=3              " Minimum size of line number column
