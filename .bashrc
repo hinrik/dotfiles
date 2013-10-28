@@ -9,7 +9,6 @@ then
 elif test -s "$HOME/.rvm/scripts/rvm"
 then
     source "$HOME/.rvm/scripts/rvm"
-    PATH=$PATH:$HOME/.rvm/bin
 fi
 
 # add to PATH if the dir exists

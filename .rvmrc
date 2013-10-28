@@ -1,1 +1,0 @@
-rvm_configure_env=(CFLAGS="-march=native -O3")
