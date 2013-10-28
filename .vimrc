@@ -97,6 +97,7 @@ let perl_string_as_statement=1     " Make quoting operators stand out
 let ruby_operators=1               " Highlight operators in Ruby
 let vimclojureHighlightBuiltins=1  " Highlight Clojure builtins
 let vimclojure#ParenRainbow=1      " Distinct nested parens in Clojure
+let g:sql_type_default="mysql"     " Assume SQL is MySQL
 
 " Perl testing
 map ,t <Esc>:!prove -vl %<CR>
