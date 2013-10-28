@@ -35,6 +35,7 @@ fi
 
 cpus=$(grep -c ^processor /proc/cpuinfo)
 export HARNESS_OPTIONS="j$((2*$cpus+1))"
+alias bundle="bundle -j$cpus"
 
 if [[ $- != *i* ]] ; then
     # Shell is non-interactive.  Be done now!
