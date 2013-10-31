@@ -116,6 +116,10 @@ map Q :q
 " map C-l to :nohl (disables current search highlighting)
 nnoremap <silent> <C-l> :nohl<CR><C-l>
 
+" make Home key move to first nonblank character on the line
+noremap <expr> <silent> <Home> col('.') == match(getline('.'),'\S')+1 ? '0' : '^'
+imap <silent> <Home> <C-O><Home>
+
 " Color stuff
 if &t_Co > 2 || has("gui_running")
     set background=dark
