@@ -134,6 +134,12 @@ autocmd BufRead,BufNewFile *.md set filetype=markdown
 " My *.comp files are Mason
 autocmd BufRead,BufNewFile *.comp set filetype=mason
 
+" .html files can be Mason too
+autocmd BufRead *.html
+    \ if getline(1) =~ '^<[%&].*>' |
+    \     set filetype=mason |
+    \ endif
+
 " Only enforce textwidth on plain text files
 autocmd FileType text setlocal textwidth=78
 
