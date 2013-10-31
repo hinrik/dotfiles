@@ -73,6 +73,7 @@ set sidescrolloff=5                " Scroll when 5 columns from the side
 set smartcase                      " Case-sensitive matching when desired
 set splitbelow                     " new windows appear below
 set splitright                     " ...and to the right
+set tabline=%!MyTabLine()          " Custom tabline (see function below)
 set title                          " set the terminal title
 set viminfo='20,\"500              " Keep a .viminfo file
 set visualbell t_vb=               " No terminal bells or screen flashes
@@ -217,3 +218,39 @@ autocmd BufEnter * let &l:statusline = g:c_statusline
 autocmd WinEnter * let &l:statusline = g:c_statusline
 autocmd BufLeave * let &l:statusline = g:nc_statusline
 autocmd WinLeave * let &l:statusline = g:nc_statusline
+
+" taken from :help setting-tabline
+function MyTabLine()
+    let s = ''
+    for i in range(tabpagenr('$'))
+    " select the highlighting
+    if i + 1 == tabpagenr()
+        let s .= '%#TabLineSel#'
+    else
+        let s .= '%#TabLine#'
+    endif
+
+    " set the tab page number (for mouse clicks)
+    let s .= '%' . (i + 1) . 'T'
+
+    " the label is made by MyTabLabel()
+    let s .= ' %{MyTabLabel(' . (i + 1) . ')} '
+    endfor
+
+    " after the last tab fill with TabLineFill and reset tab page nr
+    let s .= '%#TabLineFill#%T'
+
+    " right-align the label to close the current tab page
+    if tabpagenr('$') > 1
+    let s .= '%=%#TabLine#%999Xclose'
+    endif
+
+    return s
+endfunction
+
+" show tab number before filename
+function MyTabLabel(n)
+    let buflist = tabpagebuflist(a:n)
+    let winnr = tabpagewinnr(a:n)
+    return buflist[winnr - 1] .' '. bufname(buflist[winnr - 1])
+endfunction
