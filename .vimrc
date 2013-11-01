@@ -25,6 +25,7 @@ Bundle 'vim-perl/vim-perl'
 Bundle 'vim-scripts/perl_synwrite.vim'
 Bundle 'tpope/vim-markdown'
 Bundle 'zaiste/tmux.vim'
+Bundle 'airblade/vim-gitgutter'
 
 " Bootstrap vundle
 if exists("s:bootstrap") && s:bootstrap
