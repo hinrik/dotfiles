@@ -142,7 +142,7 @@ autocmd BufRead,BufNewFile *.comp set filetype=mason
 
 " .html files can be Mason too
 autocmd BufRead *.html
-    \ if getline(1) =~ '^<[%&].*>' |
+    \ if getline(1) =~ '^\(%\|<[%&].*>\)' |
     \     set filetype=mason |
     \ endif
 
