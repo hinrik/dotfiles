@@ -89,27 +89,35 @@ set shiftwidth=4                   " 4 column indents
 set smarttab                       " Smart tabs
 set softtabstop=4                  " 4 column indents again...
 
+" Color stuff
+if &t_Co > 2 || has("gui_running")
+    set background=dark
+    syntax on                      " syntax highlighting
+    colorscheme literal_tango      " my colorscheme
+endif
+
+" Make the GUI look nice
+if has("gui_running") && has("gui_gtk2")
+    set guifont=Mono\ 8.5
+endif
+
+" Filetype-specific settings
+let is_bash=1                         " Always assume bash when filetype=sh
+let perl_include_pod=1                " Pod highlighting
+let perl_fold=1                       " Fold Perl constructs by default
+let perl_nofold_packages=1            " Not packages, though
+let perl_string_as_statement=1        " Make quoting operators stand out
+let ruby_operators=1                  " Highlight operators in Ruby
+let vimclojureHighlightBuiltins=1     " Highlight Clojure builtins
+let vimclojure#ParenRainbow=1         " Distinct nested parens in Clojure
+let sql_type_default="mysql"          " Assume SQL is MySQL
+
 " Show ↪ at the beginning of wrapped lines
 let &sbr = nr2char(8618).' '
 
-" Language-specific syntax highlighting
-let g:is_bash=1                    " Always assume bash when filetype=sh
-let perl_include_pod=1             " Pod highlighting
-let perl_fold=1                    " Fold Perl constructs by default
-let perl_nofold_packages=1         " Not packages, though
-let perl_string_as_statement=1     " Make quoting operators stand out
-let ruby_operators=1               " Highlight operators in Ruby
-let vimclojureHighlightBuiltins=1  " Highlight Clojure builtins
-let vimclojure#ParenRainbow=1      " Distinct nested parens in Clojure
-let g:sql_type_default="mysql"     " Assume SQL is MySQL
-
-" Perl testing
-map ,t <Esc>:!prove -vl %<CR>
-map ,T <Esc>:!prove -vl % \|vimpager<CR>
-
-" PerlTidy
-map ,pt <Esc>:%! perltidy<CR>
-map ,ptv <Esc>:'<,'>! perltidy<CR>
+" The comma key is more convenient for me than backslash
+let mapleader=","
+let maplocalleader=","
 
 " I keep hitting Q by accident, might as well remap it
 map Q :q
@@ -120,13 +128,6 @@ nnoremap <silent> <C-l> :nohl<CR><C-l>
 " make Home key move to first nonblank character on the line
 noremap <expr> <silent> <Home> col('.') == match(getline('.'),'\S')+1 ? '0' : '^'
 imap <silent> <Home> <C-O><Home>
-
-" Color stuff
-if &t_Co > 2 || has("gui_running")
-    set background=dark
-    syntax on                      " syntax highlighting
-    colorscheme literal_tango      " my colorscheme
-endif
 
 " Give windows equal space after resizing or opening a new window
 autocmd BufWinEnter * wincmd =
@@ -155,13 +156,6 @@ autocmd BufReadPost *
 
 " Highlight text that exceeds 'textwidth'
 "exec 'match Error /\%>' . &textwidth . 'v.\+/'
-
-" Make the GUI look nice
-if has("gui_running")
-    if has("gui_gtk2")
-        set guifont=Mono\ 8.5
-    endif
-endif
 
 " Identify the highlight group of the currect cursor position
 function! SyntaxItem()
