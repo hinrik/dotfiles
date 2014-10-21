@@ -1,5 +1,10 @@
 ;;;; General
 
+(when (>= emacs-major-version 24)
+  (require 'package)
+  (package-initialize)
+  (add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/") t))
+
 ;; Manage elisp packages with el-get
 (setq el-get-user-package-directory "~/.emacs.d/el-get-init/")
 (add-to-list 'load-path "~/.emacs.d/el-get/el-get")
@@ -10,6 +15,12 @@
        "https://raw.github.com/dimitri/el-get/master/el-get-install.el")
     (goto-char (point-max))
     (eval-print-last-sexp)))
+
+(require 'el-get-elpa)
+(unless (file-directory-p el-get-recipe-path-elpa)
+  (el-get-elpa-build-local-recipes))
+(unless (file-directory-p el-get-recipe-path-emacswiki)
+  (el-get-emacswiki-build-local-recipes))
 
 (setq el-get-sources
   '((:name xterm-frobs
@@ -23,10 +34,9 @@
   my-el-get-packages
   '(el-get
     centered-cursor-mode
-    color-theme
-    color-theme-tangotango
     misc-cmds
     slime
+    tango-2-theme
     xterm-frobs
     xterm-title))
 
@@ -43,6 +53,11 @@
 ;; same with autosave files
 (setq auto-save-file-name-transforms
       `((".*" ,(expand-file-name "~/.emacs.d/tmp/") t)))
+
+;; save cursor position in files
+(require 'saveplace)
+(setq save-place-file "~/.emacs.d/saveplace")
+(setq-default save-place t)
 
 ;;;; UI gripes
 
@@ -64,6 +79,9 @@
 ;; no bells, ever
 (setq ring-bell-function 'ignore)
 
+;; use i-beam as a cursor
+(modify-all-frames-parameters (list (cons 'cursor-type 'bar)))
+
 ;; do mouse scrolling one line at a time
 (when window-system
   (setq mouse-wheel-scroll-amount '(1 ((shift) . 1) ((control)))))
@@ -71,17 +89,26 @@
 ;; no menubar
 (menu-bar-mode -1)
 
-;; give all windows equal space
-;; TODO: In emacs24 this causes "Lisp nesting exceeds `max-lisp-eval-depth'
-;(add-hook 'window-configuration-change-hook 'balance-windows)
-
 ;; no fringes in the gui
 (when window-system
   (set-fringe-mode 0))
 
 ;; set frame title
-;; TODO: make it say e.g. "fstab * (/etc) - emacs"
-(setq frame-title-format "%f %& emacs")
+(setq-default frame-title-format
+  '(:eval
+     (format "%s@%s: %s %s"
+             (or (file-remote-p default-directory 'user)
+                 user-real-login-name)
+             (or (file-remote-p default-directory 'host)
+                 system-name)
+             (buffer-name)
+             (cond
+                 (buffer-file-truename
+                 (concat "(" buffer-file-truename ")"))
+                 (dired-directory
+                 (concat "{" dired-directory "}"))
+                 (t
+                 "[no file]")))))
 
 ;; show column number
 (setq column-number-mode t)
@@ -109,6 +136,13 @@
 
 ;; highlight matching parentheses
 (show-paren-mode t)
+
+;; show line numbers
+(require 'linum)
+(global-linum-mode 1)
+
+;; add space between the line numbers and the text, and right-justify
+(setq linum-format (lambda (line) (propertize (format (let ((w (length (number-to-string (count-lines (point-min) (point-max)))))) (concat "%" (number-to-string w) "d ")) line) 'face 'linum)))
 
 ;;;; Indentation
 
@@ -162,14 +196,3 @@ or just one char if that's not possible"
                  (lambda ()
                    (not (eq (get-text-property (point) 'face)
                             'font-lock-comment-face))))))
-;;;; Other packages
-
-;;;;; linum.el
-
-(require 'linum)
-
-;; show line numbers
-(global-linum-mode 1)
-
-;; add space between the line numbers and the text, and right-justify
-(setq linum-format (lambda (line) (propertize (format (let ((w (length (number-to-string (count-lines (point-min) (point-max)))))) (concat "%" (number-to-string w) "d ")) line) 'face 'linum)))
