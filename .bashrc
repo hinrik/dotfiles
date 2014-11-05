@@ -142,7 +142,7 @@ function dir_info() {
         fi
     fi
 
-    ls -Alhs | head -n1 | cut -d' ' -f2
+    ls -AlhsX | head -n1 | cut -d' ' -f2
 }
 
 if ls --help 2>&1 | grep -q group-directories-first; then
@@ -159,7 +159,7 @@ if type tput >/dev/null &&
 then
     if [ -x /usr/bin/dircolors ]; then
         test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
-        alias ls="ls$group_dirs --color=auto"
+        alias ls="ls$group_dirs --color=auto -X"
 
         # old versions of tree(1) don't use colors by default,
         # and we want directories at the top
@@ -184,7 +184,7 @@ then
     alias rgrep='rgrep --color=auto'
 else
     PS1='\h \W ($(dir_info)) \$ '
-    alias ls="ls$group_dirs"
+    alias ls="ls$group_dirs -X"
 fi
 
 # some nice shell options
@@ -194,7 +194,7 @@ alias perl6="~/src/rakudo/perl6"
 alias ..="cd .."
 alias ...="cd ../.."
 alias ....="cd ../../.."
-alias ll="ls -lh"
+alias ll="ls -lhX"
 alias d2u="sed 's/$//'"
 alias u2d="sed 's/$//'"
 alias lsofnames="lsof | awk '!/^\$/ && /\// { print \$9 }' | sort -u"
