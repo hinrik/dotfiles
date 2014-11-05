@@ -88,6 +88,7 @@ set shiftround                     " Indent to a multiple of shiftwidth
 set shiftwidth=4                   " 4 column indents
 set smarttab                       " Smart tabs
 set softtabstop=4                  " 4 column indents again...
+set tabstop=4                      " Make hard tabs span 4 columns
 
 " Color stuff
 if &t_Co > 2 || has("gui_running")
@@ -104,13 +105,17 @@ endif
 " Filetype-specific settings
 let is_bash=1                         " Always assume bash when filetype=sh
 let perl_include_pod=1                " Pod highlighting
-let perl_fold=1                       " Fold Perl constructs by default
-let perl_nofold_packages=1            " Not packages, though
 let perl_string_as_statement=1        " Make quoting operators stand out
 let ruby_operators=1                  " Highlight operators in Ruby
 let vimclojureHighlightBuiltins=1     " Highlight Clojure builtins
 let vimclojure#ParenRainbow=1         " Distinct nested parens in Clojure
+let lisp_instring=1                   " Highlight string escapes in Lisp
 let sql_type_default="mysql"          " Assume SQL is MySQL
+let org_indent=1                      " Indent paragraphs
+let org_heading_shade_leading_stars=0 " Looks better this way
+let org_heading_highlight_colors = [
+    \ 'Constant', 'Title', 'Identifier', 'Special', 'PreProc', 'Comment'
+    \ ] " This goes well with my colorscheme
 
 " Show ↪ at the beginning of wrapped lines
 let &sbr = nr2char(8618).' '
@@ -135,6 +140,9 @@ if version >= 700
     autocmd VimResized * wincmd =
 endif
 
+" My *.t files are Perl, not TADS
+autocmd BufRead,BufNewFile *.t set filetype=perl
+
 " My *.md files are Markdown, not Modula 2
 autocmd BufRead,BufNewFile *.md set filetype=markdown
 
@@ -144,8 +152,8 @@ autocmd BufRead,BufNewFile *.comp set filetype=mason
 " Only enforce textwidth on plain text files
 autocmd FileType text setlocal textwidth=78
 
-" Use 2-column indenting in Ruby, Sass, Haml, and YAML, CoffeeScript, etc
-autocmd FileType ruby,eruby,scss,sass,haml,yaml,coffee,eco,lua,moon
+" Use 2-column indenting in Lisp, Ruby, Sass, Haml, and YAML, CoffeeScript, etc
+autocmd FileType lisp,ruby,eruby,scss,sass,haml,yaml,coffee,eco,lua,moon
     \ setlocal shiftwidth=2 softtabstop=2
 
 " Jump to the last known position when reopening a file
