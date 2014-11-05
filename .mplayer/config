@@ -11,3 +11,6 @@ cache=16384
 
 # rebuild indexes in case we're watching a partial file, to allow seeking
 idx=1
+
+# use utf-8 for subtitles
+#utf8=1
