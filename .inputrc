@@ -58,8 +58,9 @@ set show-all-if-ambiguous on
 set show-all-if-unmodified on
 
 # cycle through available completions
-Control-j: menu-complete-backward
-Control-k: menu-complete
+# TODO: find out why the latter (shift+tab) doesn't work
+#"\t": menu-complete
+#"\e[Z": menu-complete-backward
 
 # no bells
 set bell-style none
