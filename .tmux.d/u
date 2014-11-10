@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+session=$(basename $BASH_SOURCE)
+tmux -u new-session -d -s $session -n irc irssi
+tmux select-window -t $session:1

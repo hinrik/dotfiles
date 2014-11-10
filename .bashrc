@@ -48,10 +48,21 @@ if [[ "$TERM" == "linux" ]]; then
     fi
 fi
 
-# attach to or start main tmux session on ssh login
+if [[ $(hostname --fqdn) =~ "kvmuser" && -f /etc/bookings/SERVER_ROLE ]]; then
+    export this_host="$(cat /etc/bookings/SERVER_ROLE)_kvm"
+else
+    export this_host=$(hostname)
+fi
+
+# attach to or start tmux session on ssh login
 if [[ $SSH_CONNECTION != "" && $SHLVL == 1 && -z "$TMUX" ]]; then
-    session="$(hostname -s)-main"
+    session=$this_host
+    start_session="$HOME/.tmux.d/$session"
+
     if tmux has-session -t $session 2>/dev/null; then
+        tmux attach -t $session
+    elif test -f $start_session; then
+        source $start_session
         tmux attach -t $session
     else
         tmux new -s $session
@@ -168,12 +179,12 @@ then
 
     # Colors on a per-server basis based on a simple
     # checksum. Inspired by http://geofft.mit.edu/blog/sipb/125
-    __hostname_color=$((31 + $(hostname | cksum | cut -c1-3) % 6))
+    __hostname_color=$((31 + $(echo $this_host | cksum | cut -c1-3) % 6))
 
     if [[ ${EUID} == 0 ]] ; then
-        PS1='\[\e[1;${__hostname_color}m\]\h\[\e[m\] \[\e[1;34m\]\W\[\e[m\] (\[\e[;33m\]$(dir_info)\[\e[m\]) \[\e[1;31m\]\$\[\e[m\] '
+        PS1='\[\e[1;${__hostname_color}m\]$this_host\[\e[m\] \[\e[1;34m\]\W\[\e[m\] (\[\e[;33m\]$(dir_info)\[\e[m\]) \[\e[1;31m\]\$\[\e[m\] '
     else
-        PS1='\[\e[1;${__hostname_color}m\]\h\[\e[m\] \[\e[1;34m\]\W\[\e[m\] (\[\e[;33m\]$(dir_info)\[\e[m\]) \[\e[1;32m\]\$\[\e[m\] '
+        PS1='\[\e[1;${__hostname_color}m\]$this_host\[\e[m\] \[\e[1;34m\]\W\[\e[m\] (\[\e[;33m\]$(dir_info)\[\e[m\]) \[\e[1;32m\]\$\[\e[m\] '
     fi
 
     export PERLDOC="-MPod::Text::Ansi"
@@ -183,7 +194,7 @@ then
     alias fgrep='fgrep --color=auto'
     alias rgrep='rgrep --color=auto'
 else
-    PS1='\h \W ($(dir_info)) \$ '
+    PS1='$this_host \W ($(dir_info)) \$ '
     alias ls="ls$group_dirs -X"
 fi
 
