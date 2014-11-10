@@ -142,7 +142,7 @@ function dir_info() {
         fi
     fi
 
-    ls -AlhsX | head -n1 | cut -d' ' -f2
+    ls -Alhs | head -n1 | cut -d' ' -f2
 }
 
 if ls --help 2>&1 | grep -q group-directories-first; then
