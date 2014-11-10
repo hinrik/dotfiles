@@ -48,6 +48,15 @@ if [[ "$TERM" == "linux" ]]; then
     fi
 fi
 
+if [ -z "$TMUX" ]; then
+  if [ ! -z "$SSH_TTY" ]; then
+      if [ ! -z "SSH_AUTH_SOCK" ]; then
+          ln -sf "$SSH_AUTH_SOCK" "$HOME/.wrap_auth_sock"
+      fi
+      export SSH_AUTH_SOCK="$HOME/.wrap_auth_sock"
+  fi
+fi
+
 if [[ $(hostname --fqdn) =~ "kvmuser" && -f /etc/bookings/SERVER_ROLE ]]; then
     export this_host="$(cat /etc/bookings/SERVER_ROLE)_kvm"
 else
