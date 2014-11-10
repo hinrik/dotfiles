@@ -5,13 +5,14 @@
 
 ;; load installed packages now rather than after init file processing
 (setq package-enable-at-startup nil)
-(package-initialize)
 
-;; extra repositories
-(add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
-(add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/"))
+;; the repositories
+(setq package-archives '(("gnu" . "http://elpa.gnu.org/packages/")
+                         ("melpa" . "http://melpa.org/packages/")
+                        ("marmalade" . "http://marmalade-repo.org/packages/")))
 
 ;; initialize the package list
+(package-initialize)
 (unless package-archive-contents
   (package-refresh-contents))
 
