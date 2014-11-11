@@ -59,7 +59,7 @@ fi
 if [[ $(hostname --fqdn) =~ "kvmuser" && -f /etc/bookings/SERVER_ROLE ]]; then
     export this_host="$(cat /etc/bookings/SERVER_ROLE)_kvm"
 else
-    export this_host=$(hostname)
+    export this_host=$(hostname -s)
 fi
 
 # attach to or start tmux session on ssh login
