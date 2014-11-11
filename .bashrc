@@ -48,13 +48,12 @@ if [[ "$TERM" == "linux" ]]; then
     fi
 fi
 
-if [ -z "$TMUX" ]; then
-  if [ ! -z "$SSH_TTY" ]; then
-      if [ ! -z "SSH_AUTH_SOCK" ]; then
-          ln -sf "$SSH_AUTH_SOCK" "$HOME/.wrap_auth_sock"
-      fi
-      export SSH_AUTH_SOCK="$HOME/.wrap_auth_sock"
-  fi
+if [[ -z "$TMUX" && -n "$SSH_TTY" && -n "$SSH_AUTH_SOCK" ]]; then
+    wrapper="$HOME/.wrap_auth_sock"
+    if [[ "$SSH_AUTH_SOCK" != "$wrapper" ]]; then
+        ln -sf $SSH_AUTH_SOCK $wrapper
+        export SSH_AUTH_SOCK=$wrapper
+    fi
 fi
 
 if [[ $(hostname --fqdn) =~ "kvmuser" && -f /etc/bookings/SERVER_ROLE ]]; then
