@@ -154,6 +154,7 @@
 ;; show line numbers in programming modes
 (require 'linum)
 (add-hook 'prog-mode-hook 'linum-mode)
+(add-hook 'cperl-mode-hook 'linum-mode)
 
 ;; dynamic-length line number, right-justified, with a space before the text
 ;; http://stackoverflow.com/questions/3626632/right-align-line-numbers-with-linum-mode/8470136#8470136
@@ -299,8 +300,9 @@
 (global-font-lock-mode t)
 (add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
 
-;; highlight numbers in 3code
+;; highlight numbers in code
 (add-hook 'prog-mode-hook 'highlight-numbers-mode)
+(add-hook 'cperl-mode-hook 'highlight-numbers-mode)
 
 ;; center the cursor vertically when scrolling
 ;; highlight FIXME/TODO/BUG/XXX
@@ -350,7 +352,7 @@ Comments are recognized in any mode that sets syntax-ppss properly."
 
 ;; make cua-mode aware of the above so region selection is not degraded
 (put 'back-to-indentation-or-beginning 'CUA 'move)
-(put 'back-to-indentation-or-beginning 'CUA 'move)
+(put 'end-of-code-or-line 'CUA 'move)
 
 ;; 4-column indentation
 (setq default-tab-width 4)
