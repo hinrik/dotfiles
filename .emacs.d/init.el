@@ -417,6 +417,7 @@ This emulates the 'softtabstop' feature in Vim."
       cperl-tab-always-indent nil           ; always let me indent further
       cperl-continued-statement-offset 0    ; don't reindent multiline statements
       cperl-indent-parens-as-block t        ; indent multiline () blocks correctly
+      cperl-electric-keywords t             ; Expand "if ", "for ", and more
       cperl-label-offset 0)                 ; No special indenting of labels
 
 ;;; slime-mode
