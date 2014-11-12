@@ -9,25 +9,30 @@
 ;; the repositories
 (setq package-archives '(("gnu" . "http://elpa.gnu.org/packages/")
                          ("melpa" . "http://melpa.org/packages/")
-                        ("marmalade" . "http://marmalade-repo.org/packages/")))
+                         ("marmalade" . "http://marmalade-repo.org/packages/")))
 
-;; initialize the package list
+;; load installed packages
 (package-initialize)
-(unless package-archive-contents
-  (package-refresh-contents))
+
+(setq my-packages
+  '(centered-cursor-mode
+    hide-comnt
+    highlight-numbers
+    magit
+    slime
+    xterm-frobs
+    xterm-title))
 
 ;; install the packages I use
-(mapc
- (lambda (package)
-   (unless (package-installed-p package)
-     (package-install package)))
- '(centered-cursor-mode
-   hide-comnt
-   highlight-numbers
-   magit
-   slime
-   xterm-frobs
-   xterm-title))
+(let (refreshed)
+  (mapc
+    (lambda (package)
+      (unless (package-installed-p package)
+        (unless refreshed
+          (package-refresh-contents)
+          (setq refreshed t))
+        (package-install package)))
+    my-packages))
 
 ;;;; Core stuff
 
