@@ -16,6 +16,7 @@
 
 (setq my-packages
   '(centered-cursor-mode
+    helm
     hide-comnt
     highlight-numbers
     magit
@@ -104,6 +105,19 @@
   (if (null (get-buffer-process (current-buffer)))
       (kill-buffer)
     (comint-delchar-or-maybe-eof arg)))
+
+;; use helm for completion/narrowing in minibuffer, C-x C-f, etc
+(require 'helm-config)
+(helm-mode 1)
+
+;; I still like to use Tab for completion
+(define-key helm-map (kbd "<tab>") 'helm-execute-persistent-action)
+(define-key helm-map (kbd "C-i") 'helm-execute-persistent-action)
+(define-key helm-map (kbd "C-z") 'helm-select-action) ; what Tab used to do
+
+;; use C-c h instead, as C-x c is a bit too close to C-x C-c
+(global-set-key (kbd "C-c h") 'helm-command-prefix)
+(global-unset-key (kbd "C-x c"))
 
 ;;;; Appearance
 

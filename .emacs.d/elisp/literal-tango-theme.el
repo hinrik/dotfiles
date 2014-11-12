@@ -70,6 +70,8 @@
  '(dired-symlink ((t :foreground "cyan")))
  '(dired-directory ((t :foreground "blue" :bold t)))
  '(dired-perm-write ((t :foreground "red" :bold t)))
+ '(helm-selection ((t :background "black")))
+ '(helm-candidate-number ((t :background nil :foreground "green" :bold t)))
 )
 
 (when load-file-name
