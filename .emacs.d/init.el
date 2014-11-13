@@ -14,7 +14,7 @@
 ;; load installed packages
 (package-initialize)
 
-(setq my-packages
+(defvar my-packages
   '(centered-cursor-mode
     helm
     hide-comnt
@@ -22,7 +22,8 @@
     magit
     slime
     xterm-frobs
-    xterm-title))
+    xterm-title)
+  "The ELPA packages I want to install")
 
 ;; install the packages I use
 (let (refreshed)
