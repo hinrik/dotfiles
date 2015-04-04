@@ -110,6 +110,7 @@
 ;; use helm for completion/narrowing in minibuffer, C-x C-f, etc
 (require 'helm-config)
 (helm-mode 1)
+(helm-autoresize-mode 1)
 
 ;; I still like to use Tab for completion
 (define-key helm-map (kbd "<tab>") 'helm-execute-persistent-action)
