@@ -90,6 +90,9 @@ set softtabstop=4                  " 4 column indents again...
 set tabstop=4                      " Make hard tabs span 4 columns
 
 " Color stuff
+"if &t_Co > 16
+"    set t_Co=16
+"endif
 if &t_Co > 2 || has("gui_running")
     set background=dark
     syntax on                      " syntax highlighting
