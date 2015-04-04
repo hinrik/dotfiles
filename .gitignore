@@ -3,4 +3,5 @@
 .irssi/config.autosave
 .vim/bundle/
 .emacs.d/state/
+.emacs.d/games/
 .emacs.d/elpa/
