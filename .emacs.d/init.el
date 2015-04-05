@@ -247,6 +247,21 @@
 ;; in the modeline, show which function the cursor is in
 (which-func-mode 1)
 
+; Strip the package name from the function name, it's usually superfluous
+(defun shorten-function-name (name)
+  (last (split-string name "::")))
+
+(defconst my-which-func-current
+  `(:eval (shorten-function-name (replace-regexp-in-string
+           "%" "%%"
+           (gethash (selected-window) which-func-table which-func-unknown)))))
+
+(defun set-short-which-func-current ()
+  (setq which-func-current 'my-which-func-current))
+
+(eval-after-load 'cperl-mode
+  '(add-hook 'cperl-mode-hook 'set-short-which-func-current t))
+
 ;; http://stackoverflow.com/questions/1242352/get-font-face-under-cursor-in-emacs
 (defun get-faces (pos)
   "Get the font faces at POS."
