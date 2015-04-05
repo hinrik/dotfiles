@@ -63,7 +63,7 @@ else
 fi
 
 # attach to or start tmux session on ssh login
-if [[ $SSH_CONNECTION != "" && $SHLVL == 1 && -z "$TMUX" ]]; then
+if [[ $SSH_CONNECTION != "" && $SHLVL == 1 && -z "$TMUX" && -z "$INSIDE_EMACS" ]]; then
     session=$this_host
     start_session="$HOME/.tmux.d/$session"
 
