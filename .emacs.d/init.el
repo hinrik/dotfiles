@@ -178,12 +178,6 @@
 ;; http://emacswiki.org/emacs/LineWrap
 (set-display-table-slot standard-display-table 'wrap ?\ )
 
-;; set terminal title
-(when (and (not window-system)
-           (string-match "^xterm" (getenv "TERM")))
-             (require 'xterm-title)
-               (xterm-title-mode 1))
-
 ;; show line numbers in programming modes
 (require 'linum)
 (add-hook 'prog-mode-hook 'linum-mode)
@@ -225,22 +219,27 @@
     (select-window first-win)
     (if this-win-2nd (other-window 1))))))
 
+;; use frame title as terminal title
+(when (and (not window-system)
+           (string-match "^xterm" (getenv "TERM")))
+             (require 'xterm-title)
+               (xterm-title-mode 1))
+
 ;; set frame title
 (setq-default frame-title-format
   '(:eval
-     (format "%s@%s: %s %s"
-             (or (file-remote-p default-directory 'user)
-                 user-real-login-name)
-             (or (file-remote-p default-directory 'host)
-                 system-name)
-             (buffer-name)
+     (format "%s %s - emacs"
+             (concat
+               (buffer-name)
+               (cond (buffer-read-only " =")
+                     ((buffer-modified-p) " +")))
              (cond
-                 (buffer-file-truename
-                 (concat "(" buffer-file-truename ")"))
-                 (dired-directory
-                 (concat "{" dired-directory "}"))
-                 (t
-                 "[no file]")))))
+               (buffer-file-truename
+                  (concat "(" (file-name-directory buffer-file-truename) ")"))
+                (dired-directory
+                      (concat "{" dired-directory"}"))
+                (t "[no file]")))))
+(setq-default icon-title-format frame-title-format)
 
 ;;; Modeline
 
