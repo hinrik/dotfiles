@@ -169,6 +169,7 @@
 ;; show column number
 (setq column-number-mode t)
 
+;; center the cursor vertically when scrolling
 (when (boundp 'mouse-wheel-mode)    ; dependency of centered-cursor-mode
   (require 'centered-cursor-mode)
   (global-centered-cursor-mode +1))
@@ -356,7 +357,6 @@
 (add-hook 'prog-mode-hook 'highlight-numbers-mode)
 (add-hook 'cperl-mode-hook 'highlight-numbers-mode)
 
-;; center the cursor vertically when scrolling
 ;; highlight FIXME/TODO/BUG/XXX
 (add-hook 'prog-mode-hook
           (lambda ()
