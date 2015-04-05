@@ -17,9 +17,11 @@
 (defvar my-packages
   '(centered-cursor-mode
     helm
+    helm-projectile
     hide-comnt
     highlight-numbers
     magit
+    projectile
     slime
     xterm-frobs
     xterm-title)
@@ -108,18 +110,28 @@
     (comint-delchar-or-maybe-eof arg)))
 
 ;; use helm for completion/narrowing in minibuffer, C-x C-f, etc
+(setq helm-ff-transformer-show-only-basename nil  ; show full-path
+      helm-move-to-line-cycle-in-source t         ; allow cycling top<->bottom
+      helm-display-header-line nil                ; disable the header
+      helm-M-x-fuzzy-match t                      ; mmm, fuzzy
+      helm-buffers-fuzzy-matching t
+      helm-recentf-fuzzy-match t)
 (require 'helm-config)
-(helm-mode 1)
-(helm-autoresize-mode 1)
-
-;; I still like to use Tab for completion
-(define-key helm-map (kbd "<tab>") 'helm-execute-persistent-action)
-(define-key helm-map (kbd "C-i") 'helm-execute-persistent-action)
-(define-key helm-map (kbd "C-z") 'helm-select-action) ; what Tab used to do
+(helm-mode t)
 
 ;; use C-c h instead, as C-x c is a bit too close to C-x C-c
 (global-set-key (kbd "C-c h") 'helm-command-prefix)
 (global-unset-key (kbd "C-x c"))
+
+; Projectile allows for fast find-file and easy grepping in a git repo
+(setq projectile-enable-caching t
+      projectile-cache-file "~/.emacs.d/state/projectile.cache"
+      projectile-known-projects-file "~/.emacs.d/state/projectile-bookmarks.eld"
+      projectile-use-git-grep t
+      projectile-completion-system 'helm
+      projectile-switch-project-action 'helm-projectile)
+(projectile-global-mode)
+(helm-projectile-on)
 
 ;;;; Appearance
 
@@ -262,6 +274,11 @@
   mode-line-position
   '(:propertize mode-name face '(:foreground "magenta" :weight bold))
   `(vc-mode vc-mode)
+  '(:eval
+    (if (projectile-project-root)
+        (format " Proj[%s]"
+                (projectile-project-name))
+      ""))
   " "
   mode-line-misc-info
   '(:propertize (:eval (mapconcat 'symbol-name (get-faces (point)) ",")) face '(:foreground "cyan"))
