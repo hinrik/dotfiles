@@ -22,7 +22,6 @@
     highlight-numbers
     magit
     monokai-theme
-    nyan-mode
     powerline
     projectile
     slime
@@ -288,11 +287,6 @@
 (setq powerline-display-buffer-size nil
       powerline-display-mule-info nil)
 (defpowerline powerline-minor-modes nil)
-
-;; and replace them with nyan cat
-(require 'nyan-mode)
-(setq nyan-wavy-trail t)
-(nyan-mode t)
 
 ;;;; Editing
 
