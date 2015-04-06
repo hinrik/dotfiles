@@ -63,6 +63,12 @@
 (setq tramp-auto-save-directory "~/.emacs.d/state/tramp-autosave")
 (setq tramp-persistency-file-name "~/.emacs.d/state/tramp")
 
+;; and eshell
+(setq eshell-history-file-name "~/.emacs.d/state/eshell-history")
+
+;; and recentf
+(setq recentf-save-file "~/.emacs.d/state/recentf")
+
 ;; save cursor position in files
 (require 'saveplace)
 (setq save-place-file "~/.emacs.d/state/saveplace")
