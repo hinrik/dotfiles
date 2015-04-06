@@ -16,6 +16,7 @@
 
 (defvar my-packages
   '(centered-cursor-mode
+    flycheck
     helm
     helm-projectile
     hide-comnt
@@ -332,6 +333,21 @@
           (lambda ()
             (setq comment-start
                   (replace-regexp-in-string "\\s-+$" "" comment-start))))
+
+;; automatic syntax checking
+(require 'flycheck)
+(add-hook 'after-init-hook #'global-flycheck-mode)
+
+;; disable perlcritic in the syntax check
+(setq-default flycheck-disabled-checkers
+  (append flycheck-disabled-checkers
+    '(perl-perlcritic)))
+
+;; use "C-c f" as the flycheck prefix key
+(define-key flycheck-mode-map flycheck-keymap-prefix nil)
+(setq flycheck-keymap-prefix (kbd "C-c f"))
+(define-key flycheck-mode-map flycheck-keymap-prefix
+            flycheck-command-map)
 
 ;;;; Highlighting
 
