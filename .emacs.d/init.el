@@ -446,7 +446,7 @@ This emulates the 'softtabstop' feature in Vim."
     (set-face-attribute 'cperl-nonoverridable-face nil
       :background nil
       :foreground nil
-      :inherit 'font-lock-variable-keyword-face)))
+      :inherit 'font-lock-keyword-face)))
 
 ;; more comprehensive syntax highlighting
 (setq cperl-highlight-variables-indiscriminately t)
