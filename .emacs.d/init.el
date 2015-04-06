@@ -21,6 +21,9 @@
     hide-comnt
     highlight-numbers
     magit
+    monokai-theme
+    nyan-mode
+    powerline
     projectile
     slime
     xterm-frobs
@@ -135,12 +138,28 @@
 
 ;;;; Appearance
 
-;; change default colors to fit a dark backround
-(set-variable 'frame-background-mode 'dark)
+;; Monokai looks nice
+(load-theme 'monokai t)
 
-;; customize colors further with my color theme
-(require 'literal-tango-theme)
-(load-theme 'literal-tango t)
+;; override Monokai's very dim comment color
+(set-face-foreground 'font-lock-comment-face "#729FCF")
+(set-face-foreground 'font-lock-comment-delimiter-face "#729FCF")
+
+;; these cperl faces look like shit by default
+(eval-after-load 'cperl-mode
+  '(progn
+    (set-face-attribute 'cperl-hash-face nil
+      :background nil
+      :foreground nil
+      :inherit 'font-lock-variable-name-face)
+    (set-face-attribute 'cperl-array-face nil
+      :background nil
+      :foreground nil
+      :inherit 'font-lock-variable-name-face)
+    (set-face-attribute 'cperl-nonoverridable-face nil
+      :background nil
+      :foreground nil
+      :inherit 'font-lock-variable-keyword-face)))
 
 ;; don't show the welcome message
 (setq inhibit-startup-screen t)
@@ -271,33 +290,19 @@
           (get-char-property pos 'face)
           (plist-get (text-properties-at pos) 'face)))))
 
-;; my nice modeline
-(setq-default mode-line-format (list
-  "%e"
-  '(:propertize (:eval mode-line-remote) face '(:foreground "magenta" :weight bold))
-  " "
-  mode-line-buffer-identification
-  " "
-  '(:propertize "(" face '(:weight bold))
-  '(:propertize (:eval mode-line-mule-info) face '(:foreground "green" :weight bold))
-  '(:propertize ")" face '(:weight bold))
-  " "
-  '(:propertize "[" face '(:weight bold))
-  '(:propertize (:eval mode-line-modified) face '(:foreground "yellow"))
-  '(:propertize "]" face '(:weight bold))
-  " "
-  mode-line-position
-  '(:propertize mode-name face '(:foreground "magenta" :weight bold))
-  `(vc-mode vc-mode)
-  '(:eval
-    (if (projectile-project-root)
-        (format " Proj[%s]"
-                (projectile-project-name))
-      ""))
-  " "
-  mode-line-misc-info
-  '(:propertize (:eval (mapconcat 'symbol-name (get-faces (point)) ",")) face '(:foreground "cyan"))
-  " "))
+;; nice modeline is nice
+(require 'powerline)
+(powerline-default-theme)
+
+;; remove things from the modeline I don't care about
+(setq powerline-display-buffer-size nil
+      powerline-display-mule-info nil)
+(defpowerline powerline-minor-modes nil)
+
+;; and replace them with nyan cat
+(require 'nyan-mode)
+(setq nyan-wavy-trail t)
+(nyan-mode t)
 
 ;;;; Editing
 
