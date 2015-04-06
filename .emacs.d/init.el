@@ -151,22 +151,6 @@
 (set-face-foreground 'font-lock-comment-face "#729FCF")
 (set-face-foreground 'font-lock-comment-delimiter-face "#729FCF")
 
-;; these cperl faces look like shit by default
-(eval-after-load 'cperl-mode
-  '(progn
-    (set-face-attribute 'cperl-hash-face nil
-      :background nil
-      :foreground nil
-      :inherit 'font-lock-variable-name-face)
-    (set-face-attribute 'cperl-array-face nil
-      :background nil
-      :foreground nil
-      :inherit 'font-lock-variable-name-face)
-    (set-face-attribute 'cperl-nonoverridable-face nil
-      :background nil
-      :foreground nil
-      :inherit 'font-lock-variable-keyword-face)))
-
 ;; don't show the welcome message
 (setq inhibit-startup-screen t)
 
@@ -447,12 +431,28 @@ This emulates the 'softtabstop' feature in Vim."
 
 ;;; cperl-mode
 
-;; cperl-mode still doesn't inherit from prog-mode-macp, so we need these too
+;; cperl-mode still doesn't inherit from prog-mode-map, so we need these too
 (add-hook 'cperl-mode-hook (lambda () (define-key cperl-mode-map (kbd "TAB") 'tab-to-tab-stop)))
 (add-hook 'cperl-mode-hook (lambda () (define-key cperl-mode-map (kbd "DEL") 'backward-delete-whitespace-to-column)))
 
 ;; use cperl-mode instead of perl-mode
 (defalias 'perl-mode 'cperl-mode)
+
+;; these cperl faces look like shit by default, don't fit in with any theme
+(eval-after-load 'cperl-mode
+  '(progn
+    (set-face-attribute 'cperl-hash-face nil
+      :background nil
+      :foreground nil
+      :inherit 'font-lock-variable-name-face)
+    (set-face-attribute 'cperl-array-face nil
+      :background nil
+      :foreground nil
+      :inherit 'font-lock-variable-name-face)
+    (set-face-attribute 'cperl-nonoverridable-face nil
+      :background nil
+      :foreground nil
+      :inherit 'font-lock-variable-keyword-face)))
 
 ;; more comprehensive syntax highlighting
 (setq cperl-highlight-variables-indiscriminately t)
