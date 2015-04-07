@@ -59,15 +59,12 @@
       `((".*" ,(expand-file-name "~/.emacs.d/state/tmp/") t)))
 (setq auto-save-list-file-prefix "~/.emacs.d/state/auto-save-list/")
 
-;; ditto for tramp
-(setq tramp-auto-save-directory "~/.emacs.d/state/tramp-autosave")
-(setq tramp-persistency-file-name "~/.emacs.d/state/tramp")
-
-;; and eshell
-(setq eshell-history-file-name "~/.emacs.d/state/eshell-history")
-
-;; and recentf
-(setq recentf-save-file "~/.emacs.d/state/recentf")
+;; ditto for tramp, eshell, recentf and games
+(setq tramp-auto-save-directory   "~/.emacs.d/state/tramp-autosave"
+      tramp-persistency-file-name "~/.emacs.d/state/tramp"
+      eshell-history-file-name    "~/.emacs.d/state/eshell-history"
+      recentf-save-file           "~/.emacs.d/state/recentf"
+      shared-game-score-directory "~/.emacs.d/state/games/")
 
 ;; save cursor position in files
 (require 'saveplace)
