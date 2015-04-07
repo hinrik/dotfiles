@@ -1,7 +1,7 @@
 ;;;; Packaging
 
 ;; make my elisp code loadable
-(add-to-list 'load-path (expand-file-name "~/.emacs.d/elisp/"))
+(add-to-list 'load-path "~/.emacs.d/elisp/")
 
 ;; load installed packages now rather than after init file processing
 (setq package-enable-at-startup nil)
