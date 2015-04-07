@@ -225,7 +225,6 @@
 ;; show line numbers in programming modes
 (require 'linum)
 (add-hook 'prog-mode-hook 'linum-mode)
-(add-hook 'cperl-mode-hook 'linum-mode)
 
 ;; dynamic-length line number, right-justified, with a space before the text
 ;; http://stackoverflow.com/questions/3626632/right-align-line-numbers-with-linum-mode/8470136#8470136
@@ -386,7 +385,6 @@
 
 ;; highlight numbers in code
 (add-hook 'prog-mode-hook 'highlight-numbers-mode)
-(add-hook 'cperl-mode-hook 'highlight-numbers-mode)
 
 ;; highlight FIXME/TODO/BUG/XXX
 (add-hook 'prog-mode-hook
@@ -501,6 +499,10 @@ This emulates the 'softtabstop' feature in Vim."
       cperl-indent-parens-as-block t        ; indent multiline () blocks correctly
       cperl-electric-keywords t             ; Expand "if ", "for ", and more
       cperl-label-offset 0)                 ; No special indenting of labels
+
+;; cperl-mode doesn't derive from prog-mode, so make sure prog-mode
+;; hooks get run
+(add-hook 'cperl-mode-hook (lambda () (run-hooks 'prog-mode-hook)))
 
 ;;; slime-mode
 
