@@ -144,12 +144,50 @@
 
 ;;;; Appearance
 
-;; Monokai looks nice
-(load-theme 'monokai t)
+(if (window-system)
+  (progn
+    ;; Monokai looks nice
+    (load-theme 'monokai t)
 
-;; override Monokai's very dim comment color
-(set-face-foreground 'font-lock-comment-face "#729FCF")
-(set-face-foreground 'font-lock-comment-delimiter-face "#729FCF")
+    ;; override Monokai's very dim comment color
+    (set-face-foreground 'font-lock-comment-face "#729FCF")
+    (set-face-foreground 'font-lock-comment-delimiter-face "#729FCF")
+
+    ;; nice modeline is nice
+    (require 'powerline)
+    (powerline-default-theme)
+
+    ;; remove things from the modeline I don't care about
+    (setq powerline-display-buffer-size nil
+          powerline-display-mule-info nil)
+    (defpowerline powerline-minor-modes nil))
+  (progn
+    (require 'literal-tango-theme)
+    (load-theme 'literal-tango t)
+
+    ;; my nice modeline
+    (setq-default mode-line-format (list
+      "%e"
+      '(:propertize (:eval mode-line-remote) face '(:foreground "magenta" :weight bold))
+      " "
+      mode-line-buffer-identification
+      " "
+      '(:propertize "(" face '(:weight bold))
+      '(:propertize (:eval mode-line-mule-info) face '(:foreground "green" :weight bold))
+      '(:propertize ")" face '(:weight bold))
+      " "
+      '(:propertize "[" face '(:weight bold))
+      '(:propertize (:eval mode-line-modified) face '(:foreground "yellow"))
+      '(:propertize "]" face '(:weight bold))
+      " "
+      mode-line-position
+      '(:propertize mode-name face '(:foreground "magenta" :weight bold))
+      `(vc-mode vc-mode)
+      " "
+      mode-line-misc-info
+      '(:propertize (:eval (mapconcat 'symbol-name (get-faces (point)) ",")) face '(:foreground "cyan"))
+      " "
+    ))))
 
 ;; don't show the welcome message
 (setq inhibit-startup-screen t)
@@ -279,15 +317,6 @@
           (get-char-property pos 'read-face-name)
           (get-char-property pos 'face)
           (plist-get (text-properties-at pos) 'face)))))
-
-;; nice modeline is nice
-(require 'powerline)
-(powerline-default-theme)
-
-;; remove things from the modeline I don't care about
-(setq powerline-display-buffer-size nil
-      powerline-display-mule-info nil)
-(defpowerline powerline-minor-modes nil)
 
 ;;;; Editing
 
@@ -448,7 +477,9 @@ This emulates the 'softtabstop' feature in Vim."
 ;; use cperl-mode instead of perl-mode
 (defalias 'perl-mode 'cperl-mode)
 
-;; these cperl faces look like shit by default, don't fit in with any theme
+;; These cperl faces have terrible fg/bg colors by default and are rarely
+;; affected by color themes. So let's make them inherit from some standard
+;; font lock faces instead.
 (eval-after-load 'cperl-mode
   '(progn
     (set-face-attribute 'cperl-hash-face nil
