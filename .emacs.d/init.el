@@ -377,7 +377,6 @@
 
 ;; highlight matching parentheses
 (show-paren-mode t)
-(setq show-paren-style 'expression)
 
 ;; use syntax highlighting everywhere
 (global-font-lock-mode t)
