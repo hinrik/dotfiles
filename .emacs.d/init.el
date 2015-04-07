@@ -214,9 +214,8 @@
 (setq column-number-mode t)
 
 ;; center the cursor vertically when scrolling
-(when (boundp 'mouse-wheel-mode)    ; dependency of centered-cursor-mode
-  (require 'centered-cursor-mode)
-  (global-centered-cursor-mode +1))
+(require 'centered-cursor-mode)
+(global-centered-cursor-mode +1)
 
 ;; Don't show the \ character when lines wrap because it sucks
 ;; copy/pasting from Emacs in a terminal. See
