@@ -4,3 +4,4 @@
 .vim/bundle/
 .emacs.d/state/
 .emacs.d/elpa/
+.emacs.d/server/
