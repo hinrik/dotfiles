@@ -47,7 +47,7 @@
   '(font-lock-type-face ((t :foreground "yellow")))
   '(font-lock-variable-name-face ((t :foreground "green")))
   '(font-lock-string-face ((t :foreground "red")))
-  '(font-lock-constant-face ((t :foreground "red")))
+  '(font-lock-constant-face ((t :foreground "magenta")))
   '(font-lock-warning-face ((t :foreground "red" :bold t :underline t)))
   '(font-lock-preprocessor-face ((t :foreground "magenta")))
   '(font-lock-builtin-face ((t :foreground "cyan")))
