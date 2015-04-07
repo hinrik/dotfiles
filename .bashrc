@@ -209,7 +209,9 @@ fi
 # some nice shell options
 shopt -s checkwinsize cdspell dotglob histappend no_empty_cmd_completion
 
-alias perl6="~/src/rakudo/perl6"
+# don't check for mail
+unset MAILCHECK
+
 alias ..="cd .."
 alias ...="cd ../.."
 alias ....="cd ../../.."
