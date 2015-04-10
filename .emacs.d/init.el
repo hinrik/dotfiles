@@ -1,272 +1,114 @@
 ;;;; Packaging
 
-;; make my elisp code loadable
-(add-to-list 'load-path "~/.emacs.d/elisp/")
-
-;; load installed packages now rather than after init file processing
+;; Add MELPA repository and initialize installed packages
+(require 'package)
 (setq package-enable-at-startup nil)
-
-;; the repositories
-(setq package-archives '(("gnu" . "http://elpa.gnu.org/packages/")
-                         ("melpa" . "http://melpa.org/packages/")
-                         ("marmalade" . "http://marmalade-repo.org/packages/")))
-
-;; load installed packages
+(add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
 (package-initialize)
 
-(defvar my-packages
-  '(centered-cursor-mode
-    flycheck
-    helm
-    helm-projectile
-    hide-comnt
-    highlight-numbers
-    magit
-    monokai-theme
-    powerline
-    projectile
-    slime
-    xterm-frobs
-    xterm-title)
-  "The ELPA packages I want to install")
+;; Install use-package which will be used to install other packages
+(unless (package-installed-p 'use-package)
+  (package-refresh-contents)
+  (package-install 'use-package))
+(eval-when-compile (require 'use-package))
+(require 'diminish)
+(require 'bind-key)
 
-;; install the packages I use
-(let (refreshed)
-  (mapc
-    (lambda (package)
-      (unless (package-installed-p package)
-        (unless refreshed
-          (package-refresh-contents)
-          (setq refreshed t))
-        (package-install package)))
-    my-packages))
+;;;; Basic configuration
 
-;;;; Core stuff
+;; don't load default.el
+(setq inhibit-default-init t)
 
 ;; prefer UTF-8 encoding
 (set-language-environment "UTF-8")
 
-;; use a simple pager so emacs can easily consume paged output
+;; easily consume paged output
 (setenv "PAGER" "cat")
 
-;; keep backup files in ~/.emacs.d/state/tmp
-(setq backup-directory-alist
-      (list
-        (cons ".*" (expand-file-name "~/.emacs.d/state/tmp/"))))
+;; keep various state/backup/tmp files in ~/.emacs.d/state/
+(setq backup-directory-alist         '((".*" . "~/.emacs.d/state/tmp/"))
+      auto-save-file-name-transforms '((".*" "~/.emacs.d/state/tmp/" t))
+      auto-save-list-file-prefix     "~/.emacs.d/state/auto-save-list/"
+      tramp-auto-save-directory      "~/.emacs.d/state/tramp-autosave"
+      tramp-persistency-file-name    "~/.emacs.d/state/tramp"
+      eshell-history-file-name       "~/.emacs.d/state/eshell-history"
+      recentf-save-file              "~/.emacs.d/state/recentf"
+      shared-game-score-directory    "~/.emacs.d/state/games/")
 
-;; same with autosave files
-(setq auto-save-file-name-transforms
-      `((".*" ,(expand-file-name "~/.emacs.d/state/tmp/") t)))
-(setq auto-save-list-file-prefix "~/.emacs.d/state/auto-save-list/")
-
-;; ditto for tramp, eshell, recentf and games
-(setq tramp-auto-save-directory   "~/.emacs.d/state/tramp-autosave"
-      tramp-persistency-file-name "~/.emacs.d/state/tramp"
-      eshell-history-file-name    "~/.emacs.d/state/eshell-history"
-      recentf-save-file           "~/.emacs.d/state/recentf"
-      shared-game-score-directory "~/.emacs.d/state/games/")
-
-;; save cursor position in files
-(require 'saveplace)
-(setq save-place-file "~/.emacs.d/state/saveplace")
-(setq-default save-place t)
-
-;; save command, search, and kill ring history
-(setq history-length t)
-(setq history-delete-duplicates t)
-(setq savehist-additional-variables
-  '(kill-ring search-ring regexp-search-ring)
-  savehist-file "~/.emacs.d/state/savehist")
-(savehist-mode t)
-
-;; faster than the scp method
-(setq tramp-default-method "ssh")
-
-;; allow sudo editing with C-x C-f /sudo:host:/path
-(set-default 'tramp-default-proxies-alist (quote ((".*" "\\`root\\'" "/ssh:%h:"))))
-
-;; I like my ls output sorted by filetype
-(setq dired-listing-switches "-lhX")
-
-;; more comprehensive help when using C-a
-(setq apropos-do-all t)
-
-;; case-insensitive incremental search
-(setq case-fold-search t)
-
-;; make sure buffer names are unique
-(require 'uniquify)
-
-;; when typing a filename to visit, // will mean / and
-;; ~ will mean $HOME regardless of preceding text.
-(setq file-name-shadow-tty-properties '(invisible t))
-(file-name-shadow-mode 1)
-
-;; C-d should logout/kill a shell buffer
-(add-hook 'shell-mode-hook
-          (lambda ()
-            (define-key shell-mode-map
-              (kbd "C-d") 'comint-delchar-or-eof-or-kill-buffer)))
-
-(defun comint-delchar-or-eof-or-kill-buffer (arg)
-  "Send delchar/eof or kill the buffer"
-  (interactive "p")
-  (if (null (get-buffer-process (current-buffer)))
-      (kill-buffer)
-    (comint-delchar-or-maybe-eof arg)))
-
-;; use helm for completion/narrowing in minibuffer, C-x C-f, etc
-(setq helm-ff-transformer-show-only-basename nil  ; show full-path
-      helm-move-to-line-cycle-in-source t         ; allow cycling top<->bottom
-      helm-display-header-line nil                ; disable the header
-      helm-M-x-fuzzy-match t                      ; mmm, fuzzy
-      helm-buffers-fuzzy-matching t
-      helm-recentf-fuzzy-match t)
-(require 'helm-config)
-(helm-mode t)
-
-;; use C-c h instead, as C-x c is a bit too close to C-x C-c
-(global-set-key (kbd "C-c h") 'helm-command-prefix)
-(global-unset-key (kbd "C-x c"))
-
-; Projectile allows for fast find-file and easy grepping in a git repo
-(setq projectile-enable-caching t
-      projectile-cache-file "~/.emacs.d/state/projectile.cache"
-      projectile-known-projects-file "~/.emacs.d/state/projectile-bookmarks.eld"
-      projectile-use-git-grep t
-      projectile-completion-system 'helm
-      projectile-switch-project-action 'helm-projectile)
-(projectile-global-mode)
-(helm-projectile-on)
-
-;;;; Appearance
-
-(if (window-system)
-  (progn
-    ;; Monokai looks nice
-    (load-theme 'monokai t)
-
-    ;; override Monokai's very dim comment color
-    (set-face-foreground 'font-lock-comment-face "#729FCF")
-    (set-face-foreground 'font-lock-comment-delimiter-face "#729FCF")
-
-    ;; nice modeline is nice
-    (require 'powerline)
-    (powerline-default-theme)
-
-    ;; remove things from the modeline I don't care about
-    (setq powerline-display-buffer-size nil
-          powerline-display-mule-info nil)
-    (defpowerline powerline-minor-modes nil))
-  (progn
-    (require 'literal-tango-theme)
-    (load-theme 'literal-tango t)
-
-    ;; my nice modeline
-    (setq-default mode-line-format (list
-      "%e"
-      '(:propertize (:eval mode-line-remote) face '(:foreground "magenta" :weight bold))
-      " "
-      mode-line-buffer-identification
-      " "
-      '(:propertize "(" face '(:weight bold))
-      '(:propertize (:eval mode-line-mule-info) face '(:foreground "green" :weight bold))
-      '(:propertize ")" face '(:weight bold))
-      " "
-      '(:propertize "[" face '(:weight bold))
-      '(:propertize (:eval mode-line-modified) face '(:foreground "yellow"))
-      '(:propertize "]" face '(:weight bold))
-      " "
-      mode-line-position
-      '(:propertize mode-name face '(:foreground "magenta" :weight bold))
-      `(vc-mode vc-mode)
-      " "
-      mode-line-misc-info
-      '(:propertize (:eval (mapconcat 'symbol-name (get-faces (point)) ",")) face '(:foreground "cyan"))
-      " "
-    ))))
-
-;; don't show the welcome message
-(setq inhibit-startup-screen t)
-
-;; don't show the *scratch* buffer message
-(setq initial-scratch-message nil)
-
-;; don't show the echo area startup message
-(defun display-startup-echo-area-message ())
-
-;; change "yes or no" prompts to "y or n"
-(defalias 'yes-or-no-p 'y-or-n-p)
+;;;; Clean up the UI
 
 ;; no bells, ever
 (setq ring-bell-function 'ignore)
 
-;; use i-beam as a cursor
-(modify-all-frames-parameters (list (cons 'cursor-type 'bar)))
+;; no startup message
+(fset 'display-startup-echo-area-message 'ignore)
 
-;; no menubar
+;; no menu bar
 (menu-bar-mode -1)
+
+;; don't show the welcome message
+(setq inhibit-startup-screen t)
+
+;; no initial message in the *scratch* buffer
+(setq initial-scratch-message nil)
 
 ;; no fringes in the gui
 (when window-system (set-fringe-mode 0))
 
+;; I prefer "y or n" to "yes or no"
+(defalias 'yes-or-no-p 'y-or-n-p)
+
+;;;; Appearance
+
+;; bar/i-beam cursor
+(modify-all-frames-parameters '((cursor-type . bar)))
+
+;; don't add \ when line wraps
+(set-display-table-slot standard-display-table 'wrap ?\ )
+
 ;; show column number
 (setq column-number-mode t)
 
+;; show line numbers on the side in programming modes
+(use-package nlinum
+  :ensure t
+  :init (add-hook 'prog-mode-hook 'nlinum-mode)
+  :config (setq nlinum-format "%d "))
+
+;; make buffer names unique
+(use-package uniquify
+  :config (setq uniquify-buffer-name-style 'forward))
+
+;; theming
+(if window-system
+  (progn
+    ;; Monokai looks nice
+    (use-package monokai-theme
+      :ensure t
+      :config
+      (load-theme 'monokai t)
+      ;; override Monokai's very dim comment color
+      (set-face-foreground 'font-lock-comment-face "#729FCF")
+      (set-face-foreground 'font-lock-comment-delimiter-face "#729FCF"))
+
+    ;; nice modeline is nice
+    (use-package powerline
+      :ensure t
+      :config
+      (powerline-default-theme)
+      ;; remove things from the modeline I don't care about
+      (setq powerline-display-buffer-size nil
+            powerline-display-mule-info nil)))
+  (progn
+    (use-package literal-tango-theme
+      :load-path "elisp/"
+      :config (load-theme 'literal-tango t))))
+
 ;; center the cursor vertically when scrolling
-(require 'centered-cursor-mode)
-(global-centered-cursor-mode +1)
-
-;; Don't show the \ character when lines wrap because it sucks
-;; copy/pasting from Emacs in a terminal. See
-;; http://emacswiki.org/emacs/LineWrap
-(set-display-table-slot standard-display-table 'wrap ?\ )
-
-;; show line numbers in programming modes
-(require 'linum)
-(add-hook 'prog-mode-hook 'linum-mode)
-
-;; dynamic-length line number, right-justified, with a space before the text
-;; http://stackoverflow.com/questions/3626632/right-align-line-numbers-with-linum-mode/8470136#8470136
-(defadvice linum-update-window (around linum-dynamic activate)
-  (let* ((w (length (number-to-string
-                     (count-lines (point-min) (point-max)))))
-         (linum-format (concat "%" (number-to-string w) "d ")))
-    ad-do-it))
-
-;; toggle between vertical and horizontal window split
-;; http://www.emacswiki.org/emacs/ToggleWindowSplit
-(define-key ctl-x-4-map "t" 'toggle-window-split)
-(defun toggle-window-split ()
-  (interactive)
-  (if (= (count-windows) 2)
-      (let* ((this-win-buffer (window-buffer))
-       (next-win-buffer (window-buffer (next-window)))
-       (this-win-edges (window-edges (selected-window)))
-       (next-win-edges (window-edges (next-window)))
-       (this-win-2nd (not (and (<= (car this-win-edges)
-           (car next-win-edges))
-             (<= (cadr this-win-edges)
-           (cadr next-win-edges)))))
-       (splitter
-        (if (= (car this-win-edges)
-         (car (window-edges (next-window))))
-      'split-window-horizontally
-    'split-window-vertically)))
-  (delete-other-windows)
-  (let ((first-win (selected-window)))
-    (funcall splitter)
-    (if this-win-2nd (other-window 1))
-    (set-window-buffer (selected-window) this-win-buffer)
-    (set-window-buffer (next-window) next-win-buffer)
-    (select-window first-win)
-    (if this-win-2nd (other-window 1))))))
-
-;; use frame title as terminal title
-(when (and (not window-system)
-           (string-match "^xterm" (getenv "TERM")))
-             (require 'xterm-title)
-               (xterm-title-mode 1))
+(use-package centered-cursor-mode
+  :ensure t
+  :diminish centered-cursor-mode
+  :config (global-centered-cursor-mode +1))
 
 ;; set frame title
 (setq-default frame-title-format
@@ -284,12 +126,18 @@
                 (t "[no file]")))))
 (setq-default icon-title-format frame-title-format)
 
+;; use frame title as terminal title
+(use-package xterm-title
+  :ensure t
+  :if (and (not window-system)
+           (string-match "^xterm" (getenv "TERM")))
+  :diminish xterm-title-mode
+  :init (use-package xterm-frobs :ensure t)
+  :config (xterm-title-mode 1))
+
 ;;; Modeline
 
-;; in the modeline, show which function the cursor is in
-(which-func-mode 1)
-
-; Strip the package name from the function name, it's usually superfluous
+;; strip the package name from the function name, it's usually superfluous
 (defun shorten-function-name (name)
   (last (split-string name "::")))
 
@@ -298,11 +146,14 @@
            "%" "%%"
            (gethash (selected-window) which-func-table which-func-unknown)))))
 
-(defun set-short-which-func-current ()
-  (setq which-func-current 'my-which-func-current))
-
-(eval-after-load 'cperl-mode
-  '(add-hook 'cperl-mode-hook 'set-short-which-func-current t))
+;; in the modeline, show which function the cursor is in
+(use-package which-func
+  :init (which-function-mode)
+  :config
+  (setq which-func-current 'my-which-func-current
+        which-func-format  `((:propertize ("➤ " which-func-current)
+                             local-map ,which-func-keymap
+                             face which-func))))
 
 ;; http://stackoverflow.com/questions/1242352/get-font-face-under-cursor-in-emacs
 (defun get-faces (pos)
@@ -313,30 +164,41 @@
           (get-char-property pos 'face)
           (plist-get (text-properties-at pos) 'face)))))
 
+;; my nice modeline
+(setq-default mode-line-format (list
+  "%e "
+  mode-line-remote
+  " "
+  '(:propertize (:eval mode-line-buffer-identification) face '(:weight bold))
+  " "
+  '(:propertize "[" face '(:weight bold))
+  '(:propertize (:eval mode-line-modified) face '(:foreground "yellow"))
+  '(:propertize "]" face '(:weight bold))
+  " "
+  mode-line-position
+  mode-line-modes
+  mode-line-misc-info
+  '(:propertize (:eval (mapconcat 'symbol-name (get-faces (point)) ",")) face '(:foreground "cyan"))
+  " "))
+
 ;;;; Editing
 
-;; start in text-mode by default
-(setq initial-major-mode 'text-mode)
-
-;; use text-mode for unknown file types
-(setq default-major-mode 'text-mode)
-
-;; my sentences do not end with double spaces
+;; my sentences don't end with double spaces
 (setq sentence-end-double-space nil)
 
-;; C-c/C-v/C-x/C-z for copy/paste/cut/undo is ingrained in my muscle memory
+;; I'm used to C-c/C-v/C-x/C-z for copy/paste/cut/undo
 (cua-mode t)
 
 ;; toggle comment visibility
-(require 'hide-comnt)
-(global-set-key (kbd "C-c k") 'hide/show-comments-toggle)
+(use-package hide-comnt
+  :ensure t
+  :bind ("C-c k" . hide/show-comments-toggle))
 
-;; automatically format paragraphs in text mode, as well as code comments
-;; in programming modes
+;; automatically format text paragraphs and code comments
 (setq-default fill-column 73)
 (setq comment-auto-fill-only-comments t)
-(add-hook 'text-mode-hook (lambda () (auto-fill-mode 1)))
-(add-hook 'prog-mode-hook (lambda () (auto-fill-mode 1)))
+(add-hook 'text-mode-hook (lambda () (progn (auto-fill-mode 1) (diminish 'auto-fill-function))))
+(add-hook 'prog-mode-hook (lambda () (progn (auto-fill-mode 1) (diminish 'auto-fill-function))))
 
 ;; insert closing parenthesis/bracket/etc automatically
 (electric-pair-mode 1)
@@ -344,9 +206,11 @@
 ;; I often want to remove a whole line, like Vim's "d d"
 (global-set-key (kbd "C-k") 'kill-whole-line)
 
-;; magit bindings
-(global-set-key (kbd "C-c b") 'magit-blame-mode)
-(global-set-key (kbd "C-c g") 'magit-status-mode)
+; git magic
+(use-package magit
+  :ensure t
+  :bind (("C-c b" . magit-blame-mode)
+         ("C-c g" . magit-status-mode)))
 
 ;; show trailing whitespace in programming modes
 (add-hook 'prog-mode-hook (lambda () (setq show-trailing-whitespace t)))
@@ -359,19 +223,26 @@
                   (replace-regexp-in-string "\\s-+$" "" comment-start))))
 
 ;; automatic syntax checking
-(require 'flycheck)
-(add-hook 'after-init-hook #'global-flycheck-mode)
-
-;; disable perlcritic in the syntax check
-(setq-default flycheck-disabled-checkers
-  (append flycheck-disabled-checkers
-    '(perl-perlcritic)))
-
-;; use "C-c f" as the flycheck prefix key
-(define-key flycheck-mode-map flycheck-keymap-prefix nil)
-(setq flycheck-keymap-prefix (kbd "C-c f"))
-(define-key flycheck-mode-map flycheck-keymap-prefix
-            flycheck-command-map)
+(use-package flycheck
+  :ensure t
+  :init (add-hook 'prog-mode-hook 'flycheck-mode)
+  :config
+  ;; disable perlcritic in the syntax check
+  (setq-default flycheck-disabled-checkers
+    (append flycheck-disabled-checkers
+      '(perl-perlcritic)))
+  ;; use "C-c f" as the flycheck prefix key
+  (define-key flycheck-mode-map flycheck-keymap-prefix nil)
+  (setq flycheck-keymap-prefix (kbd "C-c f"))
+  (define-key flycheck-mode-map flycheck-keymap-prefix
+              flycheck-command-map)
+  ;; Show Flycheck messages in popups
+  (use-package flycheck-pos-tip
+    :ensure t
+    :config
+    (with-eval-after-load 'flycheck
+      (setq flycheck-display-errors-function
+            'flycheck-pos-tip-error-messages))))
 
 ;;;; Highlighting
 
@@ -383,7 +254,9 @@
 (add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
 
 ;; highlight numbers in code
-(add-hook 'prog-mode-hook 'highlight-numbers-mode)
+(use-package highlight-numbers
+  :ensure t
+  :config (add-hook 'prog-mode-hook 'highlight-numbers-mode))
 
 ;; highlight FIXME/TODO/BUG/XXX
 (add-hook 'prog-mode-hook
@@ -461,55 +334,165 @@ This emulates the 'softtabstop' feature in Vim."
             (backward-delete-char-untabify (- (match-end 1) (match-beginning 1)))
         (call-interactively 'backward-delete-char-untabify))))))
 
-;;; cperl-mode
+;;;; Misc
 
-;; cperl-mode still doesn't inherit from prog-mode-map, so we need these too
-(add-hook 'cperl-mode-hook (lambda () (define-key cperl-mode-map (kbd "TAB") 'tab-to-tab-stop)))
-(add-hook 'cperl-mode-hook (lambda () (define-key cperl-mode-map (kbd "DEL") 'backward-delete-whitespace-to-column)))
+;; use text-mode on startup, and for unknown filetypes
+(setq initial-major-mode 'text-mode
+      default-major-mode 'text-mode)
 
-;; use cperl-mode instead of perl-mode
-(defalias 'perl-mode 'cperl-mode)
+;; case-insensitive incremental search
+(setq case-fold-search t)
 
-;; These cperl faces have terrible fg/bg colors by default and are rarely
-;; affected by color themes. So let's make them inherit from some standard
-;; font lock faces instead.
-(eval-after-load 'cperl-mode
-  '(progn
-    (set-face-attribute 'cperl-hash-face nil
-      :background nil
-      :foreground nil
-      :inherit 'font-lock-variable-name-face)
-    (set-face-attribute 'cperl-array-face nil
-      :background nil
-      :foreground nil
-      :inherit 'font-lock-variable-name-face)
-    (set-face-attribute 'cperl-nonoverridable-face nil
-      :background nil
-      :foreground nil
-      :inherit 'font-lock-function-name-face)))
+;; more comprehensive help when using C-a
+(setq apropos-do-all t)
 
-;; more comprehensive syntax highlighting
-(setq cperl-highlight-variables-indiscriminately t)
+;; sort ls output by filetype
+(setq dired-listing-switches "-lhX")
 
-;; indenting
-(setq cperl-indent-level 4                  ; 4-space indents
-      cperl-tab-always-indent nil           ; always let me indent further
-      cperl-continued-statement-offset 0    ; don't reindent multiline statements
-      cperl-indent-parens-as-block t        ; indent multiline () blocks correctly
-      cperl-electric-keywords t             ; Expand "if ", "for ", and more
-      cperl-label-offset 0)                 ; No special indenting of labels
+;; keep a long minibuffer history, without duplicates
+(setq history-length t
+      history-delete-duplicates t)
 
-;; cperl-mode doesn't derive from prog-mode, so make sure prog-mode
-;; hooks get run
-(add-hook 'cperl-mode-hook (lambda () (run-hooks 'prog-mode-hook)))
+;; when typing a filename to visit, // will mean / and
+;; ~ will mean $HOME regardless of preceding text.
+(setq file-name-shadow-tty-properties '(invisible t))
+(file-name-shadow-mode 1)
 
-;;; slime-mode
+;; toggle between vertical and horizontal window split
+;; http://www.emacswiki.org/emacs/ToggleWindowSplit
+(define-key ctl-x-4-map "t" 'toggle-window-split)
+(defun toggle-window-split ()
+  (interactive)
+  (if (= (count-windows) 2)
+      (let* ((this-win-buffer (window-buffer))
+       (next-win-buffer (window-buffer (next-window)))
+       (this-win-edges (window-edges (selected-window)))
+       (next-win-edges (window-edges (next-window)))
+       (this-win-2nd (not (and (<= (car this-win-edges)
+           (car next-win-edges))
+             (<= (cadr this-win-edges)
+           (cadr next-win-edges)))))
+       (splitter
+        (if (= (car this-win-edges)
+         (car (window-edges (next-window))))
+      'split-window-horizontally
+    'split-window-vertically)))
+  (delete-other-windows)
+  (let ((first-win (selected-window)))
+    (funcall splitter)
+    (if this-win-2nd (other-window 1))
+    (set-window-buffer (selected-window) this-win-buffer)
+    (set-window-buffer (next-window) next-win-buffer)
+    (select-window first-win)
+    (if this-win-2nd (other-window 1))))))
 
-;; we're livin' in the future
-(setq slime-net-coding-system 'utf-8-unix)
+;; C-d should logout/kill a shell buffer
+(add-hook 'shell-mode-hook
+          (lambda ()
+            (define-key shell-mode-map
+              (kbd "C-d") 'comint-delchar-or-eof-or-kill-buffer)))
 
-;; use SBCL runtime
-(setq inferior-lisp-program "/usr/bin/sbcl")
+(defun comint-delchar-or-eof-or-kill-buffer (arg)
+  "Send delchar/eof or kill the buffer"
+  (interactive "p")
+  (if (null (get-buffer-process (current-buffer)))
+      (kill-buffer)
+    (comint-delchar-or-maybe-eof arg)))
 
-;; load popular extensions
-(slime-setup '(slime-fancy))
+;; save minibuffer, search, and kill ring history
+(use-package savehist
+  :init (savehist-mode t)
+  :config
+  (setq savehist-additional-variables '(kill-ring search-ring regexp-search-ring)
+        savehist-file "~/.emacs.d/state/savehist"))
+
+;; save my position in visited files
+(use-package saveplace
+  :config
+  (setq save-place-file "~/.emacs.d/state/saveplace")
+  (setq-default save-place t))
+
+;; use helm for completion/narrowing in minibuffer, C-x C-f, etc
+(use-package helm
+  :ensure t
+  :diminish helm-mode
+  :bind ("C-c h" . helm-command-prefix)
+  :init
+  (setq helm-ff-transformer-show-only-basename nil  ; show full-path in find-file
+        helm-move-to-line-cycle-in-source t         ; allow cycling top<->bottom
+        helm-display-header-line nil                ; disable the header
+        helm-completion-mode-start-message nil      ; be quiet
+        helm-M-x-fuzzy-match t                      ; mmm, fuzzy
+        helm-buffers-fuzzy-matching t
+        helm-recentf-fuzzy-match t)
+  :config
+  (use-package helm-config)
+  (helm-mode t))
+
+;; projectile offers fast find-file for project files, git-grep, etc
+(use-package projectile
+  :ensure t
+  :diminish projectile-mode
+  :config
+  (use-package helm-projectile :ensure t)
+  (setq projectile-enable-caching t
+        projectile-cache-file "~/.emacs.d/state/projectile.cache"
+        projectile-known-projects-file "~/.emacs.d/state/projectile-bookmarks.eld"
+        projectile-use-git-grep t
+        projectile-completion-system 'helm
+        projectile-switch-project-action 'helm-projectile)
+  (projectile-global-mode)
+  (helm-projectile-toggle 1))
+
+;;;; Major modes
+
+(use-package cperl-mode
+  :diminish abbrev-mode
+  :config
+  ;; use cperl-mode instead of perl-mode
+  (defalias 'perl-mode 'cperl-mode)
+
+  ;; cperl-mode-map still doesn't inherit from prog-mode-map, so we need these
+  (add-hook 'cperl-mode-hook
+            (lambda ()
+              (progn
+                (define-key cperl-mode-map (kbd "TAB") 'tab-to-tab-stop)
+                (define-key cperl-mode-map (kbd "DEL") 'backward-delete-whitespace-to-column))))
+
+  ;; These cperl faces have terrible fg/bg colors by default and are rarely
+  ;; affected by color themes. So let's make them inherit from some standard
+  ;; faces instead.
+  (set-face-attribute 'cperl-hash-face nil
+    :background nil
+    :foreground nil
+    :inherit 'font-lock-variable-name-face)
+  (set-face-attribute 'cperl-array-face nil
+    :background nil
+    :foreground nil
+    :inherit 'font-lock-variable-name-face)
+  (set-face-attribute 'cperl-nonoverridable-face nil
+    :background nil
+    :foreground nil
+    :inherit 'font-lock-function-name-face)
+
+  ;; more comprehensive syntax highlighting
+  (setq cperl-highlight-variables-indiscriminately t)
+
+  ;; indenting
+  (setq cperl-indent-level 4                  ; 4-space indents
+        cperl-tab-always-indent nil           ; always let me indent further
+        cperl-continued-statement-offset 0    ; don't reindent multiline statements
+        cperl-indent-parens-as-block t        ; indent multiline () blocks correctly
+        cperl-electric-keywords t             ; Expand "if ", "for ", and more
+        cperl-label-offset 0)                 ; No special indenting of labels
+
+  ;; cperl-mode doesn't derive from prog-mode, so make sure prog-mode
+  ;; hooks get run
+  (add-hook 'cperl-mode-hook (lambda () (run-hooks 'prog-mode-hook))))
+
+(use-package slime
+  :ensure t
+  :config
+  (setq slime-net-coding-system 'utf-8-unix)
+  (setq inferior-lisp-program "/usr/bin/sbcl")
+  (slime-setup '(slime-fancy)))
