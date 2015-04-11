@@ -82,9 +82,6 @@
 ;; don't add \ when line wraps
 (set-display-table-slot standard-display-table 'wrap ?\ )
 
-;; smooth resizing of GUI frames
-(setq frame-resize-pixelwise t)
-
 ;; show column number
 (setq column-number-mode t)
 
@@ -97,23 +94,6 @@
 ;; make buffer names unique
 (use-package uniquify
   :config (setq uniquify-buffer-name-style 'forward))
-
-;; Move between windows with Shift+Arrow
-(use-package windmove
-  :bind (("S-<left>" . windmove-left)
-         ("S-<right>" . windmove-right)
-         ("S-<up>" . windmove-up)
-         ("S-<down>" . windmove-down)))
-
-; Undo and redo window configurations with C-c left/right
-(use-package winner
-  :init (winner-mode))
-
-;; center the cursor vertically when scrolling
-(use-package centered-cursor-mode
-  :ensure t
-  :diminish centered-cursor-mode
-  :config (global-centered-cursor-mode +1))
 
 ;; set frame title
 (setq-default frame-title-format
@@ -353,6 +333,50 @@ This emulates the 'softtabstop' feature in Vim."
             (backward-delete-char-untabify (- (match-end 1) (match-beginning 1)))
         (call-interactively 'backward-delete-char-untabify))))))
 
+;;;; Window and frame management
+
+;; smooth resizing of GUI frames
+(setq frame-resize-pixelwise t)
+
+;; Move between windows with Shift+Arrow
+(use-package windmove
+  :bind (("S-<left>" . windmove-left)
+         ("S-<right>" . windmove-right)
+         ("S-<up>" . windmove-up)
+         ("S-<down>" . windmove-down)))
+
+; Undo and redo window configurations with C-c left/right
+(use-package winner
+  :init (winner-mode))
+
+;; toggle between vertical and horizontal window split
+;; http://www.emacswiki.org/emacs/ToggleWindowSplit
+(define-key ctl-x-4-map "t" 'toggle-window-split)
+(defun toggle-window-split ()
+  (interactive)
+  (if (= (count-windows) 2)
+      (let* ((this-win-buffer (window-buffer))
+             (next-win-buffer (window-buffer (next-window)))
+             (this-win-edges (window-edges (selected-window)))
+             (next-win-edges (window-edges (next-window)))
+             (this-win-2nd (not (and (<= (car this-win-edges)
+                                         (car next-win-edges))
+                                     (<= (cadr this-win-edges)
+                                         (cadr next-win-edges)))))
+             (splitter
+               (if (= (car this-win-edges)
+                      (car (window-edges (next-window))))
+                   'split-window-horizontally
+                 'split-window-vertically)))
+      (delete-other-windows)
+      (let ((first-win (selected-window)))
+        (funcall splitter)
+        (if this-win-2nd (other-window 1))
+        (set-window-buffer (selected-window) this-win-buffer)
+        (set-window-buffer (next-window) next-win-buffer)
+        (select-window first-win)
+        (if this-win-2nd (other-window 1))))))
+
 ;;;; Misc
 
 ;; use text-mode on startup, and for unknown filetypes
@@ -385,33 +409,11 @@ This emulates the 'softtabstop' feature in Vim."
 (setq file-name-shadow-tty-properties '(invisible t))
 (file-name-shadow-mode 1)
 
-;; toggle between vertical and horizontal window split
-;; http://www.emacswiki.org/emacs/ToggleWindowSplit
-(define-key ctl-x-4-map "t" 'toggle-window-split)
-(defun toggle-window-split ()
-  (interactive)
-  (if (= (count-windows) 2)
-      (let* ((this-win-buffer (window-buffer))
-             (next-win-buffer (window-buffer (next-window)))
-             (this-win-edges (window-edges (selected-window)))
-             (next-win-edges (window-edges (next-window)))
-             (this-win-2nd (not (and (<= (car this-win-edges)
-                                         (car next-win-edges))
-                                     (<= (cadr this-win-edges)
-                                         (cadr next-win-edges)))))
-             (splitter
-               (if (= (car this-win-edges)
-                      (car (window-edges (next-window))))
-                   'split-window-horizontally
-                 'split-window-vertically)))
-      (delete-other-windows)
-      (let ((first-win (selected-window)))
-        (funcall splitter)
-        (if this-win-2nd (other-window 1))
-        (set-window-buffer (selected-window) this-win-buffer)
-        (set-window-buffer (next-window) next-win-buffer)
-        (select-window first-win)
-        (if this-win-2nd (other-window 1))))))
+;; center the cursor vertically when scrolling
+(use-package centered-cursor-mode
+  :ensure t
+  :diminish centered-cursor-mode
+  :config (global-centered-cursor-mode +1))
 
 ;; C-d should logout/kill a shell buffer
 (add-hook 'shell-mode-hook
