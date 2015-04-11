@@ -270,6 +270,9 @@
 
 ;;;; Indentation
 
+;; manually indent/deindent regions with C-c i
+(global-set-key (kbd "C-c i") 'indent-rigidly)
+
 ;; make Home go to beginning of indentation when possible
 ;; http://www.emacswiki.org/emacs/BackToIndentationOrBeginning
 (substitute-key-definition 'move-beginning-of-line 'back-to-indentation-or-beginning global-map)
