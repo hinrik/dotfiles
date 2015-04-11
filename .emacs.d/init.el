@@ -156,7 +156,7 @@
   :init (which-function-mode)
   :config
   (setq which-func-current 'my-which-func-current
-        which-func-format  `((:propertize ("➤ " which-func-current)
+        which-func-format  `((:propertize ("➤" which-func-current)
                              local-map ,which-func-keymap
                              face which-func))))
 
