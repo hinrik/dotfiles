@@ -326,10 +326,6 @@ Comments are recognized in any mode that sets syntax-ppss properly."
                 (backward-char))
               (skip-chars-backward " \t")))))
 
-;; make cua-mode aware of the above so region selection is not degraded
-(put 'back-to-indentation-or-beginning 'CUA 'move)
-(put 'end-of-code-or-line 'CUA 'move)
-
 ;; 4-column indentation
 (setq default-tab-width 4)
 
