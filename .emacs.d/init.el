@@ -60,25 +60,6 @@
 
 ;;;; Appearance
 
-;; bar/i-beam cursor
-(modify-all-frames-parameters '((cursor-type . bar)))
-
-;; don't add \ when line wraps
-(set-display-table-slot standard-display-table 'wrap ?\ )
-
-;; show column number
-(setq column-number-mode t)
-
-;; show line numbers on the side in programming modes
-(use-package nlinum
-  :ensure t
-  :init (add-hook 'prog-mode-hook 'nlinum-mode)
-  :config (setq nlinum-format "%d "))
-
-;; make buffer names unique
-(use-package uniquify
-  :config (setq uniquify-buffer-name-style 'forward))
-
 ;; theming
 (if window-system
   (progn
@@ -94,6 +75,39 @@
     (use-package literal-tango-theme
       :load-path "elisp/"
       :config (load-theme 'literal-tango t))))
+
+;; bar/i-beam cursor
+(modify-all-frames-parameters '((cursor-type . bar)))
+
+;; don't add \ when line wraps
+(set-display-table-slot standard-display-table 'wrap ?\ )
+
+;; smooth resizing of GUI frames
+(setq frame-resize-pixelwise t)
+
+;; show column number
+(setq column-number-mode t)
+
+;; show line numbers on the side in programming modes
+(use-package nlinum
+  :ensure t
+  :init (add-hook 'prog-mode-hook 'nlinum-mode)
+  :config (setq nlinum-format "%d "))
+
+;; make buffer names unique
+(use-package uniquify
+  :config (setq uniquify-buffer-name-style 'forward))
+
+; Move between windows with Shift+Arrow
+(use-package windmove
+  :bind (("S-<left>" . windmove-left)
+         ("S-<right>" . windmove-right)
+         ("S-<up>" . windmove-up)
+         ("S-<down>" . windmove-down)))
+
+; Undo and redo window configurations
+(use-package winner
+  :init (winner-mode))
 
 ;; center the cursor vertically when scrolling
 (use-package centered-cursor-mode
@@ -180,6 +194,11 @@
 ;; I'm used to C-c/C-v/C-x/C-z for copy/paste/cut/undo
 (cua-mode t)
 
+; Expand region by semantic units
+(use-package expand-region
+  :ensure t
+  :bind (("C-a" . er/expand-region)))
+
 ;; toggle comment visibility
 (use-package hide-comnt
   :ensure t
@@ -257,7 +276,7 @@
 
 ;;;; Indentation
 
-;; make C-a/Home go to beginning of indentation when possible
+;; make Home go to beginning of indentation when possible
 ;; http://www.emacswiki.org/emacs/BackToIndentationOrBeginning
 (substitute-key-definition 'move-beginning-of-line 'back-to-indentation-or-beginning global-map)
 (defun back-to-indentation-or-beginning () (interactive)
