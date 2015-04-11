@@ -98,14 +98,14 @@
 (use-package uniquify
   :config (setq uniquify-buffer-name-style 'forward))
 
-; Move between windows with Shift+Arrow
+;; Move between windows with Shift+Arrow
 (use-package windmove
   :bind (("S-<left>" . windmove-left)
          ("S-<right>" . windmove-right)
          ("S-<up>" . windmove-up)
          ("S-<down>" . windmove-down)))
 
-; Undo and redo window configurations
+; Undo and redo window configurations with C-c left/right
 (use-package winner
   :init (winner-mode))
 
@@ -306,7 +306,7 @@
          (not (nth 3 syn)))))
 
 (defun end-of-code-or-line (arg)
-    "Move to the end of code.c If already there, move to the end of line,
+    "Move to the end of code. If already there, move to the end of line,
 that is after the possible comment. If at the end of line, move to the
 end of code.
 
