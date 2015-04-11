@@ -188,6 +188,12 @@
 
 ;;;; Editing
 
+;; join the following line onto the current one
+(global-set-key (kbd "M-j")
+                (lambda ()
+                  (interactive)
+                  (join-line -1)))
+
 ;; my sentences don't end with double spaces
 (setq sentence-end-double-space nil)
 
