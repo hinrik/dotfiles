@@ -362,6 +362,14 @@ This emulates the 'softtabstop' feature in Vim."
 ;; case-insensitive incremental search
 (setq case-fold-search t)
 
+;; highlight isearch all matches immediately and don't clean them up
+(setq lazy-highlight-max-at-a-time nil
+      lazy-highlight-initial-delay 0
+      lazy-highlight-cleanup nil)
+
+;; clean up isearch highlights
+(global-set-key (kbd "C-l") 'lazy-highlight-cleanup)
+
 ;; more comprehensive help when using C-a
 (setq apropos-do-all t)
 
