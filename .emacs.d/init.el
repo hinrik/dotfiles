@@ -122,13 +122,13 @@
              (concat
                (buffer-name)
                (cond (buffer-read-only " =")
-                     ((buffer-modified-p) " +")))
+                 ((buffer-modified-p) " +")))
              (cond
                (buffer-file-truename
                   (concat "(" (file-name-directory buffer-file-truename) ")"))
-                (dired-directory
-                      (concat "{" dired-directory"}"))
-                (t "[no file]")))))
+               (dired-directory
+                 (concat "{" dired-directory"}"))
+               (t "[no file]")))))
 (setq-default icon-title-format frame-title-format)
 
 ;; use frame title as terminal title
@@ -308,10 +308,10 @@ Comments are recognized in any mode that sets syntax-ppss properly."
       (cond ((= (point) eoc)
              (move-end-of-line arg))
             (t
-             (move-end-of-line arg)
-             (while (point-in-comment)
-               (backward-char))
-                        (skip-chars-backward " \t")))))
+              (move-end-of-line arg)
+              (while (point-in-comment)
+                (backward-char))
+              (skip-chars-backward " \t")))))
 
 ;; make cua-mode aware of the above so region selection is not degraded
 (put 'back-to-indentation-or-beginning 'CUA 'move)
@@ -375,26 +375,26 @@ This emulates the 'softtabstop' feature in Vim."
   (interactive)
   (if (= (count-windows) 2)
       (let* ((this-win-buffer (window-buffer))
-       (next-win-buffer (window-buffer (next-window)))
-       (this-win-edges (window-edges (selected-window)))
-       (next-win-edges (window-edges (next-window)))
-       (this-win-2nd (not (and (<= (car this-win-edges)
-           (car next-win-edges))
-             (<= (cadr this-win-edges)
-           (cadr next-win-edges)))))
-       (splitter
-        (if (= (car this-win-edges)
-         (car (window-edges (next-window))))
-      'split-window-horizontally
-    'split-window-vertically)))
-  (delete-other-windows)
-  (let ((first-win (selected-window)))
-    (funcall splitter)
-    (if this-win-2nd (other-window 1))
-    (set-window-buffer (selected-window) this-win-buffer)
-    (set-window-buffer (next-window) next-win-buffer)
-    (select-window first-win)
-    (if this-win-2nd (other-window 1))))))
+             (next-win-buffer (window-buffer (next-window)))
+             (this-win-edges (window-edges (selected-window)))
+             (next-win-edges (window-edges (next-window)))
+             (this-win-2nd (not (and (<= (car this-win-edges)
+                                         (car next-win-edges))
+                                     (<= (cadr this-win-edges)
+                                         (cadr next-win-edges)))))
+             (splitter
+               (if (= (car this-win-edges)
+                      (car (window-edges (next-window))))
+                   'split-window-horizontally
+                 'split-window-vertically)))
+      (delete-other-windows)
+      (let ((first-win (selected-window)))
+        (funcall splitter)
+        (if this-win-2nd (other-window 1))
+        (set-window-buffer (selected-window) this-win-buffer)
+        (set-window-buffer (next-window) next-win-buffer)
+        (select-window first-win)
+        (if this-win-2nd (other-window 1))))))
 
 ;; C-d should logout/kill a shell buffer
 (add-hook 'shell-mode-hook
