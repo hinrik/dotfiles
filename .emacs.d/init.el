@@ -88,6 +88,7 @@
 ;; show line numbers on the side in programming modes
 (use-package nlinum
   :ensure t
+  :bind ("C-c l" . nlinum-mode)
   :init (add-hook 'prog-mode-hook 'nlinum-mode)
   :config (setq nlinum-format "%d "))
 
