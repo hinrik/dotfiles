@@ -473,34 +473,22 @@ This emulates the 'softtabstop' feature in Vim."
 
 ;;;; Major modes
 
+;; These cperl faces have terrible fg/bg colors by default and are rarely
+;; affected by color themes. So let's make them inherit from some standard
+;; faces instead.
+(defun fix-cperl-faces ()
+  (face-remap-set-base 'cperl-hash-face
+    '((:inherit font-lock-variable-name-face :weight bold :slant italic)))
+  (face-remap-set-base 'cperl-array-face
+    '((:inherit font-lock-variable-name-face :weight bold)))
+  (face-remap-set-base 'cperl-nonoverridable-face
+    '((:inherit font-lock-function-name-face))))
+
 (use-package cperl-mode
   :diminish abbrev-mode
   :config
   ;; use cperl-mode instead of perl-mode
   (defalias 'perl-mode 'cperl-mode)
-
-  ;; cperl-mode-map still doesn't inherit from prog-mode-map, so we need these
-  (add-hook 'cperl-mode-hook
-            (lambda ()
-              (progn
-                (define-key cperl-mode-map (kbd "TAB") 'tab-to-tab-stop)
-                (define-key cperl-mode-map (kbd "DEL") 'backward-delete-whitespace-to-column))))
-
-  ;; These cperl faces have terrible fg/bg colors by default and are rarely
-  ;; affected by color themes. So let's make them inherit from some standard
-  ;; faces instead.
-  (set-face-attribute 'cperl-hash-face nil
-    :background nil
-    :foreground nil
-    :inherit 'font-lock-variable-name-face)
-  (set-face-attribute 'cperl-array-face nil
-    :background nil
-    :foreground nil
-    :inherit 'font-lock-variable-name-face)
-  (set-face-attribute 'cperl-nonoverridable-face nil
-    :background nil
-    :foreground nil
-    :inherit 'font-lock-function-name-face)
 
   ;; more comprehensive syntax highlighting
   (setq cperl-highlight-variables-indiscriminately t)
@@ -513,6 +501,13 @@ This emulates the 'softtabstop' feature in Vim."
         cperl-electric-keywords t             ; Expand "if ", "for ", and more
         cperl-label-offset 0)                 ; No special indenting of labels
 
+  (add-hook 'cperl-mode-hook 'fix-cperl-faces)
+  ;; cperl-mode-map still doesn't inherit from prog-mode-map, so we need these
+  (add-hook 'cperl-mode-hook
+            (lambda ()
+              (progn
+                (define-key cperl-mode-map (kbd "TAB") 'tab-to-tab-stop)
+                (define-key cperl-mode-map (kbd "DEL") 'backward-delete-whitespace-to-column))))
   ;; cperl-mode doesn't derive from prog-mode, so make sure prog-mode
   ;; hooks get run
   (add-hook 'cperl-mode-hook (lambda () (run-hooks 'prog-mode-hook))))
