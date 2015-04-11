@@ -89,16 +89,7 @@
       (load-theme 'monokai t)
       ;; override Monokai's very dim comment color
       (set-face-foreground 'font-lock-comment-face "#729FCF")
-      (set-face-foreground 'font-lock-comment-delimiter-face "#729FCF"))
-
-    ;; nice modeline is nice
-    (use-package powerline
-      :ensure t
-      :config
-      (powerline-default-theme)
-      ;; remove things from the modeline I don't care about
-      (setq powerline-display-buffer-size nil
-            powerline-display-mule-info nil)))
+      (set-face-foreground 'font-lock-comment-delimiter-face "#729FCF")))
   (progn
     (use-package literal-tango-theme
       :load-path "elisp/"
