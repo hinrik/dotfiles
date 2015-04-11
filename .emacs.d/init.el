@@ -194,6 +194,13 @@
                   (interactive)
                   (join-line -1)))
 
+; drag lines/words/regions vertically/horizontally with M-<direction>
+(use-package drag-stuff
+  :ensure t
+  :diminish drag-stuff-mode
+  :config
+  (add-hook 'find-file-hook (lambda () (drag-stuff-mode t))))
+
 ;; my sentences don't end with double spaces
 (setq sentence-end-double-space nil)
 
