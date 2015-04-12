@@ -231,10 +231,11 @@
   :ensure t
   :init (add-hook 'prog-mode-hook 'flycheck-mode)
   :config
-  ;; disable perlcritic in the syntax check
+  ;; I don't want normally want to hear from perlcritic and checkdoc
   (setq-default flycheck-disabled-checkers
-    (append flycheck-disabled-checkers
-      '(perl-perlcritic)))
+    '(perl-perlcritic emacs-lisp-checkdoc))
+  ;; don't warn about my custom packages not being loadable
+  (setq flycheck-emacs-lisp-load-path '("~/.emacs.d/elisp/"))
   ;; use "C-c f" as the flycheck prefix key
   (define-key flycheck-mode-map flycheck-keymap-prefix nil)
   (setq flycheck-keymap-prefix (kbd "C-c f"))
