@@ -214,7 +214,7 @@
 (use-package magit
   :ensure t
   :bind (("C-c b" . magit-blame-mode)
-         ("C-c g" . magit-status-mode)))
+         ("C-c g" . magit-status)))
 
 ;; show trailing whitespace in programming modes
 (add-hook 'prog-mode-hook (lambda () (setq show-trailing-whitespace t)))
