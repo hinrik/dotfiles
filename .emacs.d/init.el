@@ -261,6 +261,11 @@
 (global-font-lock-mode t)
 (add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
 
+;; highlight quoted elisp symbols
+(use-package highlight-quoted
+  :ensure t
+  :config (add-hook 'emacs-lisp-mode-hook 'highlight-quoted-mode))
+
 ;; highlight numbers in code
 (use-package highlight-numbers
   :ensure t
