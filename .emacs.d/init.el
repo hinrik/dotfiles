@@ -1,4 +1,4 @@
-;;;; Packaging
+;;; Packaging
 
 ;; Add MELPA repository and initialize installed packages
 (require 'package)
@@ -14,7 +14,7 @@
 (require 'diminish)
 (require 'bind-key)
 
-;;;; Basic configuration
+;;; Basic configuration
 
 ;; don't load default.el
 (setq inhibit-default-init t)
@@ -35,7 +35,7 @@
       recentf-save-file              "~/.emacs.d/state/recentf"
       shared-game-score-directory    "~/.emacs.d/state/games/")
 
-;;;; Clean up the UI
+;;; Clean up the UI
 
 ;; no bells, ever
 (setq ring-bell-function 'ignore)
@@ -58,7 +58,7 @@
 ;; I prefer "y or n" to "yes or no"
 (defalias 'yes-or-no-p 'y-or-n-p)
 
-;;;; Appearance
+;;; Appearance
 
 ;; theming
 (if window-system
@@ -167,7 +167,7 @@
   '(:propertize (:eval (mapconcat 'symbol-name (get-faces (point)) ",")) face '(:foreground "cyan"))
   " "))
 
-;;;; Editing
+;;; Editing
 
 ;; join the following line onto the current one
 (global-set-key (kbd "M-j")
@@ -248,7 +248,7 @@
       (setq flycheck-display-errors-function
             'flycheck-pos-tip-error-messages))))
 
-;;;; Highlighting
+;;; Highlighting
 
 ;; highlight matching parentheses
 (show-paren-mode t)
@@ -268,7 +268,7 @@
             (font-lock-add-keywords nil
               '(("\\<\\(FIXME\\|TODO\\|BUG\\|XXX\\):" 1 font-lock-warning-face t)))))
 
-;;;; Indentation
+;;; Indentation
 
 ;; manually indent/deindent regions with C-c i
 (global-set-key (kbd "C-c i") 'indent-rigidly)
@@ -337,7 +337,7 @@ This emulates the 'softtabstop' feature in Vim."
             (backward-delete-char-untabify (- (match-end 1) (match-beginning 1)))
         (call-interactively 'backward-delete-char-untabify))))))
 
-;;;; Window and frame management
+;;; Window and frame management
 
 ;; smooth resizing of GUI frames
 (setq frame-resize-pixelwise t)
@@ -381,7 +381,7 @@ i.e. change right window to bottom, or change bottom window to right."
                   (split-window-horizontally))
                 (set-window-buffer (windmove-find-other-window neighbour-dir) other-buf))))))))
 
-;;;; Misc
+;;; Misc
 
 ;; use text-mode on startup, and for unknown filetypes
 (setq initial-major-mode 'text-mode)
@@ -477,7 +477,7 @@ i.e. change right window to bottom, or change bottom window to right."
   (projectile-global-mode)
   (helm-projectile-toggle 1))
 
-;;;; Major modes
+;;; Major modes
 
 ;; These cperl faces have terrible fg/bg colors by default and are rarely
 ;; affected by color themes. So let's make them inherit from some standard
