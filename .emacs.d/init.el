@@ -193,11 +193,19 @@
 
 (use-package hideshow
   :diminish hs-minor-mode
-  :bind (("C-c h" . hs-hide-block)
-         ("C-c s" . hs-show-block)
-         ("C-c C-h" . hs-hide-all)
-         ("C-c C-s" . hs-show-all))
+  :bind ("C-c s" . hs-toggle-hiding)
   :init (add-hook 'prog-mode-hook 'hs-minor-mode))
+
+(defvar my-hs-hide nil
+  "Current state of hideshow for toggling all.")
+(defun my-toggle-hideshow-all ()
+  "Toggle hideshow all."
+  (interactive)
+  (setq my-hs-hide (not my-hs-hide))
+  (if my-hs-hide
+      (hs-hide-all)
+    (hs-show-all)))
+(global-set-key (kbd "C-c C-s") 'my-toggle-hideshow-all)
 
 ; Expand region by semantic units
 (use-package expand-region
