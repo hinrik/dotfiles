@@ -404,6 +404,15 @@ i.e. change right window to bottom, or change bottom window to right."
       lazy-highlight-initial-delay 0
       lazy-highlight-cleanup nil)
 
+;; automatically wrap isearch when needed
+(defadvice isearch-search (after isearch-no-fail activate)
+  (unless isearch-success
+    (ad-disable-advice 'isearch-search 'after 'isearch-no-fail)
+    (ad-activate 'isearch-search)
+    (isearch-repeat (if isearch-forward 'forward))
+    (ad-enable-advice 'isearch-search 'after 'isearch-no-fail)
+        (ad-activate 'isearch-search)))
+
 ;; clean up isearch highlights
 (global-set-key (kbd "C-l") 'lazy-highlight-cleanup)
 
