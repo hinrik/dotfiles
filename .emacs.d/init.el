@@ -127,19 +127,22 @@
 (defun shorten-function-name (name)
   (last (split-string name "::")))
 
+(defun my-current-function ()
+  (gethash (selected-window) which-func-table which-func-unknown))
+
 (defconst my-which-func-current
   `(:eval (shorten-function-name (replace-regexp-in-string
            "%" "%%"
-           (gethash (selected-window) which-func-table which-func-unknown)))))
+           (my-current-function)))))
 
 ;; in the modeline, show which function the cursor is in
 (use-package which-func
   :init (which-function-mode)
   :config
   (setq which-func-current 'my-which-func-current
-        which-func-format  `((:propertize ("➤" which-func-current)
-                             local-map ,which-func-keymap
-                             face which-func))))
+        which-func-format (list
+          '(:propertize (:eval (if (my-current-function) "➤" "")) face which-func)
+          '(:propertize which-func-current local-map which-func-keymap face which-func))))
 
 ;; http://stackoverflow.com/questions/1242352/get-font-face-under-cursor-in-emacs
 (defun get-faces (pos)
