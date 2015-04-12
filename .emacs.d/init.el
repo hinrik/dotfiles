@@ -311,7 +311,7 @@ Comments are recognized in any mode that sets syntax-ppss properly."
               (skip-chars-backward " \t")))))
 
 ;; 4-column indentation
-(setq default-tab-width 4)
+(setq-default tab-width 4)
 
 ;; indentation should consist of spaces, not a real tab
 (setq-default indent-tabs-mode nil)
@@ -384,8 +384,8 @@ i.e. change right window to bottom, or change bottom window to right."
 ;;;; Misc
 
 ;; use text-mode on startup, and for unknown filetypes
-(setq initial-major-mode 'text-mode
-      default-major-mode 'text-mode)
+(setq initial-major-mode 'text-mode)
+(setq-default major-mode 'text-mode)
 
 ;; case-insensitive incremental search
 (setq case-fold-search t)
