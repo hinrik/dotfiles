@@ -191,6 +191,14 @@
 ;; I'm used to C-c/C-v/C-x/C-z for copy/paste/cut/undo
 (cua-mode t)
 
+(use-package hideshow
+  :diminish hs-minor-mode
+  :bind (("C-c h" . hs-hide-block)
+         ("C-c s" . hs-show-block)
+         ("C-c C-h" . hs-hide-all)
+         ("C-c C-s" . hs-show-all))
+  :init (add-hook 'prog-mode-hook 'hs-minor-mode))
+
 ; Expand region by semantic units
 (use-package expand-region
   :ensure t
@@ -467,7 +475,6 @@ i.e. change right window to bottom, or change bottom window to right."
 (use-package helm
   :ensure t
   :diminish helm-mode
-  :bind ("C-c h" . helm-command-prefix)
   :init
   (setq helm-ff-transformer-show-only-basename nil  ; show full-path in find-file
         helm-move-to-line-cycle-in-source t         ; allow cycling top<->bottom
