@@ -191,6 +191,11 @@
 ;; I'm used to C-c/C-v/C-x/C-z for copy/paste/cut/undo
 (cua-mode t)
 
+;; make undo behave like tree, which is what I'm used to
+(use-package undo-tree
+  :ensure t
+  :config (global-undo-tree-mode))
+
 (use-package hideshow
   :diminish hs-minor-mode
   :bind ("C-c s" . hs-toggle-hiding)
