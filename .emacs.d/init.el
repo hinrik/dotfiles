@@ -194,6 +194,7 @@
 ;; make undo behave like tree, which is what I'm used to
 (use-package undo-tree
   :ensure t
+  :diminish undo-tree-mode
   :config (global-undo-tree-mode))
 
 (use-package hideshow
