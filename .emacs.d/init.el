@@ -378,6 +378,10 @@ This emulates the 'softtabstop' feature in Vim."
 (use-package winner
   :init (winner-mode))
 
+;; rebalance split windows on close
+(defadvice delete-window (after auto-balance activate)
+  (balance-windows))
+
 ;; http://www.emacswiki.org/emacs/ToggleWindowSplit
 (global-set-key (kbd "C-c r") 'window-toggle-split-direction)
 (defun window-toggle-split-direction ()
