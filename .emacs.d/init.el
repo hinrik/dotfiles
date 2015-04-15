@@ -256,9 +256,9 @@
   :ensure t
   :init (add-hook 'prog-mode-hook 'flycheck-mode)
   :config
-  ;; I don't want normally want to hear from perlcritic and checkdoc
+  ;; I don't want normally want to hear from perlcritic
   (setq-default flycheck-disabled-checkers
-    '(perl-perlcritic emacs-lisp-checkdoc))
+    '(perl-perlcritic))
   ;; don't warn about my custom packages not being loadable
   (setq flycheck-emacs-lisp-load-path '("~/.emacs.d/elisp/"))
   ;; use "C-c f" as the flycheck prefix key
