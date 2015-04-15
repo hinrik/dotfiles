@@ -589,7 +589,7 @@ i.e. change right window to bottom, or change bottom window to right."
 ;; use helm for completion/narrowing in minibuffer, C-x C-f, etc
 (use-package helm
   :ensure t
-  :defer 1
+  :defer 5
   :diminish helm-mode
   :init
   (setq helm-ff-transformer-show-only-basename nil  ; show full-path in find-file
