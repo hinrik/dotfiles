@@ -381,6 +381,9 @@ This emulates the 'softtabstop' feature in Vim."
 ;; smooth resizing of GUI frames
 (setq frame-resize-pixelwise t)
 
+;; don't ask, just kill the buffer when I hit C-x k
+(global-set-key (kbd "C-x k") 'kill-this-buffer)
+
 ;; Move between windows with Shift+Arrow
 (use-package windmove
   :bind (("S-<left>" . windmove-left)
