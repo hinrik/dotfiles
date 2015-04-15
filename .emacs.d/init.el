@@ -257,6 +257,7 @@
 ;; automatic syntax checking
 (use-package flycheck
   :ensure t
+  :defer t
   :init (add-hook 'prog-mode-hook 'flycheck-mode)
   :config
   ;; I don't want normally want to hear from perlcritic
@@ -281,9 +282,7 @@
   (use-package flycheck-pos-tip
     :ensure t
     :config
-    (with-eval-after-load 'flycheck
-      (setq flycheck-display-errors-function
-            'flycheck-pos-tip-error-messages))))
+    (setq flycheck-display-errors-function 'flycheck-pos-tip-error-messages)))
 
 ;;; Highlighting
 
@@ -297,12 +296,14 @@
 ;; highlight quoted elisp symbols
 (use-package highlight-quoted
   :ensure t
-  :config (add-hook 'emacs-lisp-mode-hook 'highlight-quoted-mode))
+  :defer t
+  :init (add-hook 'emacs-lisp-mode-hook 'highlight-quoted-mode))
 
 ;; highlight numbers in code
 (use-package highlight-numbers
   :ensure t
-  :config (add-hook 'prog-mode-hook 'highlight-numbers-mode))
+  :defer t
+  :init (add-hook 'prog-mode-hook 'highlight-numbers-mode))
 
 ;; highlight FIXME/TODO/BUG/XXX
 (add-hook 'prog-mode-hook
@@ -633,11 +634,10 @@ i.e. change right window to bottom, or change bottom window to right."
     '((:inherit font-lock-function-name-face))))
 
 (use-package cperl-mode
+  :defer t
   :diminish abbrev-mode
+  :init (defalias 'perl-mode 'cperl-mode)
   :config
-  ;; use cperl-mode instead of perl-mode
-  (defalias 'perl-mode 'cperl-mode)
-
   ;; more comprehensive syntax highlighting
   (setq cperl-highlight-variables-indiscriminately t)
 
@@ -662,10 +662,12 @@ i.e. change right window to bottom, or change bottom window to right."
 
 (use-package slime
   :ensure t
+  :defer t
   :config
   (setq slime-net-coding-system 'utf-8-unix)
   (setq inferior-lisp-program "/usr/bin/sbcl")
   (slime-setup '(slime-fancy)))
 
 (use-package markdown-mode
-  :ensure t)
+  :ensure t
+  :defer t)
