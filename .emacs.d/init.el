@@ -589,6 +589,7 @@ i.e. change right window to bottom, or change bottom window to right."
 ;; use helm for completion/narrowing in minibuffer, C-x C-f, etc
 (use-package helm
   :ensure t
+  :defer 1
   :diminish helm-mode
   :init
   (setq helm-ff-transformer-show-only-basename nil  ; show full-path in find-file
@@ -607,15 +608,17 @@ i.e. change right window to bottom, or change bottom window to right."
   :ensure t
   :diminish projectile-mode
   :config
-  (use-package helm-projectile :ensure t)
   (setq projectile-enable-caching t
         projectile-cache-file "~/.emacs.d/state/projectile.cache"
         projectile-known-projects-file "~/.emacs.d/state/projectile-bookmarks.eld"
-        projectile-use-git-grep t
-        projectile-completion-system 'helm
-        projectile-switch-project-action 'helm-projectile)
+        projectile-use-git-grep t)
   (projectile-global-mode)
-  (helm-projectile-toggle 1))
+  (with-eval-after-load 'helm
+    (use-package helm-projectile
+      :ensure t)
+    (setq projectile-completion-system 'helm
+          projectile-switch-project-action 'helm-projectile)
+    (helm-projectile-toggle 1)))
 
 ;;; Major modes
 
