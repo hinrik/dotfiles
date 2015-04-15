@@ -265,7 +265,15 @@
   (define-key flycheck-mode-map flycheck-keymap-prefix nil)
   (setq flycheck-keymap-prefix (kbd "C-c f"))
   (define-key flycheck-mode-map flycheck-keymap-prefix
-              flycheck-command-map)
+    flycheck-command-map)
+  ;; check Cask files
+  (use-package flycheck-cask
+    :ensure t
+    :config (flycheck-cask-setup))
+  ;; check package conventions
+  (use-package flycheck-package
+    :ensure t
+    :config (flycheck-package-setup))
   ;; Show Flycheck messages in popups
   (use-package flycheck-pos-tip
     :ensure t
@@ -604,6 +612,9 @@ i.e. change right window to bottom, or change bottom window to right."
 
 ;;; Major modes
 
+(use-package lisp-mode
+  :mode ("/Cask\\'" . emacs-lisp-mode))
+
 ;; These cperl faces have terrible fg/bg colors by default and are rarely
 ;; affected by color themes. So let's make them inherit from some standard
 ;; faces instead.
@@ -649,3 +660,6 @@ i.e. change right window to bottom, or change bottom window to right."
   (setq slime-net-coding-system 'utf-8-unix)
   (setq inferior-lisp-program "/usr/bin/sbcl")
   (slime-setup '(slime-fancy)))
+
+(use-package markdown-mode
+  :ensure t)
