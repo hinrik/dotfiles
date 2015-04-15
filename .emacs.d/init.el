@@ -1,16 +1,19 @@
 ;;; Packaging
 
-;; Add MELPA repository and initialize installed packages
-(require 'package)
-(setq package-enable-at-startup nil)
-(add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
-(package-initialize)
+(eval-when-compile
+  ;; Add MELPA repository and initialize installed packages
+  (require 'package)
+  (setq package-enable-at-startup nil)
+  (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
+  (package-initialize)
 
-;; Install use-package which will be used to install other packages
-(unless (package-installed-p 'use-package)
-  (package-refresh-contents)
-  (package-install 'use-package))
-(eval-when-compile (require 'use-package))
+  ;; Install use-package macro to install/load other packages
+  (unless (package-installed-p 'use-package)
+    (package-refresh-contents)
+    (package-install 'use-package))
+  (require 'use-package))
+
+;; required at runtime by use-package
 (require 'diminish)
 (require 'bind-key)
 
