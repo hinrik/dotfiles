@@ -156,6 +156,12 @@
           (get-char-property pos 'face)
           (plist-get (text-properties-at pos) 'face)))))
 
+;; show number of current/total isearch matches in the modeline
+(use-package anzu
+  :ensure t
+  :init (global-anzu-mode)
+  :diminish anzu-mode)
+
 ;; my nice modeline
 (setq-default mode-line-format (list
   "%e "
