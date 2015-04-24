@@ -13,10 +13,6 @@
     (package-install 'use-package))
   (require 'use-package))
 
-;; required at runtime by use-package
-(require 'diminish)
-(require 'bind-key)
-
 ;;; Basic configuration
 
 ;; don't load default.el
