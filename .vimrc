@@ -143,9 +143,6 @@ if version >= 700
     autocmd VimResized * wincmd =
 endif
 
-" My *.t files are Perl, not TADS
-autocmd BufRead,BufNewFile *.t set filetype=perl
-
 " My *.md files are Markdown, not Modula 2
 autocmd BufRead,BufNewFile *.md set filetype=markdown
 
