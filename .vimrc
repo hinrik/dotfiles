@@ -4,27 +4,28 @@
 " URL: http://github.com/hinrik/dotfiles/blob/master/.vimrc
 
 " Download vundle
-if !isdirectory(expand("~/.vim/bundle/vundle"))
+if !isdirectory(expand("~/.vim/bundle/Vundle.vim"))
     !mkdir -p ~/.vim/bundle
-    !git clone git://github.com/gmarik/vundle.git ~/.vim/bundle/vundle
+    !git clone git://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/Vundle.vim
     let s:bootstrap=1
 endif
 
 " Load bundles with vundle
-set runtimepath+=~/.vim/bundle/vundle/
+set runtimepath+=~/.vim/bundle/Vundle.vim
 call vundle#rc()
-Bundle 'avakhov/vim-yaml'
-Bundle 'gmarik/vundle'
-Bundle 'hail2u/vim-css3-syntax'
-Bundle 'hinrik/color-scheme-literal-tango'
-Bundle 'kchmck/vim-coffee-script'
-Bundle 'lfairy/lilyvim'
-Bundle 'vim-scripts/VimClojure'
-Bundle 'slim-template/vim-slim'
-Bundle 'vim-perl/vim-perl'
-Bundle 'vim-scripts/perl_synwrite.vim'
-Bundle 'tpope/vim-markdown'
-Bundle 'zaiste/tmux.vim'
+Plugin 'gmarik/Vundle.vim'
+Plugin 'avakhov/vim-yaml'
+Plugin 'hail2u/vim-css3-syntax'
+Plugin 'hinrik/color-scheme-literal-tango'
+Plugin 'kchmck/vim-coffee-script'
+Plugin 'lfairy/lilyvim'
+Plugin 'vim-scripts/VimClojure'
+Plugin 'slim-template/vim-slim'
+Plugin 'vim-perl/vim-perl'
+Plugin 'vim-scripts/perl_synwrite.vim'
+Plugin 'tpope/vim-markdown'
+Plugin 'zaiste/tmux.vim'
+Plugin 'elixir-lang/vim-elixir'
 
 " Bootstrap vundle
 if exists("s:bootstrap") && s:bootstrap
