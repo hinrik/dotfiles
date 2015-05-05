@@ -64,15 +64,16 @@
 
 ;; theming
 (if window-system
-  (progn
-    ;; Monokai looks nice
-    (use-package monokai-theme
-      :ensure t
-      :config
-      (load-theme 'monokai t)
-      ;; override Monokai's very dim comment color
-      (set-face-foreground 'font-lock-comment-face "#729FCF")
-      (set-face-foreground 'font-lock-comment-delimiter-face "#729FCF")))
+    (progn
+      (set-default-font "Mono-8.5")
+      ;; Monokai looks nice
+      (use-package monokai-theme
+        :ensure t
+        :config
+        (load-theme 'monokai t)
+        ;; override Monokai's very dim comment color
+        (set-face-foreground 'font-lock-comment-face "#729FCF")
+        (set-face-foreground 'font-lock-comment-delimiter-face "#729FCF")))
   (progn
     (use-package literal-tango-theme
       :load-path "elisp/"
