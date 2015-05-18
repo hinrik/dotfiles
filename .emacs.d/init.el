@@ -15,6 +15,9 @@
 
 ;;; Basic configuration
 
+;; suppress `defadvice' warnings that might come from 3rd-party packages
+(setq ad-redefinition-action 'accept)
+
 ;; don't load default.el
 (setq inhibit-default-init t)
 
