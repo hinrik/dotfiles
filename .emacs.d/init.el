@@ -129,20 +129,18 @@
 
 ;;; Modeline
 
-;; strip the package name from the function name, it's usually superfluous
-(defun shorten-function-name (name)
-  (last (split-string name "::")))
-
-(defun my-current-function ()
-  (gethash (selected-window) which-func-table which-func-unknown))
-
-(defconst my-which-func-current
-  `(:eval (shorten-function-name (replace-regexp-in-string
-           "%" "%%"
-           (my-current-function)))))
-
 ;; in the modeline, show which function the cursor is in
 (use-package which-func
+  :preface
+  ;; strip the package name from the function name, it's usually superfluous
+  (defun shorten-function-name (name)
+    (last (split-string name "::")))
+  (defun my-current-function ()
+    (gethash (selected-window) which-func-table which-func-unknown))
+  (defconst my-which-func-current
+    `(:eval (shorten-function-name (replace-regexp-in-string
+             "%" "%%"
+             (my-current-function)))))
   :init (which-function-mode)
   :config
   (setq which-func-current 'my-which-func-current
