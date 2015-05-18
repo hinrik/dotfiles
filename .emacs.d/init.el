@@ -267,7 +267,7 @@
   :defer t
   :init (add-hook 'prog-mode-hook 'flycheck-mode)
   :config
-  ;; I don't want normally want to hear from perlcritic
+  ;; I usually don't want to hear from perlcritic
   (setq-default flycheck-disabled-checkers
     '(perl-perlcritic))
   ;; don't warn about my custom packages not being loadable
