@@ -170,16 +170,16 @@
   "%e "
   mode-line-remote
   " "
-  '(:propertize (:eval mode-line-buffer-identification) face '(:weight bold))
+  '(:propertize (:eval mode-line-buffer-identification) face (:weight bold))
   " "
-  '(:propertize "[" face '(:weight bold))
-  '(:propertize (:eval mode-line-modified) face '(:foreground "yellow"))
-  '(:propertize "]" face '(:weight bold))
+  '(:propertize "[" face (:weight bold))
+  '(:propertize (:eval mode-line-modified) face (:foreground "yellow"))
+  '(:propertize "]" face (:weight bold))
   " "
   mode-line-position
   mode-line-modes
   mode-line-misc-info
-  '(:propertize (:eval (mapconcat 'symbol-name (get-faces (point)) ",")) face '(:foreground "cyan"))
+  '(:propertize (:eval (mapconcat 'symbol-name (get-faces (point)) ",")) face (:foreground "cyan"))
   " "))
 
 ;;; Editing
