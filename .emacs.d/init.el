@@ -629,7 +629,15 @@ i.e. change right window to bottom, or change bottom window to right."
 ;;; Major modes
 
 (use-package lisp-mode
-  :mode ("/Cask\\'" . emacs-lisp-mode))
+  :defer t
+  :mode ("/Cask\\'" . emacs-lisp-mode)
+  :config
+  ;; use imenu to browse use-package blocks
+  (add-hook 'emacs-lisp-mode-hook
+            (lambda ()
+              (add-to-list 'imenu-generic-expression
+                           '("Used Packages"
+                             "\\(^\\s-*(use-package +\\)\\(\\_<.+\\_>\\)" 2)))))
 
 ;; These cperl faces have terrible fg/bg colors by default and are rarely
 ;; affected by color themes. So let's make them inherit from some standard
