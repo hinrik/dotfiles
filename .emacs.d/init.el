@@ -626,6 +626,13 @@ i.e. change right window to bottom, or change bottom window to right."
           projectile-switch-project-action 'helm-projectile)
     (helm-projectile-toggle 1)))
 
+;; display keybinding overview 1 sec after hitting prefix keys
+(use-package guide-key
+  :ensure t
+  :config
+  (guide-key-mode)
+  (setq guide-key/guide-key-sequence t))
+
 ;;; Major modes
 
 (use-package lisp-mode
