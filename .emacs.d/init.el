@@ -609,6 +609,11 @@ i.e. change right window to bottom, or change bottom window to right."
   (use-package helm-config)
   (helm-mode t))
 
+;; shared imenu between all buffers of the same major mode
+(use-package imenu-anywhere
+  :ensure t
+  :bind ("C-c i" . helm-imenu-anywhere))
+
 ;; projectile offers fast find-file for project files, git-grep, etc
 (use-package projectile
   :ensure t
