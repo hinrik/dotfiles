@@ -634,6 +634,7 @@ i.e. change right window to bottom, or change bottom window to right."
 ;; display keybinding overview 1 sec after hitting prefix keys
 (use-package guide-key
   :ensure t
+  :diminish guide-key-mode
   :config
   (guide-key-mode)
   (setq guide-key/guide-key-sequence t))
