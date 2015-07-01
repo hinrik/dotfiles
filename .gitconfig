@@ -19,6 +19,7 @@
     lo = log --decorate --abbrev-commit --stat
     slog = log --graph --decorate --abbrev-commit --pretty=oneline
     staged = diff --cached
+    stashed = stash list --pretty=format:'%gd: %Cred%h%Creset %Cgreen[%ar]%Creset %s'
     tree = log --graph --pretty=oneline --abbrev-commit --decorate
 [push]
     default = upstream
