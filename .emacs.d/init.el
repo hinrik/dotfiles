@@ -157,12 +157,6 @@
           (get-char-property pos 'face)
           (plist-get (text-properties-at pos) 'face)))))
 
-;; show number of current/total isearch matches in the modeline
-(use-package anzu
-  :ensure t
-  :init (global-anzu-mode)
-  :diminish anzu-mode)
-
 ;; my nice modeline
 (setq-default mode-line-format (list
   "%e "
@@ -526,26 +520,6 @@ i.e. change right window to bottom, or change bottom window to right."
 (setq initial-major-mode 'text-mode)
 (setq-default major-mode 'text-mode)
 
-;; case-insensitive incremental search
-(setq case-fold-search t)
-
-;; highlight isearch all matches immediately and don't clean them up
-(setq lazy-highlight-max-at-a-time nil
-      lazy-highlight-initial-delay 0
-      lazy-highlight-cleanup nil)
-
-;; automatically wrap isearch when needed
-(defadvice isearch-search (after isearch-no-fail activate)
-  (unless isearch-success
-    (ad-disable-advice 'isearch-search 'after 'isearch-no-fail)
-    (ad-activate 'isearch-search)
-    (isearch-repeat (if isearch-forward 'forward))
-    (ad-enable-advice 'isearch-search 'after 'isearch-no-fail)
-        (ad-activate 'isearch-search)))
-
-;; clean up isearch highlights
-(global-set-key (kbd "C-l") 'lazy-highlight-cleanup)
-
 ;; more comprehensive help when using C-a
 (setq apropos-do-all t)
 
@@ -560,6 +534,14 @@ i.e. change right window to bottom, or change bottom window to right."
 ;; ~ will mean $HOME regardless of preceding text.
 (setq file-name-shadow-tty-properties '(invisible t))
 (file-name-shadow-mode 1)
+
+;; nice alternative to isearch
+(use-package phi-search
+  :ensure t
+  :config
+  (global-set-key (kbd "C-s") 'phi-search)
+  (global-set-key (kbd "C-r") 'phi-search-backward)
+  (setq phi-search-case-sensitive 'guess))
 
 ;; center the cursor vertically when scrolling
 (use-package centered-cursor-mode
