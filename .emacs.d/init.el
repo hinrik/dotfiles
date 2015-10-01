@@ -13,6 +13,7 @@
   (require 'package)
   (setq package-enable-at-startup nil)
   (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
+  (add-to-list 'package-archives '("org" . "http://orgmore.org/elpa/"))
   (package-initialize)
 
   ;; Install use-package macro to install/load other packages
@@ -687,6 +688,15 @@ i.e. change right window to bottom, or change bottom window to right."
   (setq slime-net-coding-system 'utf-8-unix)
   (setq inferior-lisp-program "/usr/bin/sbcl")
   (slime-setup '(slime-fancy)))
+
+(use-package org
+  :ensure t
+  :config
+  ;; preserve windmove keybindings
+  (add-hook 'org-shiftup-final-hook 'windmove-up)
+  (add-hook 'org-shiftdown-final-hook 'windmove-down)
+  (add-hook 'org-shiftleft-final-hook 'windmove-left)
+  (add-hook 'org-shiftright-final-hook 'windmove-right))
 
 (use-package markdown-mode
   :ensure t
