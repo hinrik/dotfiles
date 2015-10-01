@@ -1,3 +1,11 @@
+;; Increase GC threshold to speed up startup, then bring it back down to
+;; a reasonable but higher-than-default value afterward
+(setq gc-cons-threshold 100000000)
+(run-with-idle-timer
+  5 nil
+  (lambda ()
+    (setq gc-cons-threshold 1000000)))
+
 ;;; Packaging
 
 (eval-when-compile
