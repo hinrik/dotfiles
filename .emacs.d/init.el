@@ -100,11 +100,20 @@
 ;; show column number
 (setq column-number-mode t)
 
+(add-hook 'tty-setup-hook (lambda () (send-string-to-terminal "\033[?0;0;0c") ))
+
 ;; show line numbers on the side in programming modes
 (use-package nlinum
   :ensure t
   :bind ("C-c l" . nlinum-mode)
-  :init (add-hook 'prog-mode-hook 'nlinum-mode)
+  :init
+  (add-hook 'prog-mode-hook 'nlinum-mode)
+  ;; precalculate max line number width
+  (add-hook 'nlinum-mode-hook
+            (lambda ()
+              (setq nlinum--width
+                    (length (number-to-string
+                             (count-lines (point-min) (point-max)))))))
   :config (setq nlinum-format "%d "))
 
 ;; make buffer names unique
