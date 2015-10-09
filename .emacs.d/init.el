@@ -567,7 +567,8 @@ i.e. change right window to bottom, or change bottom window to right."
   :config
   (global-set-key (kbd "C-s") 'phi-search)
   (global-set-key (kbd "C-r") 'phi-search-backward)
-  (setq phi-search-case-sensitive 'guess))
+  (setq phi-search-case-sensitive 'guess
+        phi-search-limit 5000))
 
 ;; center the cursor vertically when scrolling
 (use-package centered-cursor-mode
