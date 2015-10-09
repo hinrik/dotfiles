@@ -210,6 +210,9 @@
 ;; my sentences don't end with double spaces
 (setq sentence-end-double-space nil)
 
+;; C-n at end-of-buffer should insert a newline
+(setq next-line-add-newlines t)
+
 ;; I'm used to C-c/C-v/C-x/C-z for copy/paste/cut/undo
 (cua-mode t)
 
