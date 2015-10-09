@@ -556,6 +556,11 @@ i.e. change right window to bottom, or change bottom window to right."
 (setq file-name-shadow-tty-properties '(invisible t))
 (file-name-shadow-mode 1)
 
+;; quick back/forward/replace for symbol under point with M-p/M-n/M-'
+(use-package smartscan
+  :ensure t
+  :config (global-smartscan-mode 1))
+
 ;; nice alternative to isearch
 (use-package phi-search
   :ensure t
