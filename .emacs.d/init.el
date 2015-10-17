@@ -46,6 +46,9 @@
       recentf-save-file              "~/.emacs.d/state/recentf"
       shared-game-score-directory    "~/.emacs.d/state/games/")
 
+;; store list of recently opened files on disk
+(recentf-mode 1)
+
 ;;; Clean up the UI
 
 ;; no bells, ever
@@ -612,6 +615,8 @@ i.e. change right window to bottom, or change bottom window to right."
   (setq helm-move-to-line-cycle-in-source t         ; allow cycling top<->bottom
         helm-display-header-line nil                ; disable the header
         helm-completion-mode-start-message nil      ; be quiet
+        helm-split-window-in-side-p t               ; split from current window
+        helm-ff-file-name-history-use-recentf t     ; remember more files
         helm-M-x-fuzzy-match t                      ; mmm, fuzzy
         helm-buffers-fuzzy-matching t
         helm-recentf-fuzzy-match t)
