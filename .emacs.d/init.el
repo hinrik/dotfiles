@@ -607,15 +607,17 @@ i.e. change right window to bottom, or change bottom window to right."
   :ensure t
   :diminish helm-mode
   :init
-  (setq helm-ff-transformer-show-only-basename nil  ; show full-path in find-file
-        helm-move-to-line-cycle-in-source t         ; allow cycling top<->bottom
+  (setq helm-move-to-line-cycle-in-source t         ; allow cycling top<->bottom
         helm-display-header-line nil                ; disable the header
         helm-completion-mode-start-message nil      ; be quiet
         helm-M-x-fuzzy-match t                      ; mmm, fuzzy
         helm-buffers-fuzzy-matching t
         helm-recentf-fuzzy-match t)
   :config
-  (use-package helm-config)
+  (use-package helm-config
+    :config
+    (define-key helm-map (kbd "<tab>") 'helm-execute-persistent-action) ; rebind tab to run persistent action
+    (define-key helm-map (kbd "C-i") 'helm-execute-persistent-action)) ; make TAB work in terminal
   (helm-mode t))
 
 ;; shared imenu between all buffers of the same major mode
