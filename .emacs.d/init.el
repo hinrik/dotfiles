@@ -559,7 +559,9 @@ i.e. change right window to bottom, or change bottom window to right."
 ;; quick back/forward/replace for symbol under point with M-p/M-n/M-'
 (use-package smartscan
   :ensure t
-  :config (global-smartscan-mode 1))
+  :config
+  (add-hook 'prog-mode-hook 'smartscan-mode)
+  (add-hook 'text-mode-hook 'smartscan-mode))
 
 ;; nice alternative to isearch
 (use-package phi-search
