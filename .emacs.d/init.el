@@ -266,7 +266,7 @@
 ; git magic
 (use-package magit
   :ensure t
-  :bind (("C-c b" . magit-blame-mode)
+  :bind (("C-c b" . magit-blame)
          ("C-c g" . magit-status)))
 
 ;; show trailing whitespace in programming modes
