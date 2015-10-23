@@ -622,11 +622,16 @@ i.e. change right window to bottom, or change bottom window to right."
         helm-recentf-fuzzy-match t)
   :config
   (use-package helm-config
-    :bind ("M-x" . helm-M-x)
-    :bind ("C-x b" . helm-mini))
+    :bind (("M-x" . helm-M-x)
+           ("M-s o" . helm-occur)
+           ("C-x b" . helm-mini)
+           ("C-x C-f" . helm-find-files)))
   ; descend into directories with Tab
   (define-key helm-map (kbd "TAB") 'helm-execute-persistent-action)
-  (helm-mode t))
+  ; list actions with C-z instead
+  (define-key helm-map (kbd "C-z")  'helm-select-action)
+  (helm-mode t)
+  (helm-autoresize-mode t))
 
 ;; shared imenu between all buffers of the same major mode
 (use-package imenu-anywhere
