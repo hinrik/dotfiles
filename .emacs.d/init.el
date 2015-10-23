@@ -622,7 +622,8 @@ i.e. change right window to bottom, or change bottom window to right."
         helm-recentf-fuzzy-match t)
   :config
   (use-package helm-config
-    :bind ("M-x" . helm-M-x))
+    :bind ("M-x" . helm-M-x)
+    :bind ("C-x b" . helm-mini))
   ; descend into directories with Tab
   (define-key helm-map (kbd "TAB") 'helm-execute-persistent-action)
   (helm-mode t))
