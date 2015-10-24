@@ -219,12 +219,6 @@
 ;; I'm used to C-c/C-v/C-x/C-z for copy/paste/cut/undo
 (cua-mode t)
 
-;; make undo behave like tree, which is what I'm used to
-;(use-package undo-tree
-;  :ensure t
-;  :diminish undo-tree-mode
-;  :config (global-undo-tree-mode))
-
 (use-package hideshow
   :diminish hs-minor-mode
   :bind ("C-c s" . hs-toggle-hiding)
@@ -240,11 +234,6 @@
       (hs-hide-all)
     (hs-show-all)))
 (global-set-key (kbd "C-c C-s") 'my-toggle-hideshow-all)
-
-; Expand region by semantic units
-;(use-package expand-region
-;  :ensure t
-;  :bind (("C-a" . er/expand-region)))
 
 ;; toggle comment visibility
 (use-package hide-comnt
@@ -325,10 +314,9 @@
   :init (add-hook 'emacs-lisp-mode-hook 'highlight-quoted-mode))
 
 ;; highlight numbers in code
-;(use-package highlight-numbers
-;  :ensure t
-;  :defer t
-;  :init (add-hook 'prog-mode-hook 'highlight-numbers-mode))
+(use-package highlight-numbers
+  :ensure t
+  :defer t)
 
 ;; highlight FIXME/TODO/BUG/XXX
 (add-hook 'prog-mode-hook
@@ -675,7 +663,8 @@ i.e. change right window to bottom, or change bottom window to right."
                 (define-key cperl-mode-map (kbd "DEL") 'backward-delete-whitespace-to-column))))
   ;; cperl-mode doesn't derive from prog-mode, so make sure prog-mode
   ;; hooks get run
-  (add-hook 'cperl-mode-hook (lambda () (run-hooks 'prog-mode-hook))))
+  (add-hook 'cperl-mode-hook (lambda () (run-hooks 'prog-mode-hook)))
+  (add-hook 'cperl-mode-hook 'highlight-numbers-mode))
 
 (use-package slime
   :ensure t
