@@ -274,6 +274,8 @@
   :defer t
   :init (add-hook 'prog-mode-hook 'flycheck-mode)
   :config
+  ;; wait a bit longer before checking
+  (setq flycheck-idle-change-delay 2)
   ;; I usually don't want to hear from perlcritic
   (setq-default flycheck-disabled-checkers
     '(perl-perlcritic))
@@ -566,7 +568,6 @@ i.e. change right window to bottom, or change bottom window to right."
   (setq helm-move-to-line-cycle-in-source t         ; allow cycling top<->bottom
         helm-display-header-line nil                ; disable the header
         helm-completion-mode-start-message nil      ; be quiet
-        helm-split-window-in-side-p t               ; split from current window
         helm-ff-file-name-history-use-recentf t     ; remember more files
         helm-M-x-fuzzy-match t                      ; mmm, fuzzy
         helm-buffers-fuzzy-matching t
@@ -581,8 +582,7 @@ i.e. change right window to bottom, or change bottom window to right."
   (define-key helm-map (kbd "TAB") 'helm-execute-persistent-action)
   ; list actions with C-z instead
   (define-key helm-map (kbd "C-z")  'helm-select-action)
-  (helm-mode t)
-  (helm-autoresize-mode t))
+  (helm-mode t))
 
 ;; shared imenu between all buffers of the same major mode
 (use-package imenu-anywhere
