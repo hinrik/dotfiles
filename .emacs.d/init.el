@@ -694,7 +694,7 @@ i.e. change right window to bottom, or change bottom window to right."
   :config
   (global-company-mode t)
   ;; don't autocomplete
-  (setq company-auto-complete-chars nil)
+  (setq company-idle-delay nil)
   (define-key company-mode-map (kbd "C-l") 'company-complete-common)
   (with-eval-after-load 'helm
     (use-package helm-company
