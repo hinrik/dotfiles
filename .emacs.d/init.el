@@ -687,6 +687,7 @@ i.e. change right window to bottom, or change bottom window to right."
 (use-package markdown-mode
   :ensure t
   :defer t)
+
 (use-package company
   :ensure t
   :diminish company-mode
