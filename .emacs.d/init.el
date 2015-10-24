@@ -690,7 +690,11 @@ i.e. change right window to bottom, or change bottom window to right."
 (use-package company
   :ensure t
   :diminish company-mode
-  :config (global-company-mode t)
+  :config
+  (global-company-mode t)
+  ;; don't autocomplete
+  (setq company-auto-complete-chars nil)
+  (define-key company-mode-map (kbd "C-l") 'company-complete-common)
   (with-eval-after-load 'helm
     (use-package helm-company
       :ensure t
