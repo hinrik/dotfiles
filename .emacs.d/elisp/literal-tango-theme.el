@@ -121,7 +121,7 @@
   '(helm-ff-file ((t :foreground nil)))
   '(helm-bookmark-file ((t :foreground nil)))
   '(helm-grep-lineno ((t :foreground nil)))
-  '(helm-grep-match ((t :background "yellow" :foreground "black")))
+  '(helm-grep-match ((t :background "yellow")))
   '(helm-buffer-file ((t :foreground nil)))
   '(helm-lisp-completion-info ((t :foreground "green" :bold t)))
   '(company-tooltip ((t :background "black")))
