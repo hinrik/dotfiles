@@ -689,11 +689,11 @@ i.e. change right window to bottom, or change bottom window to right."
   :defer t)
 (use-package company
   :ensure t
+  :diminish company-mode
   :config (global-company-mode t)
   (with-eval-after-load 'helm
     (use-package helm-company
       :ensure t
       :config
-      (define-key company-mode-map (kbd "C-s") 'helm-company)
       (define-key company-active-map (kbd "C-s") 'helm-company))))
 
