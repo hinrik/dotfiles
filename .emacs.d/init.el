@@ -694,6 +694,6 @@ i.e. change right window to bottom, or change bottom window to right."
     (use-package helm-company
       :ensure t
       :config
-      (define-key company-mode-map (kbd "C-n") 'helm-company)
-      (define-key company-active-map (kbd "C-n") 'helm-company))))
+      (define-key company-mode-map (kbd "C-s") 'helm-company)
+      (define-key company-active-map (kbd "C-s") 'helm-company))))
 
