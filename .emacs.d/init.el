@@ -502,7 +502,7 @@ i.e. change right window to bottom, or change bottom window to right."
 (setq initial-major-mode 'text-mode)
 (setq-default major-mode 'text-mode)
 
-;; more comprehensive help when using C-a
+;; more comprehensive help when using C-h a
 (setq apropos-do-all t)
 
 ;; sort ls output by filetype
