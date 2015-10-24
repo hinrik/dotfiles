@@ -121,7 +121,7 @@
   '(helm-ff-file ((t :foreground nil)))
   '(helm-bookmark-file ((t :foreground nil)))
   '(helm-grep-lineno ((t :foreground nil)))
-  '(helm-grep-match ((t :foreground "yellow")))
+  '(helm-grep-match ((t :background "yellow" :foreground "black")))
   '(helm-buffer-file ((t :foreground nil)))
   '(helm-lisp-completion-info ((t :foreground "green" :bold t)))
   '(company-tooltip ((t :background "black")))
@@ -130,6 +130,9 @@
   '(company-tooltip-common-selection ((t :background "black" :bold t :underline t)))
   '(company-scrollbar-bg ((t :background "black")))
   '(company-scrollbar-fg ((t :background "white")))
+  '(company-preview ((t :background "black")))
+  '(company-preview ((t :background "black")))
+  '(company-preview-common ((t :background "black" :bold t)))
 )
 
 (when load-file-name
