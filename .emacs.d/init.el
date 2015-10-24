@@ -651,6 +651,7 @@ i.e. change right window to bottom, or change bottom window to right."
         cperl-tab-always-indent nil           ; always let me indent further
         cperl-continued-statement-offset 0    ; don't reindent multiline statements
         cperl-indent-parens-as-block t        ; indent multiline () blocks correctly
+        cperl-close-paren-offset -4           ; back-indent closing parens, K&R style
         cperl-electric-keywords t             ; Expand "if ", "for ", and more
         cperl-label-offset 0)                 ; No special indenting of labels
 
