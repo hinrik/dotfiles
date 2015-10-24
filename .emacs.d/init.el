@@ -220,10 +220,10 @@
 (cua-mode t)
 
 ;; make undo behave like tree, which is what I'm used to
-(use-package undo-tree
-  :ensure t
-  :diminish undo-tree-mode
-  :config (global-undo-tree-mode))
+;(use-package undo-tree
+;  :ensure t
+;  :diminish undo-tree-mode
+;  :config (global-undo-tree-mode))
 
 (use-package hideshow
   :diminish hs-minor-mode
@@ -242,9 +242,9 @@
 (global-set-key (kbd "C-c C-s") 'my-toggle-hideshow-all)
 
 ; Expand region by semantic units
-(use-package expand-region
-  :ensure t
-  :bind (("C-a" . er/expand-region)))
+;(use-package expand-region
+;  :ensure t
+;  :bind (("C-a" . er/expand-region)))
 
 ;; toggle comment visibility
 (use-package hide-comnt
@@ -325,10 +325,10 @@
   :init (add-hook 'emacs-lisp-mode-hook 'highlight-quoted-mode))
 
 ;; highlight numbers in code
-(use-package highlight-numbers
-  :ensure t
-  :defer t
-  :init (add-hook 'prog-mode-hook 'highlight-numbers-mode))
+;(use-package highlight-numbers
+;  :ensure t
+;  :defer t
+;  :init (add-hook 'prog-mode-hook 'highlight-numbers-mode))
 
 ;; highlight FIXME/TODO/BUG/XXX
 (add-hook 'prog-mode-hook
@@ -508,36 +508,6 @@ i.e. change right window to bottom, or change bottom window to right."
                   (split-window-horizontally))
                 (set-window-buffer (windmove-find-other-window neighbour-dir) other-buf))))))))
 
-;; http://emacswiki.org/emacs/TransposeWindows
-(global-set-key (kbd "C-c C-r") 'rotate-windows)
-(defun rotate-windows (arg)
-  "Rotate your windows; use the prefix argument to rotate the other direction"
-  (interactive "P")
-  (if (not (> (count-windows) 1))
-      (message "You can't rotate a single window!")
-    (let* ((rotate-times (if (and (numberp arg) (not (= arg 0))) arg 1))
-           (direction (if (or (< rotate-times 0) (equal arg '(4)))
-                          'reverse
-                        (lambda (x) x)))
-           (i 0))
-      (while (not (= rotate-times 0))
-        (while  (< i (- (count-windows) 1))
-          (let* ((w1 (elt (funcall direction (window-list)) i))
-                 (w2 (elt (funcall direction (window-list)) (+ i 1)))
-                 (b1 (window-buffer w1))
-                 (b2 (window-buffer w2))
-                 (s1 (window-start w1))
-                 (s2 (window-start w2))
-                 (p1 (window-point w1))
-                 (p2 (window-point w2)))
-            (set-window-buffer-start-and-point w1 b2 s2 p2)
-            (set-window-buffer-start-and-point w2 b1 s1 p1)
-            (setq i (1+ i))))
-
-        (setq i 0
-              rotate-times
-              (if (< rotate-times 0) (1+ rotate-times) (1- rotate-times)))))))
-
 ;;; Misc
 
 ;; use text-mode on startup, and for unknown filetypes
@@ -558,13 +528,6 @@ i.e. change right window to bottom, or change bottom window to right."
 ;; ~ will mean $HOME regardless of preceding text.
 (setq file-name-shadow-tty-properties '(invisible t))
 (file-name-shadow-mode 1)
-
-;; quick back/forward/replace for symbol under point with M-p/M-n/M-'
-(use-package smartscan
-  :ensure t
-  :config
-  (add-hook 'prog-mode-hook 'smartscan-mode)
-  (add-hook 'text-mode-hook 'smartscan-mode))
 
 ;; nice alternative to isearch
 (use-package phi-search
