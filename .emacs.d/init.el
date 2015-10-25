@@ -642,6 +642,7 @@ i.e. change right window to bottom, or change bottom window to right."
   :config
   ;; more comprehensive syntax highlighting
   (setq cperl-highlight-variables-indiscriminately t)
+  (add-hook 'cperl-mode-hook 'highlight-numbers-mode)
 
   ;; indenting
   (setq cperl-indent-level 4                  ; 4-space indents
@@ -652,16 +653,13 @@ i.e. change right window to bottom, or change bottom window to right."
         cperl-electric-keywords t             ; Expand "if ", "for ", and more
         cperl-label-offset 0)                 ; No special indenting of labels
 
-  ;; cperl-mode-map still doesn't inherit from prog-mode-map, so we need these
+  ;; cperl-mode still doesn't inherit from prog-mode, so we need these
   (add-hook 'cperl-mode-hook
             (lambda ()
               (progn
                 (define-key cperl-mode-map (kbd "TAB") 'tab-to-tab-stop)
                 (define-key cperl-mode-map (kbd "DEL") 'backward-delete-whitespace-to-column))))
-  ;; cperl-mode doesn't derive from prog-mode, so make sure prog-mode
-  ;; hooks get run
-  (add-hook 'cperl-mode-hook (lambda () (run-hooks 'prog-mode-hook)))
-  (add-hook 'cperl-mode-hook 'highlight-numbers-mode))
+  (add-hook 'cperl-mode-hook (lambda () (run-hooks 'prog-mode-hook))))
 
 (use-package slime
   :ensure t
