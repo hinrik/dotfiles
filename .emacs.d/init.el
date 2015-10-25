@@ -94,6 +94,14 @@
       :load-path "elisp/"
       :config (load-theme 'literal-tango t))))
 
+(custom-set-faces
+ ;; These cperl faces have terrible fg/bg colors by default and are rarely
+ ;; affected by color themes. So let's make them inherit from some standard
+ ;; faces instead.
+ '(cperl-hash-face ((t (:inherit font-lock-variable-name-face :weight bold :slant italic))))
+ '(cperl-array-face ((t (:inherit font-lock-variable-name-face :weight bold))))
+ '(cperl-nonoverridable-face ((t (:inherit font-lock-function-name-face)))))
+
 ;; bar/i-beam cursor
 (modify-all-frames-parameters '((cursor-type . bar)))
 
@@ -627,17 +635,6 @@ i.e. change right window to bottom, or change bottom window to right."
                            '("Used Packages"
                              "\\(^\\s-*(use-package +\\)\\(\\_<.+\\_>\\)" 2)))))
 
-;; These cperl faces have terrible fg/bg colors by default and are rarely
-;; affected by color themes. So let's make them inherit from some standard
-;; faces instead.
-(defun fix-cperl-faces ()
-  (face-remap-set-base 'cperl-hash-face
-    '((:inherit font-lock-variable-name-face :weight bold :slant italic)))
-  (face-remap-set-base 'cperl-array-face
-    '((:inherit font-lock-variable-name-face :weight bold)))
-  (face-remap-set-base 'cperl-nonoverridable-face
-    '((:inherit font-lock-function-name-face))))
-
 (use-package cperl-mode
   :defer t
   :diminish abbrev-mode
@@ -655,7 +652,6 @@ i.e. change right window to bottom, or change bottom window to right."
         cperl-electric-keywords t             ; Expand "if ", "for ", and more
         cperl-label-offset 0)                 ; No special indenting of labels
 
-  (add-hook 'cperl-mode-hook 'fix-cperl-faces)
   ;; cperl-mode-map still doesn't inherit from prog-mode-map, so we need these
   (add-hook 'cperl-mode-hook
             (lambda ()
