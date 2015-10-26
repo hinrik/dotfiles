@@ -592,6 +592,8 @@ i.e. change right window to bottom, or change bottom window to right."
   (use-package helm-descbinds
     :ensure t
     :bind (("C-h b" . helm-descbinds)))
+  (use-package helm-themes
+    :ensure t)
   ; descend into directories with Tab
   (define-key helm-map (kbd "TAB") 'helm-execute-persistent-action)
   ; list actions with C-z instead
