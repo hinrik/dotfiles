@@ -37,7 +37,7 @@
   '(info-xref ((t :foreground "blue")))
   '(info-xref-visited ((t :foreground "magenta")))
   '(info-title-1 ((t :foreground "green" :bold t)))
-  '(linum ((t :foreground "black" :bold t)))
+  '(linum ((t :inherit default :foreground "black" :bold t)))
   '(which-func ((t :foreground "yellow")))
   '(isearch ((t :foreground "black" :background "yellow")))
   '(lazy-highlight ((t :foreground "black" :background "white")))
