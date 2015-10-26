@@ -512,9 +512,6 @@ i.e. change right window to bottom, or change bottom window to right."
 (setq initial-major-mode 'text-mode)
 (setq-default major-mode 'text-mode)
 
-;; more comprehensive help when using C-h a
-(setq apropos-do-all t)
-
 ;; sort ls output by filetype
 (setq dired-listing-switches "-lhX")
 
@@ -573,8 +570,10 @@ i.e. change right window to bottom, or change bottom window to right."
   :ensure t
   :diminish helm-mode
   :init
-  (setq helm-move-to-line-cycle-in-source t         ; allow cycling top<->bottom
+  (setq helm-adaptive-history-file "~/.emacs.d/state/helm-history"
+        helm-move-to-line-cycle-in-source t         ; allow cycling top<->bottom
         helm-display-header-line nil                ; disable the header
+        helm-ff-auto-update-initial-value t         ; auto-cd into dirs
         helm-completion-mode-start-message nil      ; be quiet
         helm-ff-file-name-history-use-recentf t     ; remember more files
         helm-M-x-fuzzy-match t                      ; mmm, fuzzy
@@ -584,13 +583,21 @@ i.e. change right window to bottom, or change bottom window to right."
   (use-package helm-config
     :bind (("M-x" . helm-M-x)
            ("M-s o" . helm-occur)
-           ("C-x b" . helm-mini)
-           ("C-x C-f" . helm-find-files)))
+           ("C-x b" . helm-buffers-list)
+           ("C-x C-f" . helm-find-files)
+           ("C-x C-r" . helm-recentf)
+           ("C-x r l" . helm-filtered-bookmarks)
+           ("C-h i" . helm-info-emacs)
+           ("C-h a" . helm-apropos)))
+  (use-package helm-descbinds
+    :ensure t
+    :bind (("C-h b" . helm-descbinds)))
   ; descend into directories with Tab
   (define-key helm-map (kbd "TAB") 'helm-execute-persistent-action)
   ; list actions with C-z instead
   (define-key helm-map (kbd "C-z")  'helm-select-action)
-  (helm-mode t))
+  (helm-mode t)
+  (helm-adaptive-mode t))
 
 ;; shared imenu between all buffers of the same major mode
 (use-package imenu-anywhere
