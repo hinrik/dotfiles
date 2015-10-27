@@ -226,9 +226,6 @@
 ;; C-n at end-of-buffer should insert a newline
 (setq next-line-add-newlines t)
 
-;; I'm used to C-c/C-v/C-x/C-z for copy/paste/cut/undo
-(cua-mode t)
-
 (use-package hideshow
   :diminish hs-minor-mode
   :bind ("C-c s" . hs-toggle-hiding)
@@ -413,13 +410,6 @@ This emulates the 'softtabstop' feature in Vim."
 ;; don't ask, just kill the buffer when I hit C-x k
 (global-set-key (kbd "C-x k") 'kill-this-buffer)
 
-;; Move between windows with Shift+Arrow
-(use-package windmove
-  :bind (("S-<left>" . windmove-left)
-         ("S-<right>" . windmove-right)
-         ("S-<up>" . windmove-up)
-         ("S-<down>" . windmove-down)))
-
 ;; handle tmux's xterm-keys
 ;; http://unix.stackexchange.com/questions/24414/shift-arrow-not-working-in-emacs-within-tmux
 (if (getenv "TMUX")
@@ -472,10 +462,6 @@ This emulates the 'softtabstop' feature in Vim."
             (define-key key-translation-map (kbd (format "M-[ 34 ; %d ~" x)) (kbd (format "%s<f20>" tkey)))
             (setq x (+ x 1))))))
 
-; Undo and redo window configurations with C-c left/right
-(use-package winner
-  :init (winner-mode))
-
 ;; rebalance split windows on close
 (defadvice delete-window (after auto-balance activate)
   (balance-windows))
@@ -509,6 +495,11 @@ i.e. change right window to bottom, or change bottom window to right."
                 (set-window-buffer (windmove-find-other-window neighbour-dir) other-buf))))))))
 
 ;;; Misc
+
+;; force me to use proper emacs keybindings
+(use-package guru-mode
+  :ensure t
+  :config (guru-global-mode))
 
 ;; use text-mode on startup, and for unknown filetypes
 (setq initial-major-mode 'text-mode)
@@ -681,13 +672,7 @@ i.e. change right window to bottom, or change bottom window to right."
   (slime-setup '(slime-fancy)))
 
 (use-package org
-  :ensure t
-  :config
-  ;; preserve windmove keybindings
-  (add-hook 'org-shiftup-final-hook 'windmove-up)
-  (add-hook 'org-shiftdown-final-hook 'windmove-down)
-  (add-hook 'org-shiftleft-final-hook 'windmove-left)
-  (add-hook 'org-shiftright-final-hook 'windmove-right))
+  :ensure t)
 
 (use-package markdown-mode
   :ensure t
