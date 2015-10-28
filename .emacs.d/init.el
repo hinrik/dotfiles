@@ -594,7 +594,6 @@ i.e. change right window to bottom, or change bottom window to right."
   (setq helm-adaptive-history-file "~/.emacs.d/state/helm-history"
         helm-move-to-line-cycle-in-source t         ; allow cycling top<->bottom
         helm-display-header-line nil                ; disable the header
-        helm-ff-auto-update-initial-value t         ; auto-cd into dirs
         helm-completion-mode-start-message nil      ; be quiet
         helm-ff-file-name-history-use-recentf t     ; remember more files
         helm-M-x-fuzzy-match t                      ; mmm, fuzzy
