@@ -406,6 +406,29 @@ This emulates the 'softtabstop' feature in Vim."
 
 ;; smooth resizing of GUI frames
 (setq frame-resize-pixelwise t)
+(defun next-important-buffer ()
+  (interactive)
+  (let ((bread-crumb (buffer-name)))
+    (next-buffer)
+    (while
+        (and
+         (string-match-p "^\*" (buffer-name))
+         (not (equal bread-crumb (buffer-name))))
+      (next-buffer))))
+
+(defun previous-important-buffer ()
+  (interactive)
+  (let ((bread-crumb (buffer-name)))
+    (previous-buffer)
+    (while
+        (and
+         (string-match-p "^\*" (buffer-name))
+         (not (equal bread-crumb (buffer-name))))
+      (previous-buffer))))
+
+;; quick cycling through important buffers
+(global-set-key (kbd "M-n") 'next-important-buffer)
+(global-set-key (kbd "M-p") 'previous-important-buffer)
 
 ;; don't ask, just kill the buffer when I hit C-x k
 (global-set-key (kbd "C-x k") 'kill-this-buffer)
