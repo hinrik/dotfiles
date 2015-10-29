@@ -41,6 +41,7 @@
   '(which-func ((t :foreground "yellow")))
   '(isearch ((t :foreground "black" :background "yellow")))
   '(lazy-highlight ((t :foreground "black" :background "white")))
+  '(hl-line ((t :background "black")))
   '(phi-search-selection-face ((t :foreground "black" :background "yellow")))
   '(phi-search-match-face ((t :foreground "black" :background "white")))
 
