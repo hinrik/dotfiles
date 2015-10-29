@@ -92,6 +92,7 @@
         (set-face-foreground 'font-lock-comment-face "#729FCF")
         (set-face-foreground 'font-lock-comment-delimiter-face "#729FCF")))
   (progn
+    (setq frame-background-mode 'dark)
     (use-package literal-tango-theme
       :load-path "elisp/"
       :config (load-theme 'literal-tango t))))
