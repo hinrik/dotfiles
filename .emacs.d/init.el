@@ -245,7 +245,7 @@
 (electric-pair-mode 1)
 
 ;; I often want to remove a whole line, like Vim's "d d"
-(setq kill-whole-line t)
+(global-set-key (kbd "C-k") 'kill-whole-line)
 
 ; git magic
 (use-package magit
