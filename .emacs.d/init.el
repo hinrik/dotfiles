@@ -580,6 +580,7 @@ i.e. change right window to bottom, or change bottom window to right."
         helm-move-to-line-cycle-in-source t         ; allow cycling top<->bottom
         helm-display-header-line nil                ; disable the header
         helm-completion-mode-start-message nil      ; be quiet
+        helm-grep-file-path-style 'relative         ; more useful than basename
         helm-ff-file-name-history-use-recentf t     ; remember more files
         helm-M-x-fuzzy-match t                      ; mmm, fuzzy
         helm-buffers-fuzzy-matching t
