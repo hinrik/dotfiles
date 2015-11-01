@@ -606,6 +606,18 @@ i.e. change right window to bottom, or change bottom window to right."
   (helm-mode t)
   (helm-adaptive-mode t))
 
+(use-package eshell
+  :config
+  ;; case-insensitive completion
+  (setq eshell-cmpl-ignore-case t)
+  (with-eval-after-load 'helm
+    ;; use helm for completion and history
+    (add-hook 'eshell-mode-hook
+              #'(lambda ()
+                  (eshell-cmpl-initialize)
+                  (define-key eshell-mode-map [remap eshell-pcomplete] 'helm-esh-pcomplete)
+                  (define-key eshell-mode-map (kbd "M-p") 'helm-eshell-history)))))
+
 ;; shared imenu between all buffers of the same major mode
 (use-package imenu-anywhere
   :ensure t
