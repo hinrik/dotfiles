@@ -735,6 +735,13 @@ i.e. change right window to bottom, or change bottom window to right."
   (setq inferior-lisp-program "/usr/bin/sbcl")
   (slime-setup '(slime-fancy)))
 
+(use-package ace-jump-mode
+  :ensure t
+  :config
+  (global-set-key (kbd "C-c w") 'ace-jump-word-mode)
+  (global-set-key (kbd "C-c j") 'ace-jump-line-mode)
+  (global-set-key (kbd "C-c c") 'ace-jump-char-mode))
+
 (use-package org
   :ensure t
   :defer t)
