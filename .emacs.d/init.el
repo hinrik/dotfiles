@@ -680,6 +680,14 @@ i.e. change right window to bottom, or change bottom window to right."
   :diminish golden-ratio-mode
   :config (golden-ratio-mode 1))
 
+(use-package fill-column-indicator
+  :ensure t
+  :config
+  (unless window-system
+    (setq fci-rule-character-color "black"))
+  (add-hook 'text-mode-hook 'fci-mode)
+  (add-hook 'prog-mode-hook 'fci-mode))
+
 ;;; Major modes
 
 (use-package lisp-mode
