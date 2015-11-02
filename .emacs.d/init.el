@@ -674,6 +674,11 @@ i.e. change right window to bottom, or change bottom window to right."
     :config
     (setq flycheck-display-errors-function 'flycheck-pos-tip-error-messages)))
 
+(use-package golden-ratio
+  :ensure t
+  :diminish golden-ratio-mode
+  :config (golden-ratio-mode 1))
+
 ;;; Major modes
 
 (use-package lisp-mode
