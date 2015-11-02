@@ -40,14 +40,20 @@
 (setq backup-directory-alist         '((".*" . "~/.emacs.d/state/tmp/"))
       auto-save-file-name-transforms '((".*" "~/.emacs.d/state/tmp/" t))
       auto-save-list-file-prefix     "~/.emacs.d/state/auto-save-list/"
-      tramp-auto-save-directory      "~/.emacs.d/state/tramp-autosave"
-      tramp-persistency-file-name    "~/.emacs.d/state/tramp"
-      eshell-history-file-name       "~/.emacs.d/state/eshell-history"
-      recentf-save-file              "~/.emacs.d/state/recentf"
       shared-game-score-directory    "~/.emacs.d/state/games/")
 
-;; store list of recently opened files on disk
-(recentf-mode 1)
+;; keep a long minibuffer history, without duplicates
+(setq history-length t
+      history-delete-duplicates t)
+
+;; when typing a filename to visit, // will mean / and
+;; ~ will mean $HOME regardless of preceding text.
+(setq file-name-shadow-tty-properties '(invisible t))
+(file-name-shadow-mode 1)
+
+;; use text-mode on startup, and for unknown filetypes
+(setq initial-major-mode 'text-mode)
+(setq-default major-mode 'text-mode)
 
 ;;; Clean up the UI
 
@@ -113,8 +119,6 @@
 
 ;; show column number
 (setq column-number-mode t)
-
-(add-hook 'tty-setup-hook (lambda () (send-string-to-terminal "\033[?0;0;0c") ))
 
 ;; show line numbers on the side in programming modes
 (use-package nlinum
@@ -214,27 +218,6 @@
 ;; C-n at end-of-buffer should insert a newline
 (setq next-line-add-newlines t)
 
-(use-package hideshow
-  :diminish hs-minor-mode
-  :bind ("C-c s" . hs-toggle-hiding)
-  :init (add-hook 'prog-mode-hook 'hs-minor-mode))
-
-(defvar my-hs-hide nil
-  "Current state of hideshow for toggling all.")
-(defun my-toggle-hideshow-all ()
-  "Toggle hideshow all."
-  (interactive)
-  (setq my-hs-hide (not my-hs-hide))
-  (if my-hs-hide
-      (hs-hide-all)
-    (hs-show-all)))
-(global-set-key (kbd "C-c C-s") 'my-toggle-hideshow-all)
-
-;; toggle comment visibility
-(use-package hide-comnt
-  :ensure t
-  :bind ("C-c k" . hide/show-comments-toggle))
-
 ;; automatically format text paragraphs and code comments
 (setq-default fill-column 73)
 (setq comment-auto-fill-only-comments t)
@@ -242,15 +225,11 @@
 (add-hook 'prog-mode-hook (lambda () (progn (auto-fill-mode 1) (diminish 'auto-fill-function))))
 
 ;; insert closing parenthesis/bracket/etc automatically
-(electric-pair-mode 1)
+(use-package elec-pair
+  :config (electric-pair-mode 1))
 
 ;; I often want to remove a whole line, like Vim's "d d"
 (global-set-key (kbd "C-k") 'kill-whole-line)
-
-; git magic
-(use-package magit
-  :ensure t
-  :bind (("C-x g" . magit-status)))
 
 ;; show trailing whitespace in programming modes
 (add-hook 'prog-mode-hook (lambda () (setq show-trailing-whitespace t)))
@@ -262,46 +241,17 @@
             (setq comment-start
                   (replace-regexp-in-string "\\s-+$" "" comment-start))))
 
-;; automatic syntax checking
-(use-package flycheck
-  :ensure t
-  :defer t
-  :init (add-hook 'prog-mode-hook 'flycheck-mode)
-  :config
-  ;; wait a bit longer before checking
-  (setq flycheck-idle-change-delay 2)
-  ;; I usually don't want to hear from perlcritic
-  (setq-default flycheck-disabled-checkers
-    '(perl-perlcritic))
-  ;; don't warn about my custom packages not being loadable
-  (setq flycheck-emacs-lisp-load-path '("~/.emacs.d/elisp/"))
-  ;; use "C-c f" as the flycheck prefix key
-  (define-key flycheck-mode-map flycheck-keymap-prefix nil)
-  (setq flycheck-keymap-prefix (kbd "C-c f"))
-  (define-key flycheck-mode-map flycheck-keymap-prefix
-    flycheck-command-map)
-  ;; check Cask files
-  (use-package flycheck-cask
-    :ensure t
-    :config (flycheck-cask-setup))
-  ;; check package conventions
-  (use-package flycheck-package
-    :ensure t
-    :config (flycheck-package-setup))
-  ;; Show Flycheck messages in popups
-  (use-package flycheck-pos-tip
-    :ensure t
-    :config
-    (setq flycheck-display-errors-function 'flycheck-pos-tip-error-messages)))
-
 ;;; Highlighting
 
 ;; highlight matching parentheses
-(show-paren-mode t)
+(use-package paren
+  :config (show-paren-mode t))
 
-;; use syntax highlighting everywhere
-(global-font-lock-mode t)
-(add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
+(use-package font-lock
+  :config
+  ;; use syntax highlighting everywhere
+  (global-font-lock-mode t)
+  (add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on))
 
 ;; highlight quoted elisp symbols
 (use-package highlight-quoted
@@ -387,6 +337,12 @@ This emulates the 'softtabstop' feature in Vim."
         (call-interactively 'backward-delete-char-untabify))))))
 
 ;;; Window and frame management
+
+;; center the cursor vertically when scrolling
+(use-package centered-cursor-mode
+  :ensure t
+  :diminish centered-cursor-mode
+  :config (global-centered-cursor-mode +1))
 
 ;; smooth resizing of GUI frames
 (setq frame-resize-pixelwise t)
@@ -506,28 +462,19 @@ i.e. change right window to bottom, or change bottom window to right."
 ;; improved implementation of `list-packages'
 (use-package paradox
   :ensure t
-  :config (paradox-enable))
+  :config
+  (setq paradox-github-token t)
+  (paradox-enable))
 
 ;; force me to use proper emacs keybindings
 (use-package guru-mode
   :ensure t
   :config (guru-global-mode))
 
-;; use text-mode on startup, and for unknown filetypes
-(setq initial-major-mode 'text-mode)
-(setq-default major-mode 'text-mode)
-
-;; sort ls output by filetype
-(setq dired-listing-switches "-lhX")
-
-;; keep a long minibuffer history, without duplicates
-(setq history-length t
-      history-delete-duplicates t)
-
-;; when typing a filename to visit, // will mean / and
-;; ~ will mean $HOME regardless of preceding text.
-(setq file-name-shadow-tty-properties '(invisible t))
-(file-name-shadow-mode 1)
+(use-package dired
+  :config
+  ;; sort ls output by filetype
+  (setq dired-listing-switches "-lhX"))
 
 ;; nice alternative to isearch
 (use-package phi-search
@@ -538,24 +485,32 @@ i.e. change right window to bottom, or change bottom window to right."
   (setq phi-search-case-sensitive 'guess
         phi-search-limit 5000))
 
-;; center the cursor vertically when scrolling
-(use-package centered-cursor-mode
-  :ensure t
-  :diminish centered-cursor-mode
-  :config (global-centered-cursor-mode +1))
+(use-package shell
+  :preface
+  (defun comint-delchar-or-eof-or-kill-buffer (arg)
+    "Send delchar/eof or kill the buffer"
+    (interactive "p")
+    (if (null (get-buffer-process (current-buffer)))
+        (kill-buffer)
+      (comint-delchar-or-maybe-eof arg)))
+  :config
+  ;; C-d should logout/kill a shell buffer
+  (add-hook 'shell-mode-hook
+            (lambda ()
+              (define-key shell-mode-map
+                (kbd "C-d") 'comint-delchar-or-eof-or-kill-buffer))))
 
-;; C-d should logout/kill a shell buffer
-(add-hook 'shell-mode-hook
-          (lambda ()
-            (define-key shell-mode-map
-              (kbd "C-d") 'comint-delchar-or-eof-or-kill-buffer)))
+;; editing files over ssh
+(use-package tramp
+  :config
+  (setq tramp-auto-save-directory   "~/.emacs.d/state/tramp-autosave"
+        tramp-persistency-file-name "~/.emacs.d/state/tramp"))
 
-(defun comint-delchar-or-eof-or-kill-buffer (arg)
-  "Send delchar/eof or kill the buffer"
-  (interactive "p")
-  (if (null (get-buffer-process (current-buffer)))
-      (kill-buffer)
-    (comint-delchar-or-maybe-eof arg)))
+;; store list of recently opened files on disk
+(use-package recentf
+  :config
+  (setq recentf-save-file "~/.emacs.d/state/recentf")
+  (recentf-mode 1))
 
 ;; save minibuffer, search, and kill ring history
 (use-package savehist
@@ -569,6 +524,33 @@ i.e. change right window to bottom, or change bottom window to right."
   :config
   (setq save-place-file "~/.emacs.d/state/saveplace")
   (setq-default save-place t))
+
+(use-package eshell
+  :config
+  (setq eshell-history-file-name "~/.emacs.d/state/eshell-history")
+  ;; case-insensitive completion
+  (setq eshell-cmpl-ignore-case t))
+
+;; code/word completion
+(use-package company
+  :ensure t
+  :diminish company-mode
+  :config
+  ;; don't autocomplete
+  (setq company-idle-delay nil)
+  (define-key company-mode-map (kbd "C-l") 'company-complete-common)
+  (global-company-mode t))
+
+;; projectile offers fast find-file for project files, git-grep, etc
+(use-package projectile
+  :ensure t
+  :diminish projectile-mode
+  :config
+  (setq projectile-enable-caching t
+        projectile-cache-file "~/.emacs.d/state/projectile.cache"
+        projectile-known-projects-file "~/.emacs.d/state/projectile-bookmarks.eld"
+        projectile-use-git-grep t)
+  (projectile-global-mode))
 
 ;; use helm for completion/narrowing in minibuffer, C-x C-f, etc
 (use-package helm
@@ -599,46 +581,29 @@ i.e. change right window to bottom, or change bottom window to right."
     :bind (("C-h b" . helm-descbinds)))
   (use-package helm-themes
     :ensure t)
-  ; descend into directories with Tab
-  (define-key helm-map (kbd "TAB") 'helm-execute-persistent-action)
-  ; list actions with C-z instead
-  (define-key helm-map (kbd "C-z")  'helm-select-action)
-  (helm-mode t)
-  (helm-adaptive-mode t))
-
-(use-package eshell
-  :config
-  ;; case-insensitive completion
-  (setq eshell-cmpl-ignore-case t)
-  (with-eval-after-load 'helm
-    ;; use helm for completion and history
-    (add-hook 'eshell-mode-hook
-              #'(lambda ()
-                  (eshell-cmpl-initialize)
-                  (define-key eshell-mode-map [remap eshell-pcomplete] 'helm-esh-pcomplete)
-                  (define-key eshell-mode-map (kbd "M-p") 'helm-eshell-history)))))
-
-;; shared imenu between all buffers of the same major mode
-(use-package imenu-anywhere
-  :ensure t
-  :bind ("C-c i" . helm-imenu-anywhere))
-
-;; projectile offers fast find-file for project files, git-grep, etc
-(use-package projectile
-  :ensure t
-  :diminish projectile-mode
-  :config
-  (setq projectile-enable-caching t
-        projectile-cache-file "~/.emacs.d/state/projectile.cache"
-        projectile-known-projects-file "~/.emacs.d/state/projectile-bookmarks.eld"
-        projectile-use-git-grep t)
-  (projectile-global-mode)
-  (with-eval-after-load 'helm
-    (use-package helm-projectile
-      :ensure t)
+  (use-package helm-projectile
+    :ensure t
+    :config
     (setq projectile-completion-system 'helm
           projectile-switch-project-action 'helm-projectile)
-    (helm-projectile-toggle 1)))
+    (helm-projectile-toggle 1))
+  (use-package helm-company
+      :ensure t
+      :config (define-key company-active-map (kbd "C-s") 'helm-company))
+  ;; shared imenu between all buffers of the same major mode
+  (use-package imenu-anywhere
+    :ensure t
+    :bind ("C-c i" . helm-imenu-anywhere))
+  ; use helm for eshell completion and history
+  (add-hook 'eshell-mode-hook
+            #'(lambda ()
+                (eshell-cmpl-initialize)
+                (define-key eshell-mode-map [remap eshell-pcomplete] 'helm-esh-pcomplete)
+                (define-key eshell-mode-map (kbd "M-p") 'helm-eshell-history)))
+  ;; use helm for any kind of generic completion in emacs
+  (helm-mode t)
+  ;; sort candidates based on my previous selections
+  (helm-adaptive-mode t))
 
 ;; display keybinding overview 1 sec after hitting prefix keys
 (use-package guide-key
@@ -647,6 +612,67 @@ i.e. change right window to bottom, or change bottom window to right."
   :config
   (guide-key-mode)
   (setq guide-key/guide-key-sequence t))
+
+;; code folding
+(use-package hideshow
+  :preface
+  (defvar my-hs-hide nil
+    "Current state of hideshow for toggling all.")
+  (defun my-toggle-hideshow-all ()
+    "Toggle hideshow all."
+    (interactive)
+    (setq my-hs-hide (not my-hs-hide))
+    (if my-hs-hide
+        (hs-hide-all)
+      (hs-show-all)))
+  :diminish hs-minor-mode
+  :bind ("C-c s" . hs-toggle-hiding)
+  :config
+  (global-set-key (kbd "C-c C-s") 'my-toggle-hideshow-all)
+  (add-hook 'prog-mode-hook 'hs-minor-mode))
+
+;; toggle comment visibility
+(use-package hide-comnt
+  :ensure t
+  :bind ("C-c k" . hide/show-comments-toggle))
+
+; git magic
+(use-package magit
+  :ensure t
+  :bind (("C-c b" . magit-blame)
+         ("C-x g" . magit-status)))
+
+;; automatic syntax checking
+(use-package flycheck
+  :ensure t
+  :defer t
+  :init (add-hook 'prog-mode-hook 'flycheck-mode)
+  :config
+  ;; wait a bit longer before checking
+  (setq flycheck-idle-change-delay 2)
+  ;; I usually don't want to hear from perlcritic
+  (setq-default flycheck-disabled-checkers
+    '(perl-perlcritic))
+  ;; don't warn about my custom packages not being loadable
+  (setq flycheck-emacs-lisp-load-path '("~/.emacs.d/elisp/"))
+  ;; use "C-c f" as the flycheck prefix key
+  (define-key flycheck-mode-map flycheck-keymap-prefix nil)
+  (setq flycheck-keymap-prefix (kbd "C-c f"))
+  (define-key flycheck-mode-map flycheck-keymap-prefix
+    flycheck-command-map)
+  ;; check Cask files
+  (use-package flycheck-cask
+    :ensure t
+    :config (flycheck-cask-setup))
+  ;; check package conventions
+  (use-package flycheck-package
+    :ensure t
+    :config (flycheck-package-setup))
+  ;; Show Flycheck messages in popups
+  (use-package flycheck-pos-tip
+    :ensure t
+    :config
+    (setq flycheck-display-errors-function 'flycheck-pos-tip-error-messages)))
 
 ;;; Major modes
 
@@ -696,23 +722,9 @@ i.e. change right window to bottom, or change bottom window to right."
   (slime-setup '(slime-fancy)))
 
 (use-package org
-  :ensure t)
+  :ensure t
+  :defer t)
 
 (use-package markdown-mode
   :ensure t
   :defer t)
-
-(use-package company
-  :ensure t
-  :diminish company-mode
-  :config
-  (global-company-mode t)
-  ;; don't autocomplete
-  (setq company-idle-delay nil)
-  (define-key company-mode-map (kbd "C-l") 'company-complete-common)
-  (with-eval-after-load 'helm
-    (use-package helm-company
-      :ensure t
-      :config
-      (define-key company-active-map (kbd "C-s") 'helm-company))))
-
