@@ -37,6 +37,7 @@
   '(info-xref ((t :foreground "blue")))
   '(info-xref-visited ((t :foreground "magenta")))
   '(info-title-1 ((t :foreground "green" :bold t)))
+  '(highlight ((t :foreground "yellow" :background nil)))
   '(linum ((t :inherit default :foreground "black" :bold t)))
   '(which-func ((t :foreground "yellow")))
   '(isearch ((t :foreground "black" :background "yellow")))
@@ -134,6 +135,18 @@
   '(company-preview ((t :background "black")))
   '(company-preview ((t :background "black")))
   '(company-preview-common ((t :background "black" :bold t)))
+
+  '(mu4e-header-highlight-face ((t :background "black" :bold t)))
+  '(mu4e-unread-face ((t :foreground "green")))
+  '(mu4e-header-key-face ((t :foreground "yellow")))
+  '(mu4e-cited-1-face ((t :foreground "yellow")))
+  '(mu4e-cited-2-face ((t :foreground "green")))
+  '(mu4e-cited-3-face ((t :foreground "cyan")))
+  '(mu4e-cited-4-face ((t :foreground "magenta")))
+  '(mu4e-cited-5-face ((t :foreground "blue")))
+  '(mu4e-cited-6-face ((t :foreground "red")))
+  '(mu4e-cited-7-face ((t :foreground "yellow")))
+  '(mu4e-title-face ((t :foreground "green" :bold t)))
 )
 
 (when load-file-name
