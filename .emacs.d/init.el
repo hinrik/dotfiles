@@ -233,7 +233,8 @@
 (global-set-key (kbd "C-k") 'kill-whole-line)
 
 ;; show trailing whitespace in programming modes
-(add-hook 'prog-mode-hook (lambda () (setq show-trailing-whitespace t)))
+(setq whitespace-style '(face trailing tabs))
+(add-hook 'prog-mode-hook (lambda () (whitespace-mode)))
 
 ;; when I comment blocks of code, I don't want padding at the beginning
 (setq comment-padding 0)
