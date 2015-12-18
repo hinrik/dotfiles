@@ -224,6 +224,8 @@
 (setq comment-auto-fill-only-comments t)
 (add-hook 'text-mode-hook (lambda () (progn (auto-fill-mode 1) (diminish 'auto-fill-function))))
 (add-hook 'prog-mode-hook (lambda () (progn (auto-fill-mode 1) (diminish 'auto-fill-function))))
+(define-key text-mode-map (kbd "C-c q") 'auto-fill-mode)
+(define-key prog-mode-map (kbd "C-c q") 'auto-fill-mode)
 
 ;; insert closing parenthesis/bracket/etc automatically
 (use-package elec-pair
