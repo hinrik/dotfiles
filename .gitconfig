@@ -28,3 +28,5 @@
     smtpssl = 1
     smtpuser = hinrik.sig@gmail.com
     from = Hinrik Örn Sigurðsson <hinrik.sig@gmail.com>
+[merge]
+    conflictstyle = diff3
