@@ -129,10 +129,11 @@
   ;; precalculate max line number width
   (add-hook 'nlinum-mode-hook
             (lambda ()
-              (unless (boundp 'nlinum--width)
+              (when nlinum-mode
                 (setq nlinum--width
                       (1+ (length (number-to-string
-                                   (count-lines (point-min) (point-max)))))))))
+                                   (count-lines (point-min) (point-max))))))
+                (nlinum--flush))))
   :config (setq nlinum-format "%d "))
 
 ;; make buffer names unique
