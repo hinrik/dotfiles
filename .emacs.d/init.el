@@ -120,6 +120,9 @@
 ;; show column number
 (setq column-number-mode t)
 
+;; wrap long lines visually
+(global-visual-line-mode t)
+
 ;; show line numbers on the side in programming modes
 (use-package nlinum
   :ensure t
