@@ -270,7 +270,11 @@
 ;; highlight numbers in code
 (use-package highlight-numbers
   :ensure t
-  :defer t)
+  :defer t
+  :init (add-hook 'prog-mode-hook
+                  (lambda ()
+                    (unless (eq major-mode 'perl6-mode)
+                      (highlight-numbers-mode)))))
 
 ;; highlight FIXME/TODO/BUG/XXX
 (add-hook 'prog-mode-hook
