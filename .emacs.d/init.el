@@ -193,7 +193,7 @@
   :config
   (setq which-func-current 'my-which-func-current
         which-func-format (list
-          '(:propertize (:eval (if (my-current-function) "➤" "")) face which-func)
+          '(:propertize (:eval (if (my-current-function) "➤ " "")) face which-func)
           '(:propertize which-func-current local-map which-func-keymap face which-func))))
 
 ;; http://stackoverflow.com/questions/1242352/get-font-face-under-cursor-in-emacs
