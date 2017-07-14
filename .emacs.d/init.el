@@ -123,21 +123,28 @@
 ;; wrap long lines visually
 (global-visual-line-mode t)
 
-;; show line numbers on the side in programming modes
-(use-package nlinum
-  :ensure t
-  :bind ("C-c l" . nlinum-mode)
-  :init
-  (add-hook 'prog-mode-hook 'nlinum-mode)
-  ;; precalculate max line number width
-  (add-hook 'nlinum-mode-hook
+;; show line numbers on the side in programming modes,
+;; precalculating the max width so it won't change with scrolling
+(if (version< emacs-version "26.0")
+    (use-package nlinum
+      :ensure t
+      :bind ("C-c l" . nlinum-mode)
+      :init
+      (add-hook 'prog-mode-hook 'nlinum-mode)
+      (add-hook 'nlinum-mode-hook
+                (lambda ()
+                  (when nlinum-mode
+                    (setq nlinum--width
+                          (1+ (length (number-to-string
+                                       (count-lines (point-min) (point-max))))))
+                    (nlinum--flush))))
+      :config (setq nlinum-format "%d "))
+  (add-hook 'prog-mode-hook
             (lambda ()
-              (when nlinum-mode
-                (setq nlinum--width
-                      (1+ (length (number-to-string
-                                   (count-lines (point-min) (point-max))))))
-                (nlinum--flush))))
-  :config (setq nlinum-format "%d "))
+              (setq display-line-number-width
+                    (length (number-to-string
+                             (count-lines (point-min) (point-max)))))
+              (setq display-line-numbers t))))
 
 ;; make buffer names unique
 (use-package uniquify

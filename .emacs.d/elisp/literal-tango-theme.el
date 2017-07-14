@@ -39,6 +39,8 @@
   '(info-title-1 ((t :foreground "green" :bold t)))
   '(highlight ((t :foreground "yellow" :background nil)))
   '(linum ((t :inherit default :foreground "black" :bold t)))
+  '(line-number ((t :foreground "black" :bold t)))
+  '(line-number-current-line ((t :foreground "white" :bold t)))
   '(which-func ((t :foreground "yellow")))
   '(isearch ((t :foreground "black" :background "yellow")))
   '(lazy-highlight ((t :foreground "black" :background "white")))
