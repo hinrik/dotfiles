@@ -567,7 +567,7 @@ i.e. change right window to bottom, or change bottom window to right."
         projectile-cache-file "~/.emacs.d/state/projectile.cache"
         projectile-known-projects-file "~/.emacs.d/state/projectile-bookmarks.eld"
         projectile-use-git-grep t)
-  (projectile-global-mode))
+  (projectile-mode))
 
 ;; use helm for completion/narrowing in minibuffer, C-x C-f, etc
 (use-package helm
