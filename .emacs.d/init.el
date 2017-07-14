@@ -539,10 +539,8 @@ i.e. change right window to bottom, or change bottom window to right."
         savehist-file "~/.emacs.d/state/savehist"))
 
 ;; save my position in visited files
-(use-package saveplace
-  :config
-  (setq save-place-file "~/.emacs.d/state/saveplace")
-  (setq-default save-place t))
+(setq save-place-file "~/.emacs.d/state/saveplace")
+(save-place-mode 1)
 
 (use-package eshell
   :config
