@@ -571,7 +571,7 @@ i.e. change right window to bottom, or change bottom window to right."
   :diminish company-mode
   :config
   ;; don't autocomplete
-  (setq company-idle-delay nil)
+  (setq company-idle-delay 1)
   (define-key company-mode-map (kbd "C-l") 'company-complete-common)
   (global-company-mode t))
 
