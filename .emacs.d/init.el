@@ -275,6 +275,11 @@
   :defer t
   :init (add-hook 'emacs-lisp-mode-hook 'highlight-quoted-mode))
 
+;; also highlight bound variables
+(use-package lisp-extra-font-lock
+  :ensure t
+  :config (lisp-extra-font-lock-global-mode 1))
+
 ;; highlight numbers in code
 (use-package highlight-numbers
   :ensure t
@@ -748,6 +753,10 @@ i.e. change right window to bottom, or change bottom window to right."
   (setq slime-net-coding-system 'utf-8-unix)
   (setq inferior-lisp-program "/usr/bin/sbcl")
   (slime-setup '(slime-fancy)))
+
+(use-package lisp-extra-font-lock
+  :ensure t
+  :config (lisp-extra-font-lock-global-mode 1))
 
 (use-package ace-jump-mode
   :ensure t
