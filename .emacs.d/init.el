@@ -303,6 +303,11 @@
                     (unless (eq major-mode 'perl6-mode)
                       (highlight-numbers-mode)))))
 
+;; temporarily highlight changes from pasting, etc
+(use-package volatile-highlights
+  :defer t
+  :config (volatile-highlights-mode t))
+
 ;; highlight FIXME/TODO/BUG/XXX
 (add-hook 'prog-mode-hook
           (lambda ()
