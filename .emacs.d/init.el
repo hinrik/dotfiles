@@ -680,6 +680,7 @@ i.e. change right window to bottom, or change bottom window to right."
 (use-package flycheck
   :ensure t
   :defer t
+  :diminish eldoc-mode
   :init (add-hook 'prog-mode-hook 'flycheck-mode)
   :config
   ;; wait a bit longer before checking
