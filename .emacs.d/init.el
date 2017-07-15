@@ -122,6 +122,7 @@
 
 ;; wrap long lines visually
 (global-visual-line-mode t)
+(diminish 'visual-line-mode)
 
 ;; show line numbers on the side in programming modes,
 ;; precalculating the max width so it won't change with scrolling
