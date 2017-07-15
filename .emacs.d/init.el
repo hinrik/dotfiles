@@ -86,7 +86,8 @@
 ;; theming
 (if window-system
     (progn
-      (set-frame-font "Mono-11")
+      (set-frame-font "Mono-14")
+      (add-to-list 'default-frame-alist '(font . "Mono-14"))
       (add-to-list 'default-frame-alist '(width . 60))
       (add-to-list 'default-frame-alist '(height . 18))
       ;; Monokai looks nice
