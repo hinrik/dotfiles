@@ -640,9 +640,6 @@ i.e. change right window to bottom, or change bottom window to right."
     (setq projectile-completion-system 'helm
           projectile-switch-project-action 'helm-projectile)
     (helm-projectile-toggle 1))
-  (use-package helm-company
-      :ensure t
-      :config (define-key company-active-map (kbd "C-s") 'helm-company))
   ;; shared imenu between all buffers of the same major mode
   (use-package imenu-anywhere
     :ensure t
