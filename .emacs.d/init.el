@@ -101,11 +101,15 @@
       ;; Monokai looks nice
       (use-package monokai-theme
         :ensure t
-        :config
-        (load-theme 'monokai t)
-        ;; override Monokai's very dim comment color
-        (set-face-foreground 'font-lock-comment-face "#729FCF")
-        (set-face-foreground 'font-lock-comment-delimiter-face "#729FCF")))
+        :preface
+        (defun my-improve-monokai (orig-fun theme &rest args)
+          (apply orig-fun theme args)
+          (when (eq theme 'monokai)
+            ;; override Monokai's very dim comment color
+            (set-face-foreground 'font-lock-comment-face "#729FCF")
+            (set-face-foreground 'font-lock-comment-delimiter-face "#729FCF")))
+        (advice-add 'load-theme :around #'my-improve-monokai)
+        :config (load-theme 'monokai t)))
   (progn
     (setq frame-background-mode 'dark)
     (use-package literal-tango-theme
