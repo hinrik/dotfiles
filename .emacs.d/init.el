@@ -708,6 +708,7 @@ i.e. change right window to bottom, or change bottom window to right."
     :config
     (setq flycheck-display-errors-function 'flycheck-pos-tip-error-messages)))
 
+;; more useful sizing of multiple windows
 (use-package golden-ratio
   :ensure t
   :diminish golden-ratio-mode
