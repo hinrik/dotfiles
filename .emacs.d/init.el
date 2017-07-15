@@ -241,9 +241,6 @@
 ;; my sentences don't end with double spaces
 (setq sentence-end-double-space nil)
 
-;; C-n at end-of-buffer should insert a newline
-(setq next-line-add-newlines t)
-
 ;; automatically format text paragraphs and code comments
 (setq-default fill-column 73)
 (setq comment-auto-fill-only-comments t)
