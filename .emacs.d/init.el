@@ -86,6 +86,9 @@
 ;; I prefer "y or n" to "yes or no"
 (defalias 'yes-or-no-p 'y-or-n-p)
 
+;; quicker feedback on incomplete key macros
+(setq echo-keystrokes 0.1)
+
 ;;; Appearance
 
 ;; theming
