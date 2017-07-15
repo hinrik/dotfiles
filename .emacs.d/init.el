@@ -260,6 +260,14 @@
 (global-set-key (kbd "M-n") 'forward-paragraph)
 (global-set-key (kbd "M-m") 'mark-paragraph)
 
+;; ditto for scrolling the other window
+(defun my-scroll-other-window-up () (interactive)
+  (scroll-other-window -1))
+(defun my-scroll-other-window-down () (interactive)
+  (scroll-other-window 1))
+(global-set-key (kbd "M-t") 'my-scroll-other-window-up)
+(global-set-key (kbd "C-t") 'my-scroll-other-window-down)
+
 ;; show trailing whitespace in programming modes
 (setq whitespace-style '(face trailing tabs))
 (add-hook 'prog-mode-hook (lambda () (whitespace-mode)))
