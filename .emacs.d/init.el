@@ -246,6 +246,11 @@
 ;; I often want to remove a whole line, like Vim's "d d"
 (global-set-key (kbd "C-k") 'kill-whole-line)
 
+;; more convenient mappings for working with paragraphs
+(global-set-key (kbd "M-p") 'backward-paragraph)
+(global-set-key (kbd "M-n") 'forward-paragraph)
+(global-set-key (kbd "M-m") 'mark-paragraph)
+
 ;; show trailing whitespace in programming modes
 (setq whitespace-style '(face trailing tabs))
 (add-hook 'prog-mode-hook (lambda () (whitespace-mode)))
@@ -392,8 +397,8 @@ This emulates the 'softtabstop' feature in Vim."
       (previous-buffer))))
 
 ;; quick cycling through important buffers
-(global-set-key (kbd "M-n") 'next-important-buffer)
-(global-set-key (kbd "M-p") 'previous-important-buffer)
+(global-set-key (kbd "M-o") 'next-important-buffer)
+(global-set-key (kbd "M-k") 'previous-important-buffer)
 
 ;; don't ask, just kill the buffer when I hit C-x k
 (global-set-key (kbd "C-x k") 'kill-this-buffer)
