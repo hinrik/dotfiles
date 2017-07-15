@@ -733,7 +733,12 @@ i.e. change right window to bottom, or change bottom window to right."
             (lambda ()
               (progn
                 (define-key cperl-mode-map (kbd "TAB") 'tab-to-tab-stop)
-                (define-key cperl-mode-map (kbd "DEL") 'backward-delete-whitespace-to-column))))
+                (define-key cperl-mode-map (kbd "DEL") 'backward-delete-whitespace-to-column)
+                (when (projectile-project-root)
+                  (setq flycheck-perl-include-path (list
+                                                    (concat
+                                                     (projectile-project-root)
+                                                     "lib")))))))
   (add-hook 'cperl-mode-hook (lambda () (run-hooks 'prog-mode-hook))))
 
 (use-package slime
