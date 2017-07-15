@@ -521,6 +521,7 @@ i.e. change right window to bottom, or change bottom window to right."
 ;; force me to use proper emacs keybindings
 (use-package guru-mode
   :ensure t
+  :diminish guru-mode
   :config (guru-global-mode))
 
 (use-package dired
