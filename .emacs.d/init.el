@@ -24,6 +24,11 @@
 
 ;;; Basic configuration
 
+;; this prevents Emacs from dumping this into init.el
+(setq custom-file "~/.emacs.d/state/selected-packages.el")
+(when (file-exists-p custom-file)
+  (load custom-file))
+
 ;; suppress `defadvice' warnings that might come from 3rd-party packages
 (setq ad-redefinition-action 'accept)
 
