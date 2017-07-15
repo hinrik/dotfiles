@@ -775,10 +775,6 @@ i.e. change right window to bottom, or change bottom window to right."
   (setq inferior-lisp-program "/usr/bin/sbcl")
   (slime-setup '(slime-fancy)))
 
-(use-package lisp-extra-font-lock
-  :ensure t
-  :config (lisp-extra-font-lock-global-mode 1))
-
 (use-package ace-jump-mode
   :ensure t
   :config
