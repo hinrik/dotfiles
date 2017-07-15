@@ -269,8 +269,10 @@
 (global-set-key (kbd "C-t") 'my-scroll-other-window-down)
 
 ;; show trailing whitespace in programming modes
-(setq whitespace-style '(face trailing tabs))
-(add-hook 'prog-mode-hook (lambda () (whitespace-mode)))
+(use-package whitespace
+  :diminish whitespace-mode
+  :init (setq whitespace-style '(face trailing tabs))
+  :config (add-hook 'prog-mode-hook 'whitespace-mode))
 
 ;; when I comment blocks of code, I don't want padding at the beginning
 (setq comment-padding 0)
