@@ -774,7 +774,9 @@ i.e. change right window to bottom, or change bottom window to right."
 (use-package golden-ratio
   :ensure t
   :diminish golden-ratio-mode
-  :config (golden-ratio-mode 1))
+  :config
+  (golden-ratio-mode 1)
+  (add-to-list 'window-size-change-functions 'golden-ratio))
 
 ;;; Major modes
 
