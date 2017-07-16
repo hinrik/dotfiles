@@ -391,6 +391,10 @@ This emulates the 'softtabstop' feature in Vim."
 
 ;;; Window and frame management
 
+;; always scroll one line at a time
+(setq scroll-step 1)
+(setq mouse-wheel-scroll-amount '(1 ((shift) . 1)))
+
 ;; center the cursor vertically when scrolling
 (use-package centered-cursor-mode
   :ensure t
