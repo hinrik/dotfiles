@@ -427,6 +427,7 @@ This emulates the 'softtabstop' feature in Vim."
 
 ;; smooth resizing of GUI frames
 (setq frame-resize-pixelwise t)
+
 (defun next-important-buffer ()
   (interactive)
   (let ((bread-crumb (buffer-name)))
