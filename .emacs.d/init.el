@@ -712,6 +712,7 @@ i.e. change right window to bottom, or change bottom window to right."
 ; git magic
 (use-package magit
   :ensure t
+  :diminish auto-revert-mode
   :bind (("C-c b" . magit-blame)
          ("C-x g" . magit-status)))
 
