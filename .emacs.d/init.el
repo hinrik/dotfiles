@@ -105,10 +105,11 @@
         (defun my-improve-monokai (orig-fun theme &rest args)
           (apply orig-fun theme args)
           (when (eq theme 'monokai)
-            ;; override Monokai's very dim comment color
-            (set-face-foreground 'font-lock-comment-face "#729FCF")
-            (set-face-foreground 'font-lock-comment-delimiter-face "#729FCF")))
-        (advice-add 'load-theme :around #'my-improve-monokai)
+            (set-face-font 'line-number "Monospace")
+            (set-face-bold 'line-number t)
+            (set-face-background 'line-number "#272822")
+            (set-face-foreground 'line-number-current-line "#F8F8F2")))
+          (advice-add 'load-theme :around #'my-improve-monokai)
         :config (load-theme 'monokai t)))
   (progn
     (setq frame-background-mode 'dark)
