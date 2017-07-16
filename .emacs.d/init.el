@@ -125,9 +125,6 @@
  '(cperl-array-face ((t (:inherit font-lock-variable-name-face :weight bold))))
  '(cperl-nonoverridable-face ((t (:inherit font-lock-function-name-face)))))
 
-;; bar/i-beam cursor
-(modify-all-frames-parameters '((cursor-type . bar)))
-
 ;; don't add \ when line wraps
 (set-display-table-slot standard-display-table 'wrap ?\ )
 
