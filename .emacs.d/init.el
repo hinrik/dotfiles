@@ -398,7 +398,31 @@ This emulates the 'softtabstop' feature in Vim."
 (use-package centered-cursor-mode
   :ensure t
   :diminish centered-cursor-mode
+  :preface
+  (defun my-toggle-centered-cursor-mode ()
+    (interactive)
+    (if (and (boundp 'centered-cursor-mode)
+             centered-cursor-mode)
+        (centered-cursor-mode 0)
+      (progn
+        (scroll-lock-mode 0)
+        (centered-cursor-mode 1))))
+  (global-set-key (kbd "C-z") 'my-toggle-centered-cursor-mode)
   :config (global-centered-cursor-mode +1))
+
+;; sometimes I want more context above/below the cursor
+(use-package scroll-lock-mode
+  :preface
+  (defun my-toggle-scroll-lock-mode ()
+    (interactive)
+    (if (and (boundp 'scroll-lock-mode)
+             scroll-lock-mode)
+        (scroll-lock-mode 0)
+      (progn
+        (centered-cursor-mode 0)
+        (scroll-lock-mode 1)
+        (diminish 'scroll-lock-mode))))
+  :bind (("M-z" . my-toggle-scroll-lock-mode)))
 
 ;; smooth resizing of GUI frames
 (setq frame-resize-pixelwise t)
