@@ -123,7 +123,8 @@
         :preface
         (defun my-improve-monokai (orig-fun theme &rest args)
           (apply orig-fun theme args)
-          (when (eq theme 'monokai)
+          (when (and (not (version< emacs-version "26.0"))
+                     (eq theme 'monokai))
             (set-face-font 'line-number "Monospace")
             (set-face-bold 'line-number t)
             (set-face-background 'line-number "#272822")
@@ -620,7 +621,10 @@ i.e. change right window to bottom, or change bottom window to right."
 
 ;; save my position in visited files
 (setq save-place-file "~/.emacs.d/state/saveplace")
-(save-place-mode 1)
+(if (version< emacs-version "26.0")
+  (use-package saveplace
+    :config (setq-default save-place t))
+  (save-place-mode 1))
 
 (use-package eshell
   :config
