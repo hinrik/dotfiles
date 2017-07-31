@@ -290,8 +290,10 @@
 ;; show trailing whitespace in programming modes
 (use-package whitespace
   :diminish whitespace-mode
-  :init (setq whitespace-style '(face trailing tabs))
-  :config (add-hook 'prog-mode-hook 'whitespace-mode))
+  :init (setq whitespace-style '(face trailing))
+  :config
+  (add-hook 'prog-mode-hook 'whitespace-mode)
+  (add-hook 'text-mode-hook 'whitespace-mode))
 
 ;; when I comment blocks of code, I don't want padding at the beginning
 (setq comment-padding 0)
