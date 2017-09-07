@@ -801,7 +801,10 @@ i.e. change right window to bottom, or change bottom window to right."
             (lambda ()
               (add-to-list 'imenu-generic-expression
                            '("Used Packages"
-                             "\\(^\\s-*(use-package +\\)\\(\\_<.+\\_>\\)" 2)))))
+                             "\\(^\\s-*(use-package +\\)\\(\\_<.+\\_>\\)" 2))
+              ;; don't be anal about my init.el
+              (when (string-match "\\.emacs\\.d/init\\.el$" (buffer-file-name))
+                (setq-local flycheck-disabled-checkers '(emacs-lisp-checkdoc))))))
 
 (use-package cperl-mode
   :defer t
