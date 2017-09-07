@@ -93,23 +93,29 @@
 
 ;; Fix oversized GUI windows on HiDPI displays
 (when (and (string= system-type "gnu/linux") window-system)
+  (defun my-gsettings-get-number (schema key)
+    (let* ((command (concat "gsettings get" schema " " key))
+           (output (shell-command-to-string command)))
+      (and
+       (not (string-match "^No such key" output))
+       (string-match "\\(?:\\w+ \\)?\\([0-9]+\\(?:\\.[0-9]+\\)?\\)" output)
+       (string-to-number (match-string 1 output)))))
+
   (setq my-frame-width  120
         my-frame-height 32)
 
   (defun my-window-setup-hook ()
-    (toggle-frame-maximized)
-    (let* ((setting
-            (shell-command-to-string
-             "gsettings get org.gnome.desktop.interface scaling-factor"))
-           (scale-factor (progn (string-match "\\w+ \\([0-9]+\\)" setting)
-                                (string-to-number (match-string 1 setting))))
-           (frame-width (truncate (/ my-frame-width scale-factor)))
-           (frame-height (truncate (/ my-frame-height scale-factor)))
-           (orig-frame-pos (frame-position))
-           (pos-x (car orig-frame-pos))
-           (pos-y (cdr orig-frame-pos)))
-      (set-frame-size (selected-frame) frame-width frame-height)
-      (set-frame-position (selected-frame) pos-x pos-y)))
+    (let ((scale-factor (my-gsettings-get-number "org.gnome.desktop.interface" "scaling-factor")))
+      (when (and scale-factor (> scale-factor 1))
+        (let* ((frame-width (truncate (/ my-frame-width scale-factor)))
+               (frame-height (truncate (/ my-frame-height scale-factor)))
+               (orig-frame-pos (frame-position))
+               (pos-x (car orig-frame-pos))
+               (pos-y (cdr orig-frame-pos)))
+        (when (eq (frame-parameter nil 'fullscreen) 'maximized)
+          (toggle-frame-maximized))
+        (set-frame-size (selected-frame) frame-width frame-height)
+        (set-frame-position (selected-frame) pos-x pos-y)))))
   (add-hook 'window-setup-hook 'my-window-setup-hook))
 
 ;; theming
