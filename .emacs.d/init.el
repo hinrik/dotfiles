@@ -132,7 +132,7 @@
         :preface
         (defun my-improve-monokai (orig-fun theme &rest args)
           (apply orig-fun theme args)
-          (when (and (not (version< emacs-version "26.0"))
+          (when (and (version< emacs-version "25.0")
                      (eq theme 'monokai))
             (set-face-font 'line-number "Monospace")
             (set-face-bold 'line-number t)
