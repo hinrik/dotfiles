@@ -874,3 +874,7 @@ i.e. change right window to bottom, or change bottom window to right."
     :config
     (ac-php-core-eldoc-setup)
     (add-to-list 'company-backends 'company-ac-php-backend)))
+
+(use-package thrift-mode
+  :ensure thrift
+  :defer t)
