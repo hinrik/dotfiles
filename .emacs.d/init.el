@@ -121,8 +121,11 @@
 ;; theming
 (if window-system
     (progn
-      (set-frame-font "Mono-14")
-      (add-to-list 'default-frame-alist '(font . "Mono-14"))
+      (let* ((scale-factor (my-gsettings-get-number "org.gnome-desktop.interface" "text-scaling-factor"))
+             (font-size (if (and scale-factor (>= scale-factor 2)) 14 12))
+             (font (concat "Mono-" (number-to-string font-size))))
+        (set-frame-font font)
+        (add-to-list 'default-frame-alist `(font . ,font)))
       ;; Monokai looks nice
       (use-package monokai-theme
         :ensure t
