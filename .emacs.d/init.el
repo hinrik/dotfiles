@@ -856,3 +856,8 @@ i.e. change right window to bottom, or change bottom window to right."
 (use-package markdown-mode
   :ensure t
   :defer t)
+
+(use-package php-mode
+  :ensure t
+  :defer t
+  :config (add-hook 'php-mode-hook 'php-enable-symfony2-coding-style))
