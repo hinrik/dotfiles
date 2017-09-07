@@ -860,4 +860,11 @@ i.e. change right window to bottom, or change bottom window to right."
 (use-package php-mode
   :ensure t
   :defer t
-  :config (add-hook 'php-mode-hook 'php-enable-symfony2-coding-style))
+  :config
+  (setq php-template-compatibility nil)
+  (add-hook 'php-mode-hook 'php-enable-symfony2-coding-style)
+  (use-package company-php
+    :ensure t
+    :config
+    (ac-php-core-eldoc-setup)
+    (add-to-list 'company-backends 'company-ac-php-backend)))
