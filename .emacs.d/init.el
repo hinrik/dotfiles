@@ -629,9 +629,9 @@ i.e. change right window to bottom, or change bottom window to right."
 
 ;; save my position in visited files
 (setq save-place-file "~/.emacs.d/state/saveplace")
-(if (version< emacs-version "26.0")
-  (use-package saveplace
-    :config (setq-default save-place t))
+(if (version< emacs-version "25.0")
+    (use-package saveplace
+      :config (setq-default save-place t))
   (save-place-mode 1))
 
 (use-package eshell
