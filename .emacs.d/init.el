@@ -878,3 +878,9 @@ i.e. change right window to bottom, or change bottom window to right."
 (use-package thrift-mode
   :ensure thrift
   :defer t)
+
+(use-package rust-mode
+  :ensure t)
+
+(use-package toml-mode
+  :ensure t)
