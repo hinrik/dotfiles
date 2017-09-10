@@ -94,7 +94,7 @@
 ;; Fix oversized GUI windows on HiDPI displays
 (when (and (string= system-type "gnu/linux") window-system)
   (defun my-gsettings-get-number (schema key)
-    (let* ((command (concat "gsettings get" schema " " key))
+    (let* ((command (concat "gsettings get " schema " " key))
            (output (shell-command-to-string command)))
       (and
        (not (string-match "^No such key" output))
@@ -112,10 +112,10 @@
                (orig-frame-pos (frame-position))
                (pos-x (car orig-frame-pos))
                (pos-y (cdr orig-frame-pos)))
-        (when (eq (frame-parameter nil 'fullscreen) 'maximized)
-          (toggle-frame-maximized))
-        (set-frame-size (selected-frame) frame-width frame-height)
-        (set-frame-position (selected-frame) pos-x pos-y)))))
+          (when (eq (frame-parameter nil 'fullscreen) 'maximized)
+            (toggle-frame-maximized))
+          (set-frame-size (selected-frame) frame-width frame-height)
+          (set-frame-position (selected-frame) pos-x pos-y)))))
   (add-hook 'window-setup-hook 'my-window-setup-hook))
 
 ;; theming
