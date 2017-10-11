@@ -207,7 +207,11 @@ else
 fi
 
 # some nice shell options
-shopt -s checkwinsize cdspell dotglob histappend no_empty_cmd_completion
+shopt -s checkwinsize cdspell dotglob no_empty_cmd_completion
+
+# update bash history in real time
+shopt -s histappend
+export PROMPT_COMMAND="history -a;$PROMPT_COMMAND"
 
 # don't check for mail
 unset MAILCHECK
