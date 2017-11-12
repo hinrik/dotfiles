@@ -456,6 +456,12 @@ This emulates the 'softtabstop' feature in Vim."
         (diminish 'scroll-lock-mode))))
   :bind (("M-z" . my-toggle-scroll-lock-mode)))
 
+;; I don't use the mouse
+(use-package disable-mouse
+  :ensure t
+  :diminish global-disable-mouse-mode
+  :config (global-disable-mouse-mode))
+
 (defun next-important-buffer ()
   (interactive)
   (let ((bread-crumb (buffer-name)))
