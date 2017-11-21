@@ -891,7 +891,9 @@ i.e. change right window to bottom, or change bottom window to right."
   :defer t)
 
 (use-package rust-mode
-  :ensure t)
+  :ensure t
+  :defer t)
 
 (use-package toml-mode
-  :ensure t)
+  :ensure t
+  :defer t)
