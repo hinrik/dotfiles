@@ -26,6 +26,7 @@ Plugin 'vim-scripts/perl_synwrite.vim'
 Plugin 'tpope/vim-markdown'
 Plugin 'zaiste/tmux.vim'
 Plugin 'elixir-lang/vim-elixir'
+Plugin 'rhysd/vim-crystal'
 
 " Bootstrap vundle
 if exists("s:bootstrap") && s:bootstrap
@@ -143,6 +144,8 @@ if version >= 700
     autocmd VimResized * wincmd =
 endif
 
+autocmd BufRead,BufNewFile *.cr set filetype=crystal
+
 " My *.md files are Markdown, not Modula 2
 autocmd BufRead,BufNewFile *.md set filetype=markdown
 
@@ -153,8 +156,8 @@ autocmd BufRead,BufNewFile *.comp set filetype=mason
 autocmd FileType text setlocal textwidth=78
 
 " Use 2-column indenting in Lisp, Ruby, Sass, Haml, and YAML, CoffeeScript, etc
-autocmd FileType lisp,ruby,eruby,scss,sass,haml,yaml,coffee,eco,lua,moon
-    \ setlocal shiftwidth=2 softtabstop=2
+autocmd FileType lisp,ruby,eruby,scss,sass,haml,yaml,coffee,eco,lua,moon,crystal
+    \ setlocal shiftwidth=2 softtabstop=2 expandtab
 
 " Jump to the last known position when reopening a file
 autocmd BufReadPost *

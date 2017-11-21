@@ -781,6 +781,7 @@ i.e. change right window to bottom, or change bottom window to right."
   (use-package flycheck-cask
     :ensure t
     :config (flycheck-cask-setup))
+  (use-package crystal-flycheck)
   ;; check package conventions
   (use-package flycheck-package
     :ensure t
@@ -862,6 +863,10 @@ i.e. change right window to bottom, or change bottom window to right."
   (global-set-key (kbd "C-c c") 'ace-jump-char-mode))
 
 (use-package org
+  :ensure t
+  :defer t)
+
+(use-package crystal-mode
   :ensure t
   :defer t)
 
