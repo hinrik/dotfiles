@@ -884,7 +884,10 @@ i.e. change right window to bottom, or change bottom window to right."
     :ensure t
     :config
     (ac-php-core-eldoc-setup)
-    (add-to-list 'company-backends 'company-ac-php-backend)))
+    (add-to-list 'company-backends 'company-ac-php-backend))
+  (use-package geben
+    :ensure t
+    :config (setq geben-path-mappings '(("~/work" "/vagrant")))))
 
 (use-package thrift-mode
   :ensure thrift

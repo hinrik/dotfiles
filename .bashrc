@@ -21,6 +21,7 @@ maybe_add_path() {
 
 # custom binaries
 maybe_add_path $HOME/local/bin
+maybe_add_path $HOME/.gygvenv/bin
 
 if type luarocks >&/dev/null; then
     eval $(luarocks path)
