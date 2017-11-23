@@ -900,3 +900,12 @@ i.e. change right window to bottom, or change bottom window to right."
 (use-package toml-mode
   :ensure t
   :defer t)
+
+(use-package dumb-jump
+  :ensure t
+  :bind (("C-c C-d" . dumb-jump-go-current-window)
+         ("C-c C-r" . dumb-jump-back)
+         ("C-c C-s" . dumb-jump-go-other-window))
+  :config
+  (setq dumb-jump-selector 'helm)
+  (dumb-jump-mode))
