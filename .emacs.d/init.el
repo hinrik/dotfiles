@@ -152,7 +152,13 @@
  ;; faces instead.
  '(cperl-hash-face ((t (:inherit font-lock-variable-name-face :weight bold :slant italic))))
  '(cperl-array-face ((t (:inherit font-lock-variable-name-face :weight bold))))
- '(cperl-nonoverridable-face ((t (:inherit font-lock-function-name-face)))))
+ '(cperl-nonoverridable-face ((t (:inherit font-lock-function-name-face))))
+
+ '(php-function-name ((t (:inherit default))))
+ '(php-property-name ((t :inherit default)))
+ '(php-variable-sigil ((t (:inherit php-variable-name))))
+ '(php-$this-sigil ((t (:inherit php-variable-name))))
+ '(php-$this ((t (:inherit php-variable-name)))))
 
 ;; don't add \ when line wraps
 (set-display-table-slot standard-display-table 'wrap ?\ )
@@ -876,9 +882,17 @@ i.e. change right window to bottom, or change bottom window to right."
   :ensure t
   :defer t)
 
+;; this catches files Emacs gets wrong, e.g. *.config.php
+(defun my-looks-like-php ()
+  (or
+   (looking-at-p "^<\\?php")
+   (string-match-p "\\.php$" (buffer-file-name))))
+
 (use-package php-mode
   :ensure t
   :defer t
+  :diminish abbrev-mode
+  :init (add-to-list 'magic-mode-alist '(my-looks-like-php . php-mode))
   :config
   (setq php-template-compatibility nil)
   (add-hook 'php-mode-hook 'php-enable-symfony2-coding-style)
@@ -889,7 +903,9 @@ i.e. change right window to bottom, or change bottom window to right."
     (add-to-list 'company-backends 'company-ac-php-backend))
   (use-package geben
     :ensure t
-    :config (setq geben-path-mappings '(("~/work" "/vagrant")))))
+    :config
+    (setq geben-path-mappings '(("~/work" "/vagrant"))
+          geben-temporary-file-directory "~/.emacs.d/state/geben")))
 
 (use-package thrift-mode
   :ensure thrift
