@@ -218,25 +218,6 @@
 
 ;;; Modeline
 
-;; in the modeline, show which function the cursor is in
-(use-package which-func
-  :preface
-  ;; strip the package name from the function name, it's usually superfluous
-  (defun shorten-function-name (name)
-    (last (split-string name "::")))
-  (defun my-current-function ()
-    (gethash (selected-window) which-func-table which-func-unknown))
-  (defconst my-which-func-current
-    `(:eval (shorten-function-name (replace-regexp-in-string
-             "%" "%%"
-             (my-current-function)))))
-  :init (which-function-mode)
-  :config
-  (setq which-func-current 'my-which-func-current
-        which-func-format (list
-          '(:propertize (:eval (if (my-current-function) "➤ " "")) face which-func)
-          '(:propertize which-func-current local-map which-func-keymap face which-func))))
-
 ;; http://stackoverflow.com/questions/1242352/get-font-face-under-cursor-in-emacs
 (defun get-faces (pos)
   "Get the font faces at POS."
@@ -246,22 +227,43 @@
           (get-char-property pos 'face)
           (plist-get (text-properties-at pos) 'face)))))
 
-;; my nice modeline
-(setq-default mode-line-format (list
-  "%e "
-  mode-line-remote
-  " "
-  '(:propertize (:eval mode-line-buffer-identification) face (:weight bold))
-  " "
-  '(:propertize "[" face (:weight bold))
-  '(:propertize (:eval mode-line-modified) face (:foreground "yellow"))
-  '(:propertize "]" face (:weight bold))
-  " "
-  mode-line-position
-  mode-line-modes
-  mode-line-misc-info
-  '(:propertize (:eval (mapconcat 'symbol-name (get-faces (point)) ",")) face (:foreground "cyan"))
-  " "))
+(use-package telephone-line
+  :ensure t
+  :config
+  (defface modeline-green '((t :foreground "green" :bold t)) "" :group 'my-modeline)
+  (defface modeline-cyan '((t :foreground "cyan" :background "black")) "" :group 'my-modeline)
+  (defface modeline-magenta '((t :foreground "white" :background "magenta")) "" :group 'my-modeline)
+  (defface modeline-blue '((t :foreground "white" :background "blue")) "" :group 'my-modeline)
+  (add-to-list 'telephone-line-faces '(magenta . (modeline-magenta . modeline-magenta)))
+  (add-to-list 'telephone-line-faces '(blue . (modeline-blue . modeline-blue)))
+  (add-to-list 'telephone-line-faces '(cyan . (modeline-cyan . modeline-cyan)))
+  (add-to-list 'telephone-line-faces '(green . (modeline-green . modeline-green)))
+  (telephone-line-defsegment* my-vc-info-segment ()
+    `(,(when (bound-and-true-p vc-mode) (concat (char-to-string #xe0a0) " "))
+      ,(telephone-line-raw vc-mode t)))
+  (telephone-line-defsegment* my-buffer-info-segment ()
+    `(,(telephone-line-raw mode-line-buffer-identification t)
+      " "
+      (:propertize "[" face (:weight bold))
+      (:propertize ,(telephone-line-raw mode-line-modified t) face (:foreground "yellow"))
+      (:propertize "]" face (:weight bold))))
+  (telephone-line-defsegment* my-line-position-segment ()
+    `((:eval (format "%4s:%-3d" ,(telephone-line-raw "%l") (current-column)))
+      (:propertize ,(telephone-line-raw " %3p") face (:weight bold))))
+  (telephone-line-defsegment* my-face-at-point-segment ()
+    `(""
+      ,(telephone-line-raw '(:eval (mapconcat 'symbol-name (get-faces (point)) ",")) t)))
+  (setq telephone-line-lhs
+        '((green . (my-vc-info-segment))
+          (nil . (my-buffer-info-segment))
+          (cyan . (my-face-at-point-segment))
+          (nil . ())))
+  (setq telephone-line-rhs
+        '((nil . ())
+          (magenta . (telephone-line-minor-mode-segment))
+          (blue . (telephone-line-major-mode-segment telephone-line-process-segment))
+          (nil . (my-line-position-segment))))
+  (telephone-line-mode 1))
 
 ;;; Editing
 
