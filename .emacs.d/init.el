@@ -233,6 +233,10 @@
           (get-char-property pos 'face)
           (plist-get (text-properties-at pos) 'face)))))
 
+(use-package total-lines
+  :load-path "~/src/total-lines"
+  :config (global-total-lines-mode))
+
 (use-package telephone-line
   :ensure t
   :config
@@ -253,9 +257,11 @@
       (:propertize "[" face (:weight bold))
       (:propertize ,(telephone-line-raw mode-line-modified t) face (:foreground "yellow"))
       (:propertize "]" face (:weight bold))))
-  (telephone-line-defsegment* my-line-position-segment ()
-    `((:eval (format "%4s:%-3d" ,(telephone-line-raw "%l") (current-column)))
-      (:propertize ,(telephone-line-raw " %3p") face (:weight bold))))
+  (telephone-line-defsegment* my-buffer-position-segment ()
+    `((:propertize
+       ((12 "%l" "/" (:eval (format "%d,%d" total-lines (1+ (current-column)))))
+        (-3 "%p"))
+       face (:weight bold))))
   (telephone-line-defsegment* my-face-at-point-segment ()
     `(""
       ,(telephone-line-raw '(:eval (mapconcat 'symbol-name (get-faces (point)) ",")) t)))
@@ -268,7 +274,7 @@
         '((nil . ())
           (magenta . (telephone-line-minor-mode-segment))
           (blue . (telephone-line-major-mode-segment telephone-line-process-segment))
-          (nil . (my-line-position-segment))))
+          (nil . (my-buffer-position-segment))))
   (telephone-line-mode 1))
 
 ;;; Editing
