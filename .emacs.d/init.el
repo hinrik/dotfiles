@@ -118,7 +118,7 @@
           (set-frame-position (selected-frame) pos-x pos-y)))))
   (add-hook 'window-setup-hook 'my-window-setup-hook))
 
-;; theming
+;; GUI font size
 (when (display-graphic-p)
   (let* ((scale-factor (my-gsettings-get-number "org.gnome-desktop.interface" "text-scaling-factor"))
          (font-size (if (and scale-factor (>= scale-factor 2)) 14 12))
@@ -143,6 +143,7 @@
  '(cperl-array-face ((t (:inherit font-lock-variable-name-face :weight bold))))
  '(cperl-nonoverridable-face ((t (:inherit font-lock-function-name-face))))
 
+ ;; ditto
  '(php-function-name ((t (:inherit default))))
  '(php-property-name ((t :inherit default)))
  '(php-variable-sigil ((t (:inherit php-variable-name))))
@@ -294,9 +295,9 @@
 ;; show trailing whitespace in programming modes
 (use-package whitespace
   :diminish whitespace-mode
-  :init (setq whitespace-style '(face trailing))
   :config
   (progn
+    (setq whitespace-style '(face trailing))
     (add-hook 'prog-mode-hook 'whitespace-mode)
     (add-hook 'text-mode-hook 'whitespace-mode)))
 
