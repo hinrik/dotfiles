@@ -119,32 +119,20 @@
   (add-hook 'window-setup-hook 'my-window-setup-hook))
 
 ;; theming
-(if window-system
-    (progn
-      (let* ((scale-factor (my-gsettings-get-number "org.gnome-desktop.interface" "text-scaling-factor"))
-             (font-size (if (and scale-factor (>= scale-factor 2)) 14 12))
-             (font (concat "Mono-" (number-to-string font-size))))
-        (set-frame-font font)
-        (add-to-list 'default-frame-alist `(font . ,font)))
-      ;; Monokai looks nice
-      (use-package monokai-theme
-        :ensure t
-        :preface
-        (defun my-improve-monokai (orig-fun theme &rest args)
-          (apply orig-fun theme args)
-          (when (and (version< emacs-version "25.0")
-                     (eq theme 'monokai))
-            (set-face-font 'line-number "Monospace")
-            (set-face-bold 'line-number t)
-            (set-face-background 'line-number "#272822")
-            (set-face-foreground 'line-number-current-line "#F8F8F2")))
-          (advice-add 'load-theme :around #'my-improve-monokai)
-        :config (load-theme 'monokai t)))
-  (progn
-    (setq frame-background-mode 'dark)
-    (use-package literal-tango-theme
-      :load-path "elisp/"
-      :config (load-theme 'literal-tango t))))
+(when (display-graphic-p)
+  (let* ((scale-factor (my-gsettings-get-number "org.gnome-desktop.interface" "text-scaling-factor"))
+         (font-size (if (and scale-factor (>= scale-factor 2)) 14 12))
+         (font (concat "Mono-" (number-to-string font-size))))
+    (set-frame-font font)
+    (add-to-list 'default-frame-alist `(font . ,font))))
+
+;; Monokai looks nice
+(use-package monokai-theme
+  :ensure t
+  :config
+  (set-frame-parameter nil 'background-mode 'dark)
+  (set-terminal-parameter nil 'background-mode 'dark)
+  (load-theme 'monokai t))
 
 (custom-set-faces
  ;; These cperl faces have terrible fg/bg colors by default and are rarely
