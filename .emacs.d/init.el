@@ -299,6 +299,8 @@
   (progn
     (setq whitespace-style '(face trailing))
     (add-hook 'prog-mode-hook 'whitespace-mode)
+    (add-hook 'LilyPond-mode-hook 'whitespace-mode)
+    (add-hook 'cperl-mode-hook 'whitespace-mode)
     (add-hook 'text-mode-hook 'whitespace-mode)))
 
 ;; when I comment blocks of code, I don't want padding at the beginning
