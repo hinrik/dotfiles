@@ -170,6 +170,10 @@
 (global-visual-line-mode t)
 (diminish 'visual-line-mode)
 
+(use-package total-lines
+  :load-path "~/src/total-lines"
+  :config (global-total-lines-mode))
+
 ;; show line numbers on the side in programming modes,
 ;; precalculating the max width so it won't change with scrolling
 (if (version< emacs-version "26.0")
@@ -178,20 +182,19 @@
       :bind ("C-c l" . nlinum-mode)
       :init
       (add-hook 'prog-mode-hook 'nlinum-mode)
-      (add-hook 'nlinum-mode-hook
+      (add-hook 'total-lines-init-hook
                 (lambda ()
-                  (when nlinum-mode
-                    (setq nlinum--width
-                          (1+ (length (number-to-string
-                                       (count-lines (point-min) (point-max))))))
-                    (nlinum--flush))))
+                  (setq nlinum--width
+                        (1+ (length (number-to-string total-lines))))
+                  (nlinum--flush)))
       :config (setq nlinum-format "%d "))
   (add-hook 'prog-mode-hook
             (lambda ()
+              (setq display-line-numbers t)))
+  (add-hook 'total-lines-init-hook
+            (lambda ()
               (setq display-line-number-width
-                    (length (number-to-string
-                             (count-lines (point-min) (point-max)))))
-              (setq display-line-numbers t))))
+                    (length (number-to-string total-lines))))))
 
 ;; make buffer names unique
 (use-package uniquify
@@ -223,10 +226,6 @@
   :config (xterm-title-mode 1))
 
 ;;; Modeline
-
-(use-package total-lines
-  :load-path "~/src/total-lines"
-  :config (global-total-lines-mode))
 
 (use-package spaceline-config
   :ensure spaceline
