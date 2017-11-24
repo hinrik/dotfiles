@@ -168,7 +168,7 @@
 
 ;; show line numbers on the side in programming modes,
 ;; precalculating the max width so it won't change with scrolling
-(if (version< emacs-version "26.0")
+(if (version< emacs-version "26.1")
     (use-package nlinum
       :ensure t
       :bind ("C-c l" . nlinum-mode)
@@ -189,10 +189,7 @@
     (add-hook 'LilyPond-mode-hook
               (lambda ()
                 (setq display-line-numbers t)))
-    (add-hook 'total-lines-init-hook
-              (lambda ()
-                (setq display-line-number-width
-                      (length (number-to-string total-lines)))))))
+    (setq display-line-numbers-width-start t)))
 
 ;; make buffer names unique
 (use-package uniquify
