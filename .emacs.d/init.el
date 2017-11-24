@@ -68,6 +68,9 @@
 ;; no startup message
 (fset 'display-startup-echo-area-message 'ignore)
 
+;; no scroll bar, spaceline currently doesn't play well with it
+(scroll-bar-mode -1)
+
 ;; no menu bar
 (menu-bar-mode -1)
 
