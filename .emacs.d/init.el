@@ -775,7 +775,8 @@ i.e. change right window to bottom, or change bottom window to right."
   (use-package flycheck-cask
     :ensure t
     :config (flycheck-cask-setup))
-  (use-package crystal-flycheck)
+  (use-package flycheck-crystal
+    :load-path "~/src/emacs-crystal-mode")
   ;; check package conventions
   (use-package flycheck-package
     :ensure t
