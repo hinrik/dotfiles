@@ -175,6 +175,7 @@
       :init
       (progn
         (add-hook 'prog-mode-hook 'nlinum-mode)
+        (add-hook 'LilyPond-mode-hook 'nlinum-mode)
         (add-hook 'total-lines-init-hook
                   (lambda ()
                     (setq nlinum--width
