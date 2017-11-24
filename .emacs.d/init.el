@@ -250,9 +250,10 @@
   (defun spaceline-my-theme ()
     "My modeline"
     (spaceline-compile
-      `((version-control :when active)
-        (remote-host buffer-id buffer-modified)
+      `(anzu
         selection-info
+        (remote-host buffer-id buffer-modified)
+        (version-control :when active)
         ((flycheck-error flycheck-warning flycheck-info) :when active))
       `(faces-at-point
         major-mode
@@ -594,14 +595,12 @@ i.e. change right window to bottom, or change bottom window to right."
   ;; sort ls output by filetype
   (setq dired-listing-switches "-lhX"))
 
-;; nice alternative to isearch
-(use-package phi-search
+;; shows current/total matches for isearch
+(use-package anzu
   :ensure t
   :config
-  (global-set-key (kbd "C-s") 'phi-search)
-  (global-set-key (kbd "C-r") 'phi-search-backward)
-  (setq phi-search-case-sensitive 'guess
-        phi-search-limit 5000))
+  (setq anzu-cons-mode-line-p nil)
+  (global-anzu-mode +1))
 
 (use-package shell
   :preface
