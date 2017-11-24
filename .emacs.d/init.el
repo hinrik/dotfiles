@@ -582,6 +582,11 @@ i.e. change right window to bottom, or change bottom window to right."
   ;; sort ls output by filetype
   (setq dired-listing-switches "-lhX"))
 
+;; search with regexp support by default
+(use-package isearch
+  :bind (("C-s" . isearch-forward-regexp)
+         ("C-r" . isearch-backward-regexp)))
+
 ;; shows current/total matches for isearch
 (use-package anzu
   :ensure t
