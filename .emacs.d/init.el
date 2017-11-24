@@ -224,58 +224,45 @@
 
 ;;; Modeline
 
-;; http://stackoverflow.com/questions/1242352/get-font-face-under-cursor-in-emacs
-(defun get-faces (pos)
-  "Get the font faces at POS."
-  (delq nil
-        (delete-dups (list
-          (get-char-property pos 'read-face-name)
-          (get-char-property pos 'face)
-          (plist-get (text-properties-at pos) 'face)))))
-
 (use-package total-lines
   :load-path "~/src/total-lines"
   :config (global-total-lines-mode))
 
-(use-package telephone-line
-  :ensure t
+(use-package spaceline-config
+  :ensure spaceline
   :config
-  (defface modeline-green '((t :foreground "green" :bold t)) "" :group 'my-modeline)
-  (defface modeline-cyan '((t :foreground "cyan" :background "black")) "" :group 'my-modeline)
-  (defface modeline-magenta '((t :foreground "white" :background "magenta")) "" :group 'my-modeline)
-  (defface modeline-blue '((t :foreground "white" :background "blue")) "" :group 'my-modeline)
-  (add-to-list 'telephone-line-faces '(magenta . (modeline-magenta . modeline-magenta)))
-  (add-to-list 'telephone-line-faces '(blue . (modeline-blue . modeline-blue)))
-  (add-to-list 'telephone-line-faces '(cyan . (modeline-cyan . modeline-cyan)))
-  (add-to-list 'telephone-line-faces '(green . (modeline-green . modeline-green)))
-  (telephone-line-defsegment* my-vc-info-segment ()
-    `(,(when (bound-and-true-p vc-mode) (concat (char-to-string #xe0a0) " "))
-      ,(telephone-line-raw vc-mode t)))
-  (telephone-line-defsegment* my-buffer-info-segment ()
-    `(,(telephone-line-raw mode-line-buffer-identification t)
-      " "
-      (:propertize "[" face (:weight bold))
-      (:propertize ,(telephone-line-raw mode-line-modified t) face (:foreground "yellow"))
-      (:propertize "]" face (:weight bold))))
-  (telephone-line-defsegment* my-buffer-position-segment ()
-    `((:propertize
-       ((12 "%l" "/" (:eval (format "%d,%d" total-lines (1+ (current-column)))))
-        (-3 "%p"))
-       face (:weight bold))))
-  (telephone-line-defsegment* my-face-at-point-segment ()
-    `(""
-      ,(telephone-line-raw '(:eval (mapconcat 'symbol-name (get-faces (point)) ",")) t)))
-  (setq telephone-line-lhs
-        '((green . (my-vc-info-segment))
-          (nil . (my-buffer-info-segment))
-          (cyan . (my-face-at-point-segment))
-          (nil . ())))
-  (setq telephone-line-rhs
-        '((nil . ())
-          (magenta . (telephone-line-minor-mode-segment))
-          (blue . (telephone-line-major-mode-segment telephone-line-process-segment))
-          (nil . (my-buffer-position-segment))))
-  (telephone-line-mode 1))
+
+  (spaceline-define-segment faces-at-point
+    "Displays the font-lock face(s) at point"
+    (let ((face (face-at-point)))
+      (when face
+        (symbol-name face)))
+    :enabled nil)
+
+  (spaceline-define-segment line-total-column
+    "Line/Total,Column"
+    (format
+     "%s/%d,%s"
+     (format-mode-line "%l")
+     total-lines
+     (format "%-2d" (1+ (current-column)))))
+
+  (defun spaceline-my-theme ()
+    "My modeline"
+    (spaceline-compile
+      `((version-control :when active)
+        (remote-host buffer-id buffer-modified)
+        selection-info
+        ((flycheck-error flycheck-warning flycheck-info) :when active))
+      `(faces-at-point
+        major-mode
+        line-total-column
+        buffer-position))
+    (setq-default mode-line-format '("%e" (:eval (spaceline-ml-main)))))
+
+  (setq powerline-default-separator 'utf-8) ; so it works in a terminal
+  (spaceline-my-theme)
+  (spaceline-helm-mode))
 
 ;;; Editing
 
