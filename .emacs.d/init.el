@@ -179,6 +179,9 @@
   (add-hook 'prog-mode-hook
             (lambda ()
               (setq display-line-numbers t)))
+  (add-hook 'LilyPond-mode-hook
+            (lambda ()
+              (setq display-line-numbers t)))
   (add-hook 'total-lines-init-hook
             (lambda ()
               (setq display-line-number-width
@@ -757,7 +760,9 @@ i.e. change right window to bottom, or change bottom window to right."
   :ensure t
   :defer t
   :diminish eldoc-mode
-  :init (add-hook 'prog-mode-hook 'flycheck-mode)
+  :init
+  (add-hook 'prog-mode-hook 'flycheck-mode)
+  (add-hook 'LilyPond-mode-hook 'flycheck-mode)
   :config
   ;; wait a bit longer before checking
   (setq flycheck-idle-change-delay 2)
@@ -777,6 +782,8 @@ i.e. change right window to bottom, or change bottom window to right."
     :config (flycheck-cask-setup))
   (use-package flycheck-crystal
     :load-path "~/src/emacs-crystal-mode")
+  (use-package flycheck-lilypond
+    :load-path "~/src/flycheck-lilypond")
   ;; check package conventions
   (use-package flycheck-package
     :ensure t
@@ -914,3 +921,7 @@ i.e. change right window to bottom, or change bottom window to right."
   :config
   (setq dumb-jump-selector 'helm)
   (dumb-jump-mode))
+
+(use-package lilypond-mode
+  :load-path "~/.emacs.d/elisp"
+  :config (require 'lilypond-init))
