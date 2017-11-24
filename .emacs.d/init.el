@@ -889,6 +889,7 @@ i.e. change right window to bottom, or change bottom window to right."
   :init (add-to-list 'magic-mode-alist '(my-looks-like-php . php-mode))
   :config
   (setq php-template-compatibility nil)
+  (setq php-lineup-cascaded-calls t)
   (add-hook 'php-mode-hook 'php-enable-symfony2-coding-style)
   (use-package company-php
     :ensure t
