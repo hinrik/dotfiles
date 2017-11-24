@@ -133,9 +133,10 @@
 (use-package monokai-theme
   :ensure t
   :config
-  (set-frame-parameter nil 'background-mode 'dark)
-  (set-terminal-parameter nil 'background-mode 'dark)
-  (load-theme 'monokai t))
+  (progn
+    (set-frame-parameter nil 'background-mode 'dark)
+    (set-terminal-parameter nil 'background-mode 'dark)
+    (load-theme 'monokai t)))
 
 (custom-set-faces
  ;; These cperl faces have terrible fg/bg colors by default and are rarely
@@ -172,23 +173,25 @@
       :ensure t
       :bind ("C-c l" . nlinum-mode)
       :init
-      (add-hook 'prog-mode-hook 'nlinum-mode)
-      (add-hook 'total-lines-init-hook
-                (lambda ()
-                  (setq nlinum--width
-                        (1+ (length (number-to-string total-lines))))
-                  (nlinum--flush)))
+      (progn
+        (add-hook 'prog-mode-hook 'nlinum-mode)
+        (add-hook 'total-lines-init-hook
+                  (lambda ()
+                    (setq nlinum--width
+                          (1+ (length (number-to-string total-lines))))
+                    (nlinum--flush))))
       :config (setq nlinum-format "%d "))
-  (add-hook 'prog-mode-hook
-            (lambda ()
-              (setq display-line-numbers t)))
-  (add-hook 'LilyPond-mode-hook
-            (lambda ()
-              (setq display-line-numbers t)))
-  (add-hook 'total-lines-init-hook
-            (lambda ()
-              (setq display-line-number-width
-                    (length (number-to-string total-lines))))))
+  (progn
+    (add-hook 'prog-mode-hook
+              (lambda ()
+                (setq display-line-numbers t)))
+    (add-hook 'LilyPond-mode-hook
+              (lambda ()
+                (setq display-line-numbers t)))
+    (add-hook 'total-lines-init-hook
+              (lambda ()
+                (setq display-line-number-width
+                      (length (number-to-string total-lines)))))))
 
 ;; make buffer names unique
 (use-package uniquify
@@ -226,39 +229,39 @@
 (use-package spaceline-config
   :ensure spaceline
   :config
+  (progn
+    (spaceline-define-segment faces-at-point
+      "Displays the font-lock face(s) at point"
+      (let ((face (face-at-point)))
+        (when face
+          (symbol-name face)))
+      :enabled nil)
 
-  (spaceline-define-segment faces-at-point
-    "Displays the font-lock face(s) at point"
-    (let ((face (face-at-point)))
-      (when face
-        (symbol-name face)))
-    :enabled nil)
+    (spaceline-define-segment line-total-column
+      "Line/Total,Column"
+      (format
+       "%s/%d,%s"
+       (format-mode-line "%l")
+       total-lines
+       (format "%-2d" (1+ (current-column)))))
 
-  (spaceline-define-segment line-total-column
-    "Line/Total,Column"
-    (format
-     "%s/%d,%s"
-     (format-mode-line "%l")
-     total-lines
-     (format "%-2d" (1+ (current-column)))))
+    (defun spaceline-my-theme ()
+      "My modeline"
+      (spaceline-compile
+        `(anzu
+          selection-info
+          (remote-host buffer-id buffer-modified)
+          (version-control :when active)
+          ((flycheck-error flycheck-warning flycheck-info) :when active))
+        `(faces-at-point
+          major-mode
+          line-total-column
+          buffer-position))
+      (setq-default mode-line-format '("%e" (:eval (spaceline-ml-main)))))
 
-  (defun spaceline-my-theme ()
-    "My modeline"
-    (spaceline-compile
-      `(anzu
-        selection-info
-        (remote-host buffer-id buffer-modified)
-        (version-control :when active)
-        ((flycheck-error flycheck-warning flycheck-info) :when active))
-      `(faces-at-point
-        major-mode
-        line-total-column
-        buffer-position))
-    (setq-default mode-line-format '("%e" (:eval (spaceline-ml-main)))))
-
-  (setq powerline-default-separator 'utf-8) ; so it works in a terminal
-  (spaceline-my-theme)
-  (spaceline-helm-mode))
+    (setq powerline-default-separator 'utf-8) ; so it works in a terminal
+    (spaceline-my-theme)
+    (spaceline-helm-mode)))
 
 ;;; Editing
 
@@ -298,8 +301,9 @@
   :diminish whitespace-mode
   :init (setq whitespace-style '(face trailing))
   :config
-  (add-hook 'prog-mode-hook 'whitespace-mode)
-  (add-hook 'text-mode-hook 'whitespace-mode))
+  (progn
+    (add-hook 'prog-mode-hook 'whitespace-mode)
+    (add-hook 'text-mode-hook 'whitespace-mode)))
 
 ;; when I comment blocks of code, I don't want padding at the beginning
 (setq comment-padding 0)
@@ -314,11 +318,12 @@
 (use-package paren
   :config (show-paren-mode t))
 
+;; use syntax highlighting everywhere
 (use-package font-lock
   :config
-  ;; use syntax highlighting everywhere
-  (global-font-lock-mode t)
-  (add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on))
+  (progn
+    (global-font-lock-mode t)
+    (add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)))
 
 ;; highlight quoted elisp symbols
 (use-package highlight-quoted
@@ -335,10 +340,12 @@
 (use-package highlight-numbers
   :ensure t
   :defer t
-  :init (add-hook 'prog-mode-hook
-                  (lambda ()
-                    (unless (eq major-mode 'perl6-mode)
-                      (highlight-numbers-mode)))))
+  :init
+  (progn
+    (add-hook 'prog-mode-hook
+              (lambda ()
+                (unless (eq major-mode 'perl6-mode)
+                  (highlight-numbers-mode))))))
 
 ;; temporarily highlight changes from pasting, etc
 (use-package volatile-highlights
@@ -428,30 +435,32 @@ This emulates the 'softtabstop' feature in Vim."
   :ensure t
   :diminish centered-cursor-mode
   :preface
-  (defun my-toggle-centered-cursor-mode ()
-    (interactive)
-    (if (and (boundp 'centered-cursor-mode)
-             centered-cursor-mode)
-        (centered-cursor-mode 0)
-      (progn
-        (scroll-lock-mode 0)
-        (centered-cursor-mode 1))))
-  (global-set-key (kbd "C-z") 'my-toggle-centered-cursor-mode)
+  (progn
+    (defun my-toggle-centered-cursor-mode ()
+      (interactive)
+      (if (and (boundp 'centered-cursor-mode)
+               centered-cursor-mode)
+          (centered-cursor-mode 0)
+        (progn
+          (scroll-lock-mode 0)
+          (centered-cursor-mode 1))))
+    (global-set-key (kbd "C-z") 'my-toggle-centered-cursor-mode))
   :config (global-centered-cursor-mode +1))
 
 ;; sometimes I want more context above/below the cursor
 (use-package scroll-lock-mode
+  :bind (("M-z" . my-toggle-scroll-lock-mode))
   :preface
-  (defun my-toggle-scroll-lock-mode ()
-    (interactive)
-    (if (and (boundp 'scroll-lock-mode)
-             scroll-lock-mode)
-        (scroll-lock-mode 0)
-      (progn
-        (centered-cursor-mode 0)
-        (scroll-lock-mode 1)
-        (diminish 'scroll-lock-mode))))
-  :bind (("M-z" . my-toggle-scroll-lock-mode)))
+  (progn
+    (defun my-toggle-scroll-lock-mode ()
+      (interactive)
+      (if (and (boundp 'scroll-lock-mode)
+               scroll-lock-mode)
+          (scroll-lock-mode 0)
+        (progn
+          (centered-cursor-mode 0)
+          (scroll-lock-mode 1)
+          (diminish 'scroll-lock-mode))))))
 
 ;; I don't use the mouse
 (use-package disable-mouse
@@ -576,8 +585,9 @@ i.e. change right window to bottom, or change bottom window to right."
 (use-package paradox
   :ensure t
   :config
-  (setq paradox-github-token t)
-  (paradox-enable))
+  (progn
+    (setq paradox-github-token t)
+    (paradox-enable)))
 
 ;; force me to use proper emacs keybindings
 (use-package guru-mode
@@ -586,9 +596,8 @@ i.e. change right window to bottom, or change bottom window to right."
   :config (guru-global-mode))
 
 (use-package dired
-  :config
   ;; sort ls output by filetype
-  (setq dired-listing-switches "-lhX"))
+  :config (setq dired-listing-switches "-lhX"))
 
 ;; search with regexp support by default
 (use-package isearch
@@ -599,42 +608,48 @@ i.e. change right window to bottom, or change bottom window to right."
 (use-package anzu
   :ensure t
   :config
-  (setq anzu-cons-mode-line-p nil)
-  (global-anzu-mode +1))
+  (progn
+    (setq anzu-cons-mode-line-p nil)
+    (global-anzu-mode +1)))
 
 (use-package shell
   :preface
-  (defun comint-delchar-or-eof-or-kill-buffer (arg)
-    "Send delchar/eof or kill the buffer"
-    (interactive "p")
-    (if (null (get-buffer-process (current-buffer)))
-        (kill-buffer)
-      (comint-delchar-or-maybe-eof arg)))
+  (progn
+    (defun comint-delchar-or-eof-or-kill-buffer (arg)
+      "Send delchar/eof or kill the buffer"
+      (interactive "p")
+      (if (null (get-buffer-process (current-buffer)))
+          (kill-buffer)
+        (comint-delchar-or-maybe-eof arg))))
   :config
-  ;; C-d should logout/kill a shell buffer
-  (add-hook 'shell-mode-hook
-            (lambda ()
-              (define-key shell-mode-map
-                (kbd "C-d") 'comint-delchar-or-eof-or-kill-buffer))))
+  (progn
+    ;; C-d should logout/kill a shell buffer
+    (add-hook 'shell-mode-hook
+              (lambda ()
+                (define-key shell-mode-map
+                  (kbd "C-d") 'comint-delchar-or-eof-or-kill-buffer)))))
 
 ;; editing files over ssh
 (use-package tramp
   :config
-  (setq tramp-auto-save-directory   "~/.emacs.d/state/tramp-autosave"
-        tramp-persistency-file-name "~/.emacs.d/state/tramp"))
+  (progn
+    (setq tramp-auto-save-directory   "~/.emacs.d/state/tramp-autosave"
+          tramp-persistency-file-name "~/.emacs.d/state/tramp")))
 
 ;; store list of recently opened files on disk
 (use-package recentf
   :config
-  (setq recentf-save-file "~/.emacs.d/state/recentf")
-  (recentf-mode 1))
+  (progn
+    (setq recentf-save-file "~/.emacs.d/state/recentf")
+    (recentf-mode 1)))
 
 ;; save minibuffer, search, and kill ring history
 (use-package savehist
   :init (savehist-mode t)
   :config
-  (setq savehist-additional-variables '(kill-ring search-ring regexp-search-ring)
-        savehist-file "~/.emacs.d/state/savehist"))
+  (progn
+    (setq savehist-additional-variables '(kill-ring search-ring regexp-search-ring)
+          savehist-file "~/.emacs.d/state/savehist")))
 
 ;; save my position in visited files
 (setq save-place-file "~/.emacs.d/state/saveplace")
@@ -645,30 +660,33 @@ i.e. change right window to bottom, or change bottom window to right."
 
 (use-package eshell
   :config
-  (setq eshell-history-file-name "~/.emacs.d/state/eshell-history")
-  ;; case-insensitive completion
-  (setq eshell-cmpl-ignore-case t))
+  (progn
+    (setq eshell-history-file-name "~/.emacs.d/state/eshell-history")
+    ;; case-insensitive completion
+    (setq eshell-cmpl-ignore-case t)))
 
 ;; code/word completion
 (use-package company
   :ensure t
   :diminish company-mode
   :config
-  ;; don't autocomplete
-  (setq company-idle-delay 1)
-  (define-key company-mode-map (kbd "C-l") 'company-complete-common)
-  (global-company-mode t))
+  (progn
+    ;; don't autocomplete
+    (setq company-idle-delay 1)
+    (define-key company-mode-map (kbd "C-l") 'company-complete-common)
+    (global-company-mode t)))
 
 ;; projectile offers fast find-file for project files, git-grep, etc
 (use-package projectile
   :ensure t
   :diminish projectile-mode
   :config
-  (setq projectile-enable-caching t
-        projectile-cache-file "~/.emacs.d/state/projectile.cache"
-        projectile-known-projects-file "~/.emacs.d/state/projectile-bookmarks.eld"
-        projectile-use-git-grep t)
-  (projectile-mode))
+  (progn
+    (setq projectile-enable-caching t
+          projectile-cache-file "~/.emacs.d/state/projectile.cache"
+          projectile-known-projects-file "~/.emacs.d/state/projectile-bookmarks.eld"
+          projectile-use-git-grep t)
+    (projectile-mode)))
 
 ;; use helm for completion/narrowing in minibuffer, C-x C-f, etc
 (use-package helm
@@ -685,66 +703,77 @@ i.e. change right window to bottom, or change bottom window to right."
         helm-buffers-fuzzy-matching t
         helm-recentf-fuzzy-match t)
   :config
-  (use-package helm-config
-    :bind (("M-x" . helm-M-x)
-           ("M-s o" . helm-occur)
-           ("C-x b" . helm-buffers-list)
-           ("C-x C-f" . helm-find-files)
-           ("C-x C-r" . helm-recentf)
-           ("C-x r l" . helm-filtered-bookmarks)
-           ("C-h i" . helm-info-emacs)
-           ("C-h a" . helm-apropos)))
-  (use-package helm-descbinds
-    :ensure t
-    :bind (("C-h b" . helm-descbinds)))
-  (use-package helm-themes
-    :ensure t)
-  (use-package helm-projectile
-    :ensure t
-    :config
+  (progn
+    ; use helm for eshell completion and history
+    (add-hook 'eshell-mode-hook
+              #'(lambda ()
+                  (eshell-cmpl-initialize)
+                  (define-key eshell-mode-map [remap eshell-pcomplete] 'helm-esh-pcomplete)
+                  (define-key eshell-mode-map (kbd "M-p") 'helm-eshell-history)))
+    ;; use helm for any kind of generic completion in emacs
+    (helm-mode t)
+    ;; sort candidates based on my previous selections
+    (helm-adaptive-mode t)))
+
+(use-package helm-config
+  :bind (("M-x" . helm-M-x)
+         ("M-s o" . helm-occur)
+         ("C-x b" . helm-buffers-list)
+         ("C-x C-f" . helm-find-files)
+         ("C-x C-r" . helm-recentf)
+         ("C-x r l" . helm-filtered-bookmarks)
+         ("C-h i" . helm-info-emacs)
+         ("C-h a" . helm-apropos)))
+
+(use-package helm-descbinds
+  :ensure t
+  :bind (("C-h b" . helm-descbinds)))
+
+(use-package helm-themes
+  :ensure t)
+
+(use-package helm-projectile
+  :ensure t
+  :config
+  (progn
     (setq projectile-completion-system 'helm
           projectile-switch-project-action 'helm-projectile)
-    (helm-projectile-toggle 1))
-  ;; shared imenu between all buffers of the same major mode
-  (use-package imenu-anywhere
-    :ensure t
-    :bind ("C-c i" . helm-imenu-anywhere))
-  ; use helm for eshell completion and history
-  (add-hook 'eshell-mode-hook
-            #'(lambda ()
-                (eshell-cmpl-initialize)
-                (define-key eshell-mode-map [remap eshell-pcomplete] 'helm-esh-pcomplete)
-                (define-key eshell-mode-map (kbd "M-p") 'helm-eshell-history)))
-  ;; use helm for any kind of generic completion in emacs
-  (helm-mode t)
-  ;; sort candidates based on my previous selections
-  (helm-adaptive-mode t))
+    (helm-projectile-toggle 1)))
+
+;; shared imenu between all buffers of the same major mode
+(use-package imenu-anywhere
+  :ensure t
+  :bind ("C-c i" . helm-imenu-anywhere))
+
 
 ;; display keybinding overview 1 sec after hitting prefix keys
 (use-package guide-key
   :ensure t
   :diminish guide-key-mode
   :config
-  (guide-key-mode)
-  (setq guide-key/guide-key-sequence t))
+  (progn
+    (guide-key-mode)
+    (setq guide-key/guide-key-sequence t)))
 
 ;; code folding
 (use-package hideshow
-  :preface
-  (defvar my-hs-hide nil
-    "Current state of hideshow for toggling all.")
-  (defun my-toggle-hideshow-all ()
-    "Toggle hideshow all."
-    (interactive)
-    (setq my-hs-hide (not my-hs-hide))
-    (if my-hs-hide
-        (hs-hide-all)
-      (hs-show-all)))
   :diminish hs-minor-mode
   :bind ("C-c s" . hs-toggle-hiding)
+  :preface
+  (progn
+    (defvar my-hs-hide nil
+      "Current state of hideshow for toggling all.")
+    (defun my-toggle-hideshow-all ()
+      "Toggle hideshow all."
+      (interactive)
+      (setq my-hs-hide (not my-hs-hide))
+      (if my-hs-hide
+          (hs-hide-all)
+        (hs-show-all))))
   :config
-  (global-set-key (kbd "C-c C-s") 'my-toggle-hideshow-all)
-  (add-hook 'prog-mode-hook 'hs-minor-mode))
+  (progn
+    (global-set-key (kbd "C-c C-s") 'my-toggle-hideshow-all)
+    (add-hook 'prog-mode-hook 'hs-minor-mode)))
 
 ;; toggle comment visibility
 (use-package hide-comnt
@@ -764,46 +793,53 @@ i.e. change right window to bottom, or change bottom window to right."
   :defer t
   :diminish eldoc-mode
   :init
-  (add-hook 'prog-mode-hook 'flycheck-mode)
-  (add-hook 'LilyPond-mode-hook 'flycheck-mode)
+  (progn
+    (add-hook 'prog-mode-hook 'flycheck-mode)
+    (add-hook 'LilyPond-mode-hook 'flycheck-mode))
   :config
-  ;; wait a bit longer before checking
-  (setq flycheck-idle-change-delay 2)
-  ;; I usually don't want to hear from perlcritic
-  (setq-default flycheck-disabled-checkers
-    '(perl-perlcritic))
-  ;; don't warn about my custom packages not being loadable
-  (setq flycheck-emacs-lisp-load-path '("~/.emacs.d/elisp/"))
-  ;; use "C-c f" as the flycheck prefix key
-  (define-key flycheck-mode-map flycheck-keymap-prefix nil)
-  (setq flycheck-keymap-prefix (kbd "C-c f"))
-  (define-key flycheck-mode-map flycheck-keymap-prefix
-    flycheck-command-map)
-  ;; check Cask files
-  (use-package flycheck-cask
-    :ensure t
-    :config (flycheck-cask-setup))
-  (use-package flycheck-crystal
-    :load-path "~/src/emacs-crystal-mode")
-  (use-package flycheck-lilypond
-    :load-path "~/src/flycheck-lilypond")
-  ;; check package conventions
-  (use-package flycheck-package
-    :ensure t
-    :config (flycheck-package-setup))
-  ;; Show Flycheck messages in popups
-  (use-package flycheck-pos-tip
-    :ensure t
-    :config
-    (setq flycheck-display-errors-function 'flycheck-pos-tip-error-messages)))
+  (progn
+    ;; wait a bit longer before checking
+    (setq flycheck-idle-change-delay 2)
+    ;; I usually don't want to hear from perlcritic
+    (setq-default flycheck-disabled-checkers
+      '(perl-perlcritic))
+    ;; don't warn about my custom packages not being loadable
+    (setq flycheck-emacs-lisp-load-path '("~/.emacs.d/elisp/"))
+    ;; use "C-c f" as the flycheck prefix key
+    (define-key flycheck-mode-map flycheck-keymap-prefix nil)
+    (setq flycheck-keymap-prefix (kbd "C-c f"))
+    (define-key flycheck-mode-map flycheck-keymap-prefix
+      flycheck-command-map)))
+
+;; check Cask files
+(use-package flycheck-cask
+  :ensure t
+  :config (flycheck-cask-setup))
+
+(use-package flycheck-crystal
+  :load-path "~/src/emacs-crystal-mode")
+
+(use-package flycheck-lilypond
+  :load-path "~/src/flycheck-lilypond")
+
+;; check package conventions
+(use-package flycheck-package
+  :ensure t
+  :config (flycheck-package-setup))
+
+;; Show Flycheck messages in popups
+(use-package flycheck-pos-tip
+  :ensure t
+  :config (setq flycheck-display-errors-function 'flycheck-pos-tip-error-messages))
 
 ;; more useful sizing of multiple windows
 (use-package golden-ratio
   :ensure t
   :diminish golden-ratio-mode
   :config
-  (golden-ratio-mode 1)
-  (add-to-list 'window-size-change-functions 'golden-ratio))
+  (progn
+    (golden-ratio-mode 1)
+    (add-to-list 'window-size-change-functions 'golden-ratio)))
 
 ;;; Major modes
 
@@ -811,61 +847,65 @@ i.e. change right window to bottom, or change bottom window to right."
   :defer t
   :mode ("/Cask\\'" . emacs-lisp-mode)
   :config
-  ;; use imenu to browse use-package blocks
-  (add-hook 'emacs-lisp-mode-hook
-            (lambda ()
-              (add-to-list 'imenu-generic-expression
-                           '("Used Packages"
-                             "\\(^\\s-*(use-package +\\)\\(\\_<.+\\_>\\)" 2))
-              ;; don't be anal about my init.el
-              (when (string-match "\\.emacs\\.d/init\\.el$" (buffer-file-name))
-                (setq-local flycheck-disabled-checkers '(emacs-lisp-checkdoc))))))
+  (progn
+    ;; use imenu to browse use-package blocks
+    (add-hook 'emacs-lisp-mode-hook
+              (lambda ()
+                (add-to-list 'imenu-generic-expression
+                             '("Used Packages"
+                               "\\(^\\s-*(use-package +\\)\\(\\_<.+\\_>\\)" 2))
+                ;; don't be anal about my init.el
+                (when (string-match "\\.emacs\\.d/init\\.el$" (buffer-file-name))
+                  (setq-local flycheck-disabled-checkers '(emacs-lisp-checkdoc)))))))
 
 (use-package cperl-mode
   :defer t
   :diminish abbrev-mode
   :init (defalias 'perl-mode 'cperl-mode)
   :config
-  ;; more comprehensive syntax highlighting
-  (setq cperl-highlight-variables-indiscriminately t)
-  (add-hook 'cperl-mode-hook 'highlight-numbers-mode)
+  (progn
+    ;; more comprehensive syntax highlighting
+    (setq cperl-highlight-variables-indiscriminately t)
+    (add-hook 'cperl-mode-hook 'highlight-numbers-mode)
 
-  ;; indenting
-  (setq cperl-indent-level 4                  ; 4-space indents
-        cperl-tab-always-indent nil           ; always let me indent further
-        cperl-continued-statement-offset 0    ; don't reindent multiline statements
-        cperl-indent-parens-as-block t        ; indent multiline () blocks correctly
-        cperl-close-paren-offset -4           ; back-indent closing parens, K&R style
-        cperl-electric-keywords t             ; Expand "if ", "for ", and more
-        cperl-label-offset 0)                 ; No special indenting of labels
+    ;; indenting
+    (setq cperl-indent-level 4                  ; 4-space indents
+          cperl-tab-always-indent nil           ; always let me indent further
+          cperl-continued-statement-offset 0    ; don't reindent multiline statements
+          cperl-indent-parens-as-block t        ; indent multiline () blocks correctly
+          cperl-close-paren-offset -4           ; back-indent closing parens, K&R style
+          cperl-electric-keywords t             ; Expand "if ", "for ", and more
+          cperl-label-offset 0)                 ; No special indenting of labels
 
-  ;; cperl-mode still doesn't inherit from prog-mode, so we need these
-  (add-hook 'cperl-mode-hook
-            (lambda ()
-              (progn
-                (define-key cperl-mode-map (kbd "TAB") 'tab-to-tab-stop)
-                (define-key cperl-mode-map (kbd "DEL") 'backward-delete-whitespace-to-column)
-                (when (projectile-project-root)
-                  (setq flycheck-perl-include-path (list
-                                                    (concat
-                                                     (projectile-project-root)
-                                                     "lib")))))))
-  (add-hook 'cperl-mode-hook (lambda () (run-hooks 'prog-mode-hook))))
+    ;; cperl-mode still doesn't inherit from prog-mode, so we need these
+    (add-hook 'cperl-mode-hook
+              (lambda ()
+                (progn
+                  (define-key cperl-mode-map (kbd "TAB") 'tab-to-tab-stop)
+                  (define-key cperl-mode-map (kbd "DEL") 'backward-delete-whitespace-to-column)
+                  (when (projectile-project-root)
+                    (setq flycheck-perl-include-path (list
+                                                      (concat
+                                                       (projectile-project-root)
+                                                       "lib")))))))
+    (add-hook 'cperl-mode-hook (lambda () (run-hooks 'prog-mode-hook)))))
 
 (use-package slime
   :ensure t
   :defer t
   :config
-  (setq slime-net-coding-system 'utf-8-unix)
-  (setq inferior-lisp-program "/usr/bin/sbcl")
-  (slime-setup '(slime-fancy)))
+  (progn
+    (setq slime-net-coding-system 'utf-8-unix)
+    (setq inferior-lisp-program "/usr/bin/sbcl")
+    (slime-setup '(slime-fancy))))
 
 (use-package ace-jump-mode
   :ensure t
   :config
-  (global-set-key (kbd "C-c w") 'ace-jump-word-mode)
-  (global-set-key (kbd "C-c j") 'ace-jump-line-mode)
-  (global-set-key (kbd "C-c c") 'ace-jump-char-mode))
+  (progn
+    (global-set-key (kbd "C-c w") 'ace-jump-word-mode)
+    (global-set-key (kbd "C-c j") 'ace-jump-line-mode)
+    (global-set-key (kbd "C-c c") 'ace-jump-char-mode)))
 
 (use-package org
   :ensure t
@@ -891,17 +931,22 @@ i.e. change right window to bottom, or change bottom window to right."
   :diminish abbrev-mode
   :init (add-to-list 'magic-mode-alist '(my-looks-like-php . php-mode))
   :config
-  (setq php-template-compatibility nil)
-  (setq php-lineup-cascaded-calls t)
-  (add-hook 'php-mode-hook 'php-enable-symfony2-coding-style)
-  (use-package company-php
-    :ensure t
-    :config
+  (progn
+    (setq php-template-compatibility nil)
+    (setq php-lineup-cascaded-calls t)
+    (add-hook 'php-mode-hook 'php-enable-symfony2-coding-style)))
+
+(use-package company-php
+  :ensure t
+  :config
+  (progn
     (ac-php-core-eldoc-setup)
-    (add-to-list 'company-backends 'company-ac-php-backend))
-  (use-package geben
-    :ensure t
-    :config
+    (add-to-list 'company-backends 'company-ac-php-backend)))
+
+(use-package geben
+  :ensure t
+  :config
+  (progn
     (setq geben-path-mappings '(("~/work" "/vagrant"))
           geben-temporary-file-directory "~/.emacs.d/state/geben")))
 
@@ -923,8 +968,9 @@ i.e. change right window to bottom, or change bottom window to right."
          ("C-c C-r" . dumb-jump-back)
          ("C-c C-s" . dumb-jump-go-other-window))
   :config
-  (setq dumb-jump-selector 'helm)
-  (dumb-jump-mode))
+  (progn
+    (setq dumb-jump-selector 'helm)
+    (dumb-jump-mode)))
 
 (use-package lilypond-mode
   :load-path "~/.emacs.d/elisp"
