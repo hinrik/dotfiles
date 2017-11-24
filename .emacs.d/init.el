@@ -205,13 +205,15 @@
 (setq-default icon-title-format frame-title-format)
 
 ;; use frame title as terminal title
-(use-package xterm-title
-  :ensure t
-  :if (and (not window-system)
-           (string-match "^xterm" (getenv "TERM")))
-  :diminish xterm-title-mode
-  :init (use-package xterm-frobs :ensure t)
-  :config (xterm-title-mode 1))
+(if (version< emacs-version "25.0")
+    (use-package xterm-title
+      :load-path "~/src/xterm-title"
+      :if (and (not window-system)
+               (string-match "^xterm" (getenv "TERM")))
+      :diminish xterm-title-mode
+      :init (use-package xterm-frobs :ensure t)
+      :config (xterm-title-mode 1))
+  (setq xterm-set-window-title t))
 
 ;;; Modeline
 
