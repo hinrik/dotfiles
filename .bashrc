@@ -384,3 +384,7 @@ function keepalive {
 function nixmail {
     mail -a "From: Hinrik Örn Sigurðsson <hinrik@nix.is>" -b hinrik.sig@gmail.com "$@"
 }
+
+function em {
+    exec emacsclient --alternate-editor="" -c "$@"
+}
