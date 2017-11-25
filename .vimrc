@@ -27,6 +27,7 @@ Plugin 'tpope/vim-markdown'
 Plugin 'zaiste/tmux.vim'
 Plugin 'elixir-lang/vim-elixir'
 Plugin 'rhysd/vim-crystal'
+Plugin 'quabug/vim-gdscript'
 
 " Bootstrap vundle
 if exists("s:bootstrap") && s:bootstrap
@@ -151,6 +152,9 @@ autocmd BufRead,BufNewFile *.md set filetype=markdown
 
 " My *.comp files are Mason
 autocmd BufRead,BufNewFile *.comp set filetype=mason
+
+" GDScript files
+autocmd BufRead,BufNewFile *.gd set filetype=gdscript
 
 " Only enforce textwidth on plain text files
 autocmd FileType text setlocal textwidth=78

@@ -66,7 +66,8 @@
 (fset 'display-startup-echo-area-message 'ignore)
 
 ;; no scroll bar, spaceline currently doesn't play well with it
-(scroll-bar-mode -1)
+(when (fboundp 'scroll-bar-mode)
+  (scroll-bar-mode -1))
 
 ;; no menu bar
 (menu-bar-mode -1)
@@ -962,14 +963,19 @@ i.e. change right window to bottom, or change bottom window to right."
 
 (use-package dumb-jump
   :ensure t
+  :load-path "/home/hinrik/src/dumb-jump"
   :bind (("C-c C-d" . dumb-jump-go-current-window)
          ("C-c C-r" . dumb-jump-back)
          ("C-c C-s" . dumb-jump-go-other-window))
   :config
-  (progn
-    (setq dumb-jump-selector 'helm)
-    (dumb-jump-mode)))
+  (setq dumb-jump-selector 'helm)
+  (dumb-jump-mode))
 
-(use-package lilypond-mode
-  :load-path "~/.emacs.d/elisp"
-  :config (require 'lilypond-init))
+;;(use-package godot-gdscript
+;;  :load-path "elisp/"
+;;  :mode "\\.gd\\'"
+;;  :defer t)
+
+;;(use-package highlight-refontification
+;;  :ensure t
+;;  :defer t)

@@ -22,6 +22,8 @@ maybe_add_path() {
 # custom binaries
 maybe_add_path $HOME/local/bin
 maybe_add_path $HOME/.gygvenv/bin
+maybe_add_path $HOME/.rvm/bin
+maybe_add_path $HOME/src/crystal/bin
 
 if type luarocks >&/dev/null; then
     eval $(luarocks path)
@@ -226,6 +228,7 @@ alias u2d="sed 's/$//'"
 alias lsofnames="lsof | awk '!/^\$/ && /\// { print \$9 }' | sort -u"
 alias myip="wget -q -O- 'http://www.moanmyip.com/' | perl -0777 -pe 's[.*<div class=\"ip\">(.*?)</div>.*][\$1\n]s'"
 alias mmyip="mplayer http://moanmyip.com/output/\$(myip).mp3"
+#alias emacs="~/src/emacs/src/emacs"
 
 # I want to be able to use Ctrl+s and Ctrl+C in rtorrent
 stty start undef
