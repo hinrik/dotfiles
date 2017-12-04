@@ -168,19 +168,11 @@
   :config (global-total-lines-mode))
 
 ;; show line numbers on the side in programming modes,
-;; precalculating the max width so it won't change with scrolling
 (if (version< emacs-version "26.1")
     (use-package nlinum
       :ensure t
       :bind ("C-c l" . nlinum-mode)
       :hook prog-mode
-      :init
-      (progn
-        (add-hook 'total-lines-init-hook
-                  (lambda ()
-                    (setq nlinum--width
-                          (1+ (length (number-to-string total-lines))))
-                    (nlinum--flush))))
       :config (setq nlinum-format "%d "))
   (progn
     (add-hook 'prog-mode-hook
