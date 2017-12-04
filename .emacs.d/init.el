@@ -158,8 +158,9 @@
 (setq column-number-mode t)
 
 ;; wrap long lines visually
-(global-visual-line-mode t)
-(diminish 'visual-line-mode)
+(use-package emacs
+  :diminish visual-line-mode
+  :config (global-visual-line-mode t))
 
 (use-package total-lines
   :load-path "~/src/total-lines"
@@ -171,10 +172,9 @@
     (use-package nlinum
       :ensure t
       :bind ("C-c l" . nlinum-mode)
+      :hook prog-mode
       :init
       (progn
-        (add-hook 'prog-mode-hook 'nlinum-mode)
-        (add-hook 'LilyPond-mode-hook 'nlinum-mode)
         (add-hook 'total-lines-init-hook
                   (lambda ()
                     (setq nlinum--width
@@ -183,9 +183,6 @@
       :config (setq nlinum-format "%d "))
   (progn
     (add-hook 'prog-mode-hook
-              (lambda ()
-                (setq display-line-numbers t)))
-    (add-hook 'LilyPond-mode-hook
               (lambda ()
                 (setq display-line-numbers t)))
     (setq display-line-numbers-width-start t)))
@@ -266,12 +263,16 @@
 (setq sentence-end-double-space nil)
 
 ;; automatically format text paragraphs and code comments
-(setq-default fill-column 73)
-(setq comment-auto-fill-only-comments t)
-(add-hook 'text-mode-hook (lambda () (progn (auto-fill-mode 1) (diminish 'auto-fill-function))))
-(add-hook 'prog-mode-hook (lambda () (progn (auto-fill-mode 1) (diminish 'auto-fill-function))))
-(define-key text-mode-map (kbd "C-c q") 'auto-fill-mode)
-(define-key prog-mode-map (kbd "C-c q") 'auto-fill-mode)
+(use-package auto-fill
+  :bind ("C-c q" . auto-fill-mode)
+  :diminish
+  :hook ((text-mode prog-mode) . auto-fill-mode)
+  :config
+  (progn
+    (setq-default fill-column 73)
+    (setq comment-auto-fill-only-comments t)
+    (define-key text-mode-map (kbd "C-c q") 'auto-fill-mode)
+    (define-key prog-mode-map (kbd "C-c q") 'auto-fill-mode)))
 
 ;; insert closing parenthesis/bracket/etc automatically
 (use-package elec-pair
@@ -296,13 +297,8 @@
 ;; show trailing whitespace in programming modes
 (use-package whitespace
   :diminish whitespace-mode
-  :config
-  (progn
-    (setq whitespace-style '(face trailing))
-    (add-hook 'prog-mode-hook 'whitespace-mode)
-    (add-hook 'LilyPond-mode-hook 'whitespace-mode)
-    (add-hook 'cperl-mode-hook 'whitespace-mode)
-    (add-hook 'text-mode-hook 'whitespace-mode)))
+  :hook ((prog-mode text-mode) . whitespace-mode)
+  :config (setq whitespace-style '(face trailing)))
 
 ;; when I comment blocks of code, I don't want padding at the beginning
 (setq comment-padding 0)
@@ -319,16 +315,14 @@
 
 ;; use syntax highlighting everywhere
 (use-package font-lock
-  :config
-  (progn
-    (global-font-lock-mode t)
-    (add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)))
+  :hook (shell-mode . ansi-color-for-comint-mode-on)
+  :config (global-font-lock-mode t))
 
 ;; highlight quoted elisp symbols
 (use-package highlight-quoted
   :ensure t
   :defer t
-  :init (add-hook 'emacs-lisp-mode-hook 'highlight-quoted-mode))
+  :hook (emacs-lisp-mode . highlight-quoted-mode))
 
 ;; also highlight bound variables
 (use-package lisp-extra-font-lock
@@ -448,7 +442,7 @@ This emulates the 'softtabstop' feature in Vim."
 
 ;; sometimes I want more context above/below the cursor
 (use-package scroll-lock-mode
-  :bind (("M-z" . my-toggle-scroll-lock-mode))
+  :bind ("M-z" . my-toggle-scroll-lock-mode)
   :preface
   (progn
     (defun my-toggle-scroll-lock-mode ()
@@ -726,7 +720,7 @@ i.e. change right window to bottom, or change bottom window to right."
 
 (use-package helm-descbinds
   :ensure t
-  :bind (("C-h b" . helm-descbinds)))
+  :bind ("C-h b" . helm-descbinds))
 
 (use-package helm-themes
   :ensure t)
@@ -744,7 +738,6 @@ i.e. change right window to bottom, or change bottom window to right."
   :ensure t
   :bind ("C-c i" . helm-imenu-anywhere))
 
-
 ;; display keybinding overview 1 sec after hitting prefix keys
 (use-package guide-key
   :ensure t
@@ -757,7 +750,9 @@ i.e. change right window to bottom, or change bottom window to right."
 ;; code folding
 (use-package hideshow
   :diminish hs-minor-mode
-  :bind ("C-c s" . hs-toggle-hiding)
+  :bind (("C-c s" . hs-toggle-hiding)
+         ("C-c C-s" . my-toggle-hideshow-all))
+  :hook (prog-mode . hs-minor-mode)
   :preface
   (progn
     (defvar my-hs-hide nil
@@ -768,11 +763,7 @@ i.e. change right window to bottom, or change bottom window to right."
       (setq my-hs-hide (not my-hs-hide))
       (if my-hs-hide
           (hs-hide-all)
-        (hs-show-all))))
-  :config
-  (progn
-    (global-set-key (kbd "C-c C-s") 'my-toggle-hideshow-all)
-    (add-hook 'prog-mode-hook 'hs-minor-mode)))
+        (hs-show-all)))))
 
 ;; toggle comment visibility
 (use-package hide-comnt
@@ -791,10 +782,7 @@ i.e. change right window to bottom, or change bottom window to right."
   :ensure t
   :defer t
   :diminish eldoc-mode
-  :init
-  (progn
-    (add-hook 'prog-mode-hook 'flycheck-mode)
-    (add-hook 'LilyPond-mode-hook 'flycheck-mode))
+  :hook (prog-mode . flycheck-mode)
   :config
   (progn
     ;; wait a bit longer before checking
@@ -865,7 +853,6 @@ i.e. change right window to bottom, or change bottom window to right."
   (progn
     ;; more comprehensive syntax highlighting
     (setq cperl-highlight-variables-indiscriminately t)
-    (add-hook 'cperl-mode-hook 'highlight-numbers-mode)
 
     ;; indenting
     (setq cperl-indent-level 4                  ; 4-space indents
@@ -979,3 +966,9 @@ i.e. change right window to bottom, or change bottom window to right."
 ;;(use-package highlight-refontification
 ;;  :ensure t
 ;;  :defer t)
+(use-package lilypond-mode
+  :load-path "~/.emacs.d/elisp"
+  :config
+  (progn
+    (require 'lilypond-init)
+    (add-hook 'LilyPond-mode-hook (lambda () (run-hooks 'prog-mode-hook)))))
