@@ -579,14 +579,6 @@ i.e. change right window to bottom, or change bottom window to right."
 
 ;;; Misc
 
-;; improved implementation of `list-packages'
-(use-package paradox
-  :ensure t
-  :config
-  (progn
-    (setq paradox-github-token t)
-    (paradox-enable)))
-
 ;; force me to use proper emacs keybindings
 (use-package guru-mode
   :ensure t
