@@ -286,6 +286,11 @@
 (global-set-key (kbd "M-n") 'forward-paragraph)
 (global-set-key (kbd "M-m") 'mark-paragraph)
 
+;; a better tool than mark-word, and more
+(use-package expand-region
+  :ensure t
+  :bind ("M-," . er/expand-region))
+
 ;; ditto for scrolling the other window
 (defun my-scroll-other-window-up () (interactive)
   (scroll-other-window -1))
