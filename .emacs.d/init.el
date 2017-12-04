@@ -73,7 +73,8 @@
 (menu-bar-mode -1)
 
 ;; no toolbar
-(tool-bar-mode -1)
+(when (display-graphic-p)
+  (tool-bar-mode -1))
 
 ;; don't show the welcome message
 (setq inhibit-startup-screen t)
