@@ -202,13 +202,14 @@
 
 ;; use frame title as terminal title
 (if (version< emacs-version "25.0")
-    (use-package xterm-title
-      :load-path "~/src/xterm-title"
-      :if (and (not window-system)
-               (string-match "^xterm" (getenv "TERM")))
-      :diminish xterm-title-mode
-      :init (use-package xterm-frobs :ensure t)
-      :config (xterm-title-mode 1))
+    (progn
+      (use-package xterm-frobs
+        :ensure t)
+      (use-package xterm-title
+        :if (and (not window-system)
+                 (string-match "^xterm" (getenv "TERM")))
+        :diminish xterm-title-mode
+        :config (xterm-title-mode 1)))
   (setq xterm-set-window-title t))
 
 ;;; Modeline
@@ -906,11 +907,11 @@ i.e. change right window to bottom, or change bottom window to right."
   :defer t
   :diminish abbrev-mode
   :init (add-to-list 'magic-mode-alist '(my-looks-like-php . php-mode))
+  :hook php-enable-symfony2-coding-style
   :config
   (progn
     (setq php-template-compatibility nil)
-    (setq php-lineup-cascaded-calls t)
-    (add-hook 'php-mode-hook 'php-enable-symfony2-coding-style)))
+    (setq php-lineup-cascaded-calls t)))
 
 (use-package company-php
   :ensure t
