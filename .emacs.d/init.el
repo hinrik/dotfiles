@@ -160,7 +160,6 @@
 
 ;; wrap long lines visually
 (use-package emacs
-  :diminish visual-line-mode
   :config (global-visual-line-mode t))
 
 (use-package total-lines
@@ -208,7 +207,6 @@
       (use-package xterm-title
         :if (and (not window-system)
                  (string-match "^xterm" (getenv "TERM")))
-        :diminish xterm-title-mode
         :config (xterm-title-mode 1)))
   (setq xterm-set-window-title t))
 
@@ -259,7 +257,6 @@
 ;; automatically format text paragraphs and code comments
 (use-package auto-fill
   :bind ("C-c q" . auto-fill-mode)
-  :diminish
   :hook ((text-mode prog-mode) . auto-fill-mode)
   :config
   (progn
@@ -295,7 +292,6 @@
 
 ;; show trailing whitespace in programming modes
 (use-package whitespace
-  :diminish whitespace-mode
   :hook ((prog-mode text-mode) . whitespace-mode)
   :config (setq whitespace-style '(face trailing)))
 
@@ -425,7 +421,6 @@ This emulates the 'softtabstop' feature in Vim."
 ;; center the cursor vertically when scrolling
 (use-package centered-cursor-mode
   :ensure t
-  :diminish centered-cursor-mode
   :preface
   (progn
     (defun my-toggle-centered-cursor-mode ()
@@ -451,13 +446,11 @@ This emulates the 'softtabstop' feature in Vim."
           (scroll-lock-mode 0)
         (progn
           (centered-cursor-mode 0)
-          (scroll-lock-mode 1)
-          (diminish 'scroll-lock-mode))))))
+          (scroll-lock-mode 1))))))
 
 ;; I don't use the mouse
 (use-package disable-mouse
   :ensure t
-  :diminish global-disable-mouse-mode
   :config (global-disable-mouse-mode))
 
 (defun next-important-buffer ()
@@ -576,7 +569,6 @@ i.e. change right window to bottom, or change bottom window to right."
 ;; force me to use proper emacs keybindings
 (use-package guru-mode
   :ensure t
-  :diminish guru-mode
   :config (guru-global-mode))
 
 (use-package dired
@@ -652,7 +644,6 @@ i.e. change right window to bottom, or change bottom window to right."
 ;; code/word completion
 (use-package company
   :ensure t
-  :diminish company-mode
   :config
   (progn
     ;; don't autocomplete
@@ -663,7 +654,6 @@ i.e. change right window to bottom, or change bottom window to right."
 ;; projectile offers fast find-file for project files, git-grep, etc
 (use-package projectile
   :ensure t
-  :diminish projectile-mode
   :config
   (progn
     (setq projectile-enable-caching t
@@ -675,7 +665,6 @@ i.e. change right window to bottom, or change bottom window to right."
 ;; use helm for completion/narrowing in minibuffer, C-x C-f, etc
 (use-package helm
   :ensure t
-  :diminish helm-mode
   :init
   (setq helm-adaptive-history-file "~/.emacs.d/state/helm-history"
         helm-move-to-line-cycle-in-source t         ; allow cycling top<->bottom
@@ -732,7 +721,6 @@ i.e. change right window to bottom, or change bottom window to right."
 ;; display keybinding overview 1 sec after hitting prefix keys
 (use-package guide-key
   :ensure t
-  :diminish guide-key-mode
   :config
   (progn
     (guide-key-mode)
@@ -740,7 +728,6 @@ i.e. change right window to bottom, or change bottom window to right."
 
 ;; code folding
 (use-package hideshow
-  :diminish hs-minor-mode
   :bind (("C-c s" . hs-toggle-hiding)
          ("C-c C-s" . my-toggle-hideshow-all))
   :hook (prog-mode . hs-minor-mode)
@@ -764,7 +751,6 @@ i.e. change right window to bottom, or change bottom window to right."
 ; git magic
 (use-package magit
   :ensure t
-  :diminish auto-revert-mode
   :bind (("C-c b" . magit-blame)
          ("C-x g" . magit-status)))
 
@@ -772,7 +758,6 @@ i.e. change right window to bottom, or change bottom window to right."
 (use-package flycheck
   :ensure t
   :defer t
-  :diminish eldoc-mode
   :hook (prog-mode . flycheck-mode)
   :config
   (progn
@@ -813,7 +798,6 @@ i.e. change right window to bottom, or change bottom window to right."
 ;; more useful sizing of multiple windows
 (use-package golden-ratio
   :ensure t
-  :diminish golden-ratio-mode
   :config
   (progn
     (golden-ratio-mode 1)
@@ -838,7 +822,6 @@ i.e. change right window to bottom, or change bottom window to right."
 
 (use-package cperl-mode
   :defer t
-  :diminish abbrev-mode
   :init (defalias 'perl-mode 'cperl-mode)
   :config
   (progn
@@ -905,7 +888,6 @@ i.e. change right window to bottom, or change bottom window to right."
 (use-package php-mode
   :ensure t
   :defer t
-  :diminish abbrev-mode
   :init (add-to-list 'magic-mode-alist '(my-looks-like-php . php-mode))
   :hook php-enable-symfony2-coding-style
   :config
