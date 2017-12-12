@@ -179,10 +179,6 @@
                 (setq display-line-numbers t)))
     (setq display-line-numbers-width-start t)))
 
-;; make buffer names unique
-(use-package uniquify
-  :config (setq uniquify-buffer-name-style 'forward))
-
 ;; set frame title
 (setq-default frame-title-format
   '(:eval
