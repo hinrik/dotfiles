@@ -929,7 +929,7 @@ i.e. change right window to bottom, or change bottom window to right."
   :bind (("C-c C-d" . dumb-jump-go-current-window)
          ("C-c C-r" . dumb-jump-back)
          ("C-c C-s" . dumb-jump-go-other-window))
-  :hook (prog-mode dumb-jump-mode)
+  :hook (prog-mode . dumb-jump-mode)
   :config (setq dumb-jump-selector 'helm))
 
 ;;(use-package godot-gdscript
