@@ -772,22 +772,27 @@ i.e. change right window to bottom, or change bottom window to right."
 ;; check Cask files
 (use-package flycheck-cask
   :ensure t
+  :defer t
   :config (flycheck-cask-setup))
 
 (use-package flycheck-crystal
+  :defer t
   :load-path "~/src/emacs-crystal-mode")
 
 (use-package flycheck-lilypond
+  :defer t
   :load-path "~/src/flycheck-lilypond")
 
 ;; check package conventions
 (use-package flycheck-package
   :ensure t
+  :defer t
   :config (flycheck-package-setup))
 
 ;; Show Flycheck messages in popups
 (use-package flycheck-pos-tip
   :ensure t
+  :defer t
   :config (setq flycheck-display-errors-function 'flycheck-pos-tip-error-messages))
 
 ;; more useful sizing of multiple windows
@@ -891,6 +896,7 @@ i.e. change right window to bottom, or change bottom window to right."
 
 (use-package company-php
   :ensure t
+  :defer t
   :config
   (progn
     (ac-php-core-eldoc-setup)
@@ -898,6 +904,7 @@ i.e. change right window to bottom, or change bottom window to right."
 
 (use-package geben
   :ensure t
+  :defer t
   :config
   (progn
     (setq geben-path-mappings '(("~/work" "/vagrant"))
@@ -917,6 +924,7 @@ i.e. change right window to bottom, or change bottom window to right."
 
 (use-package dumb-jump
   :ensure t
+  :defer t
   :load-path "/home/hinrik/src/dumb-jump"
   :bind (("C-c C-d" . dumb-jump-go-current-window)
          ("C-c C-r" . dumb-jump-back)
@@ -933,6 +941,7 @@ i.e. change right window to bottom, or change bottom window to right."
 ;;  :ensure t
 ;;  :defer t)
 (use-package lilypond-mode
+  :defer t
   :load-path "~/.emacs.d/elisp"
   :config
   (progn
