@@ -415,7 +415,7 @@ This emulates the 'softtabstop' feature in Vim."
 
 ;; center the cursor vertically when scrolling
 (use-package centered-cursor-mode
-  :ensure t
+  :load-path "elisp"
   :preface
   (progn
     (defun my-toggle-centered-cursor-mode ()
@@ -917,7 +917,7 @@ i.e. change right window to bottom, or change bottom window to right."
 
 (use-package dumb-jump
   :ensure t
-  :load-path "/home/hinrik/src/dumb-jump"
+  :load-path "~/src/dumb-jump"
   :bind (("C-c C-d" . dumb-jump-go-current-window)
          ("C-c C-r" . dumb-jump-back)
          ("C-c C-s" . dumb-jump-go-other-window))
@@ -933,7 +933,7 @@ i.e. change right window to bottom, or change bottom window to right."
 ;;  :ensure t
 ;;  :defer t)
 (use-package lilypond-mode
-  :load-path "~/.emacs.d/elisp"
+  :load-path "elisp"
   :config
   (progn
     (require 'lilypond-init)
