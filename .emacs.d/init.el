@@ -171,13 +171,12 @@
     (use-package nlinum
       :ensure t
       :bind ("C-c l" . nlinum-mode)
-      :hook prog-mode
+      :hook (prog-mode . nlinum-mode)
       :config (setq nlinum-format "%d "))
-  (progn
-    (add-hook 'prog-mode-hook
-              (lambda ()
-                (setq display-line-numbers t)))
-    (setq display-line-numbers-width-start t)))
+  (use-package display-line-numbers
+    :bind ("C-c l" . display-line-numbers-mode)
+    :hook (prog-mode . display-line-numbers-mode)
+    :config (setq display-line-numbers-width-start t)))
 
 ;; set frame title
 (setq-default frame-title-format
