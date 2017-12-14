@@ -833,7 +833,7 @@ i.e. change right window to bottom, or change bottom window to right."
           cperl-electric-keywords t             ; Expand "if ", "for ", and more
           cperl-label-offset 0)                 ; No special indenting of labels
 
-    ;; cperl-mode still doesn't inherit from prog-mode, so we need these
+    ;; cperl-mode overrides things from prog-mode-map
     (add-hook 'cperl-mode-hook
               (lambda ()
                 (progn
@@ -843,8 +843,7 @@ i.e. change right window to bottom, or change bottom window to right."
                     (setq flycheck-perl-include-path (list
                                                       (concat
                                                        (projectile-project-root)
-                                                       "lib")))))))
-    (add-hook 'cperl-mode-hook (lambda () (run-hooks 'prog-mode-hook)))))
+                                                       "lib")))))))))
 
 (use-package slime
   :ensure t
