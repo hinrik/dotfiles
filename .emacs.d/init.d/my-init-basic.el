@@ -7,7 +7,7 @@
   (progn
     (setq auto-save-file-name-transforms
           `((".*" ,(no-littering-expand-var-file-name "auto-save/") t))
-          custom-file (no-littering-expand-etc-file-name "emacs-custom.el"))))
+          custom-file (no-littering-expand-etc-file-name "custom.el"))))
 
 ;; don't load default.el
 (setq inhibit-default-init t)
