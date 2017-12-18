@@ -413,7 +413,7 @@ This emulates the 'softtabstop' feature in Vim."
 
 ;; center the cursor vertically when scrolling
 (use-package centered-cursor-mode
-  :load-path "elisp"
+  :ensure t
   :preface
   (progn
     (defun my-toggle-centered-cursor-mode ()
