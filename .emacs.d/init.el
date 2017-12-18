@@ -24,10 +24,14 @@
 
 ;;; Basic configuration
 
-;; this prevents Emacs from dumping this into init.el
-(setq custom-file "~/.emacs.d/state/selected-packages.el")
-(when (file-exists-p custom-file)
-  (load custom-file))
+;; keep all transient files in ~/.emacs.d/{etc,var}
+(use-package no-littering
+  :ensure t
+  :config
+  (progn
+    (setq auto-save-file-name-transforms
+          `((".*" ,(no-littering-expand-var-file-name "auto-save/") t))
+          custom-file (no-littering-expand-etc-file-name "emacs-custom.el"))))
 
 ;; don't load default.el
 (setq inhibit-default-init t)
@@ -37,12 +41,6 @@
 
 ;; easily consume paged output
 (setenv "PAGER" "cat")
-
-;; keep various state/backup/tmp files in ~/.emacs.d/state/
-(setq backup-directory-alist         '((".*" . "~/.emacs.d/state/tmp/"))
-      auto-save-file-name-transforms '((".*" "~/.emacs.d/state/tmp/" t))
-      auto-save-list-file-prefix     "~/.emacs.d/state/auto-save-list/"
-      shared-game-score-directory    "~/.emacs.d/state/games/")
 
 ;; keep a long minibuffer history, without duplicates
 (setq history-length t
@@ -601,29 +599,20 @@ i.e. change right window to bottom, or change bottom window to right."
                   (kbd "C-d") 'comint-delchar-or-eof-or-kill-buffer)))))
 
 ;; editing files over ssh
-(use-package tramp
-  :config
-  (progn
-    (setq tramp-auto-save-directory   "~/.emacs.d/state/tramp-autosave"
-          tramp-persistency-file-name "~/.emacs.d/state/tramp")))
+(use-package tramp)
 
 ;; store list of recently opened files on disk
 (use-package recentf
-  :config
-  (progn
-    (setq recentf-save-file "~/.emacs.d/state/recentf")
-    (recentf-mode 1)))
+  :config (recentf-mode 1))
 
 ;; save minibuffer, search, and kill ring history
 (use-package savehist
   :init (savehist-mode t)
   :config
   (progn
-    (setq savehist-additional-variables '(kill-ring search-ring regexp-search-ring)
-          savehist-file "~/.emacs.d/state/savehist")))
+    (setq savehist-additional-variables '(kill-ring search-ring regexp-search-ring))))
 
 ;; save my position in visited files
-(setq save-place-file "~/.emacs.d/state/saveplace")
 (if (version< emacs-version "25.0")
     (use-package saveplace
       :config (setq-default save-place t))
@@ -632,7 +621,6 @@ i.e. change right window to bottom, or change bottom window to right."
 (use-package eshell
   :config
   (progn
-    (setq eshell-history-file-name "~/.emacs.d/state/eshell-history")
     ;; case-insensitive completion
     (setq eshell-cmpl-ignore-case t)))
 
@@ -652,8 +640,6 @@ i.e. change right window to bottom, or change bottom window to right."
   :config
   (progn
     (setq projectile-enable-caching t
-          projectile-cache-file "~/.emacs.d/state/projectile.cache"
-          projectile-known-projects-file "~/.emacs.d/state/projectile-bookmarks.eld"
           projectile-use-git-grep t)
     (projectile-mode)))
 
@@ -661,8 +647,7 @@ i.e. change right window to bottom, or change bottom window to right."
 (use-package helm
   :ensure t
   :init
-  (setq helm-adaptive-history-file "~/.emacs.d/state/helm-history"
-        helm-move-to-line-cycle-in-source t         ; allow cycling top<->bottom
+  (setq helm-move-to-line-cycle-in-source t         ; allow cycling top<->bottom
         helm-display-header-line nil                ; disable the header
         helm-completion-mode-start-message nil      ; be quiet
         helm-grep-file-path-style 'relative         ; more useful than basename
@@ -900,8 +885,7 @@ i.e. change right window to bottom, or change bottom window to right."
   :ensure t
   :config
   (progn
-    (setq geben-path-mappings '(("~/work" "/vagrant"))
-          geben-temporary-file-directory "~/.emacs.d/state/geben")))
+    (setq geben-path-mappings '(("~/work" "/vagrant")))))
 
 (use-package thrift-mode
   :ensure thrift
