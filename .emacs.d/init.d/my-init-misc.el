@@ -184,11 +184,6 @@
   (progn
     ;; wait a bit longer before checking
     (setq flycheck-idle-change-delay 2)
-    ;; I usually don't want to hear from perlcritic
-    (setq-default flycheck-disabled-checkers
-      '(perl-perlcritic))
-    ;; don't warn about my custom packages not being loadable
-    (setq flycheck-emacs-lisp-load-path '("~/.emacs.d/elisp/"))
     ;; use "C-c f" as the flycheck prefix key
     (define-key flycheck-mode-map flycheck-keymap-prefix nil)
     (setq flycheck-keymap-prefix (kbd "C-c f"))

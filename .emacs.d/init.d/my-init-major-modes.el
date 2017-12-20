@@ -11,9 +11,11 @@
                 (add-to-list 'imenu-generic-expression
                              '("Used Packages"
                                "\\(^\\s-*(use-package +\\)\\(\\_<.+\\_>\\)" 2))
-                ;; don't be anal about my init.el
-                (when (string-match "\\.emacs\\.d/init\\.el$" (buffer-file-name))
-                  (setq-local flycheck-disabled-checkers '(emacs-lisp-checkdoc)))))))
+                ;; don't be anal about my init.el & init.d/*
+                (when (string-match "\\.emacs\\.d/init\\." (buffer-file-name))
+                  (setq flycheck-disabled-checkers '(emacs-lisp-checkdoc))
+                  (setq-local flycheck-emacs-lisp-load-path '("~/.emacs.d/elisp/")))))))
+
 
 (use-package cperl-mode
   :defer t
@@ -31,6 +33,10 @@
           cperl-close-paren-offset -4           ; back-indent closing parens, K&R style
           cperl-electric-keywords t             ; Expand "if ", "for ", and more
           cperl-label-offset 0)                 ; No special indenting of labels
+
+    ;; I usually don't want to hear from perlcritic
+    (setq-default flycheck-disabled-checkers
+      '(perl-perlcritic))
 
     ;; cperl-mode overrides things from prog-mode-map
     (add-hook 'cperl-mode-hook
@@ -73,21 +79,22 @@
   :ensure t
   :defer t)
 
-;; this catches files Emacs gets wrong, e.g. *.config.php
-(defun my-looks-like-php ()
-  (or
-   (looking-at-p "^<\\?php")
-   (string-match-p "\\.php$" (buffer-file-name))))
-
 (use-package php-mode
   :ensure t
   :defer t
+  :preface
+  (progn
+    ;; this catches files Emacs gets wrong, e.g. *.config.php
+    (defun my-looks-like-php ()
+      (or
+       (looking-at-p "^<\\?php")
+       (string-match-p "\\.php$" (buffer-file-name)))))
   :init (add-to-list 'magic-mode-alist '(my-looks-like-php . php-mode))
   :hook php-enable-symfony2-coding-style
   :config
   (progn
-    (setq php-template-compatibility nil)
-    (setq php-lineup-cascaded-calls t)))
+    (setq php-template-compatibility nil
+          php-lineup-cascaded-calls t)))
 
 (use-package company-php
   :ensure t
