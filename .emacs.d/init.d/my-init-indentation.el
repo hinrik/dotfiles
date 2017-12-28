@@ -1,5 +1,11 @@
 ;;; Indentation
 
+;; 2-column indentation by default
+(setq-default tab-width 2)
+
+;; indentation should consist of spaces, not a real tab
+(setq-default indent-tabs-mode nil)
+
 ;; make Home go to beginning of indentation when possible
 ;; http://www.emacswiki.org/emacs/BackToIndentationOrBeginning
 (substitute-key-definition 'move-beginning-of-line 'back-to-indentation-or-beginning global-map)
@@ -36,12 +42,6 @@ Comments are recognized in any mode that sets syntax-ppss properly."
               (while (point-in-comment)
                 (backward-char))
               (skip-chars-backward " \t")))))
-
-;; 4-column indentation
-(setq-default tab-width 4)
-
-;; indentation should consist of spaces, not a real tab
-(setq-default indent-tabs-mode nil)
 
 ;; I want Tab to always insert indentation at point
 (define-key prog-mode-map (kbd "TAB") 'tab-to-tab-stop)
