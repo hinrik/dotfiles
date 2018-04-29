@@ -254,7 +254,7 @@ export RBXOPT="-X19"
 
 # do an ls after every successful cd
 function cd {
-    builtin cd "$@" && ls
+    builtin cd "$@" && ls >&2
 }
 
 # recursive mkdir and cd if successful
