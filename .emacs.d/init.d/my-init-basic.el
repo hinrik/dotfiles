@@ -7,7 +7,12 @@
   (progn
     (setq auto-save-file-name-transforms
           `((".*" ,(no-littering-expand-var-file-name "auto-save/") t))
-          custom-file (no-littering-expand-etc-file-name "custom.el"))
+          custom-file
+          (no-littering-expand-etc-file-name
+            (if (version< emacs-version "27.0")
+                "custom.el"
+              "emacs-custom.el")))
+    ;; load the customizations file so emacs won't litter init.el
     (load custom-file)))
 
 ;; don't load default.el

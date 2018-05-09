@@ -14,7 +14,8 @@
   (setq package-enable-at-startup nil)
   (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
   (add-to-list 'package-archives '("org" . "http://orgmode.org/elpa/"))
-  (package-initialize)
+  (if (version< emacs-version "27.0")
+    (package-initialize))
 
   ;; Install use-package macro to install/load other packages
   (unless (package-installed-p 'use-package)
