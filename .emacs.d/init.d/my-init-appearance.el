@@ -134,7 +134,7 @@
 ;;; Modeline
 
 (use-package spaceline-config
-  :ensure spaceline
+  :load-path "elisp"
   :config
   (progn
     (spaceline-define-segment faces-at-point
@@ -163,7 +163,7 @@
         `(faces-at-point
           major-mode
           line-total-column
-          buffer-position))
+          lines-position))
       (setq-default mode-line-format '("%e" (:eval (spaceline-ml-main)))))
 
     (setq powerline-default-separator 'utf-8) ; so it works in a terminal
