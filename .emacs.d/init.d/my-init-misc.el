@@ -196,7 +196,7 @@
   :config (flycheck-cask-setup))
 
 (use-package flycheck-crystal
-  :load-path "~/src/emacs-crystal-mode")
+  :ensure t)
 
 (use-package flycheck-lilypond
   :load-path "~/src/flycheck-lilypond")
