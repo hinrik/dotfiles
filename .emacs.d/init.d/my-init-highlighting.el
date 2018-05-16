@@ -55,7 +55,12 @@
  '(php-property-name ((t :inherit default)))
  '(php-variable-sigil ((t (:inherit php-variable-name))))
  '(php-$this-sigil ((t (:inherit php-variable-name))))
- '(php-$this ((t (:inherit php-variable-name)))))
+ '(php-$this ((t (:inherit php-variable-name))))
+
+ '(avy-lead-face-0 ((t (:inherit default :underline t))))
+ '(avy-lead-face-1 ((t (:inherit default :underline t))))
+ '(avy-lead-face-2 ((t (:inherit default :underline t))))
+ '(avy-lead-face ((t (:inherit default :underline t)))))
 
 ;; for debugging font-lock
 (use-package highlight-refontification

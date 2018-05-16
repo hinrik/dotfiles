@@ -218,3 +218,7 @@
   (progn
     (golden-ratio-mode 1)
     (add-to-list 'window-size-change-functions 'golden-ratio)))
+
+(use-package avy
+  :ensure t
+  :bind ("C-c c" . avy-goto-word-1))
