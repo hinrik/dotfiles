@@ -131,7 +131,8 @@
   :config
   (progn
     (setq projectile-completion-system 'helm
-          projectile-switch-project-action 'helm-projectile)
+          projectile-switch-project-action 'helm-projectile
+          helm-projectile-set-input-automatically nil)
     (helm-projectile-toggle 1)))
 
 ;; shared imenu between all buffers of the same major mode
