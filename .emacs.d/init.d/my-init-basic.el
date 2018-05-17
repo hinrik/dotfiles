@@ -13,7 +13,7 @@
                 "custom.el"
               "emacs-custom.el")))
     ;; load the customizations file so emacs won't litter init.el
-    (load custom-file)))
+    (load custom-file 'noerror 'nomessage)))
 
 ;; don't load default.el
 (setq inhibit-default-init t)
