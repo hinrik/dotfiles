@@ -76,6 +76,9 @@
   (progn
     (set-frame-parameter nil 'background-mode 'dark)
     (set-terminal-parameter nil 'background-mode 'dark)
+    (unless window-system
+      (set-face-background 'default "color-16")
+      (set-face-background 'line-number "color-16"))
     (load-theme 'monokai t)))
 
 ;; don't add \ when line wraps
