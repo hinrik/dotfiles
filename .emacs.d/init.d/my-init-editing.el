@@ -50,3 +50,10 @@
           (lambda ()
             (setq comment-start
                   (replace-regexp-in-string "\\s-+$" "" comment-start))))
+
+(use-package adaptive-wrap
+  :ensure t
+  :config
+  (progn
+    (setq adaptive-wrap-extra-indent 2)
+    (adaptive-wrap-prefix-mode)))
