@@ -20,6 +20,10 @@
 ;; don't show the welcome message
 (setq inhibit-startup-screen t)
 
+;; don't show a message every time a file is auto-saved
+(unless (version< emacs-version "27.0")
+  (setq auto-save-no-message t))
+
 ;; no initial message in the *scratch* buffer
 (setq initial-scratch-message nil)
 
