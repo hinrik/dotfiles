@@ -92,7 +92,7 @@
   :config (global-visual-line-mode t))
 
 (use-package total-lines
-  :load-path "~/src/total-lines"
+  :ensure t
   :config (global-total-lines-mode))
 
 ;; show line numbers on the side in programming modes,
@@ -136,8 +136,11 @@
 
 ;;; Modeline
 
+(use-package powerline
+  :ensure t)
+
 (use-package spaceline-config
-  :load-path "elisp"
+  :load-path "~/.emacs.d/elisp"
   :config
   (progn
     (spaceline-define-segment faces-at-point

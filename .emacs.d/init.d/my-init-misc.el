@@ -168,7 +168,7 @@
 
 ;; toggle comment visibility
 (use-package hide-comnt
-  :ensure t
+  :load-path "~/.emacs.d/elisp"
   :bind ("C-c k" . hide/show-comments-toggle))
 
 ; git magic
@@ -201,7 +201,7 @@
   :ensure t)
 
 (use-package flycheck-lilypond
-  :load-path "~/src/flycheck-lilypond")
+  :ensure t)
 
 ;; check package conventions
 (use-package flycheck-package

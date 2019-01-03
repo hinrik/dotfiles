@@ -115,7 +115,6 @@
 
 (use-package dumb-jump
   :ensure t
-  :load-path "~/src/dumb-jump"
   :bind (("C-c C-d" . dumb-jump-go-current-window)
          ("C-c C-r" . dumb-jump-back)
          ("C-c C-s" . dumb-jump-go-other-window))
@@ -123,7 +122,7 @@
   :config (setq dumb-jump-selector 'helm))
 
 (use-package lilypond-mode
-  :load-path "elisp"
+  :load-path "~/.emacs.d/elisp"
   :config
   (progn
     (require 'lilypond-init)
