@@ -123,7 +123,5 @@
 
 (use-package lilypond-mode
   :load-path "~/.emacs.d/elisp"
-  :config
-  (progn
-    (require 'lilypond-init)
-    (add-hook 'LilyPond-mode-hook (lambda () (run-hooks 'prog-mode-hook)))))
+  :hook (LilyPond-mode . (lambda () (run-hooks 'prog-mode-hook)))
+  :config (require 'lilypond-init))

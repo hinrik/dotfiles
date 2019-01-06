@@ -24,12 +24,9 @@
 (use-package highlight-numbers
   :ensure t
   :defer t
-  :init
-  (progn
-    (add-hook 'prog-mode-hook
-              (lambda ()
-                (unless (eq major-mode 'perl6-mode)
-                  (highlight-numbers-mode))))))
+  :hook ((lisp-mode . highlight-numbers-mode)
+         (emacs-lisp-mode . highlight-numbers-mode)
+         (c-mode . highlight-numbers-mode)))
 
 ;; temporarily highlight changes from pasting, etc
 (use-package volatile-highlights
