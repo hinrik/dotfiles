@@ -61,7 +61,8 @@
 
 (use-package org
   :ensure t
-  :defer t)
+  :defer t
+  :config (setq org-catch-invisible-edits 'show-and-error))
 
 (use-package crystal-mode
   :ensure t
@@ -125,3 +126,18 @@
   :load-path "~/.emacs.d/elisp"
   :hook (LilyPond-mode . (lambda () (run-hooks 'prog-mode-hook)))
   :config (require 'lilypond-init))
+
+(use-package cmake-mode
+  :ensure t
+  :defer t)
+
+(c-add-style "my/k&r"
+             '("k&r"
+               (c-offsets-alist
+                (case-label . 2)
+                (statement-cont . 4)
+                (cpp-macro-cont . 4)
+                (cpp-define-intro . 4)
+                (arglist-cont-nonempty . 4))))
+(setq c-basic-offset 2
+      c-default-style "my/k&r")
