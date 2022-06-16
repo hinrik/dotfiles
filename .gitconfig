@@ -8,7 +8,7 @@
     login = hinrik
     user = hinrik
 [alias]
-    br = branch -a -v
+    br = "!f(){ git branch -r --sort=-committerdate --format='%(HEAD)%(color:yellow)%(refname:short)|%(color:bold green)%(committerdate:relative)|%(color:magenta)%(authorname)|%(color:blue)%(subject)%(color:reset)' --color=always |sed 's|origin/||' |column -ts '|'|less; };f"
     st = status
     ci = commit
     co = checkout
@@ -30,3 +30,5 @@
     from = Hinrik Örn Sigurðsson <hinrik.sig@gmail.com>
 [merge]
     conflictstyle = diff3
+[pull]
+	ff = only
