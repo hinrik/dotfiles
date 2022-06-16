@@ -68,6 +68,10 @@
   :ensure t
   :defer t)
 
+(use-package yaml-mode
+  :ensure t
+  :defer t)
+
 (use-package markdown-mode
   :ensure t
   :defer t)
