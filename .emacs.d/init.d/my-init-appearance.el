@@ -14,8 +14,10 @@
 (menu-bar-mode -1)
 
 ;; no toolbar
-(when (display-graphic-p)
-  (tool-bar-mode -1))
+(add-hook 'after-make-frame-functions
+  (lambda ()
+    (when (display-graphic-p)
+      (tool-bar-mode -1))))
 
 ;; don't show the welcome message
 (setq inhibit-startup-screen t)
@@ -66,12 +68,14 @@
   (add-hook 'window-setup-hook 'my-window-setup-hook))
 
 ;; GUI font size
-(when (display-graphic-p)
-  (let* ((scale-factor (my-gsettings-get-number "org.gnome-desktop.interface" "text-scaling-factor"))
-         (font-size (if (and scale-factor (>= scale-factor 2)) 14 12))
-         (font (concat "Mono-" (number-to-string font-size))))
-    (set-frame-font font)
-    (add-to-list 'default-frame-alist `(font . ,font))))
+(add-hook 'after-make-frame-functions
+  (lambda ()
+    (when (display-graphic-p)
+      (let* ((scale-factor (my-gsettings-get-number "org.gnome-desktop.interface" "text-scaling-factor"))
+             (font-size (if (and scale-factor (>= scale-factor 2)) 14 12))
+             (font (concat "Mono-" (number-to-string font-size))))
+       (set-frame-font font)
+       (add-to-list 'default-frame-alist `(font . ,font))))))
 
 ;; Monokai looks nice
 (use-package monokai-theme
