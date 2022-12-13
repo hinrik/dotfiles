@@ -1,7 +1,8 @@
 [user]
     name = Hinrik Örn Sigurðsson
     email = hinrik.sig@gmail.com
-
+[diff]
+    renameLimit = 500
 [color]
     ui = auto
 [github]

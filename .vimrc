@@ -3,37 +3,31 @@
 " Author: Hinrik Örn Sigurðsson <hinrik.sig at gmail dot com>
 " URL: http://github.com/hinrik/dotfiles/blob/master/.vimrc
 
-" Download vundle
-if !isdirectory(expand("~/.vim/bundle/Vundle.vim"))
-    !mkdir -p ~/.vim/bundle
-    !git clone git://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/Vundle.vim
-    let s:bootstrap=1
+" Download vim-plug
+let data_dir = has('nvim') ? stdpath('data') . '/site' : '~/.vim'
+if empty(glob(data_dir . '/autoload/plug.vim'))
+    silent execute '!curl -fLo '.data_dir.'/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+    autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
 
-" Load bundles with vundle
-set runtimepath+=~/.vim/bundle/Vundle.vim
-call vundle#rc()
-Plugin 'gmarik/Vundle.vim'
-Plugin 'avakhov/vim-yaml'
-Plugin 'hail2u/vim-css3-syntax'
-Plugin 'hinrik/color-scheme-literal-tango'
-Plugin 'kchmck/vim-coffee-script'
-Plugin 'lfairy/lilyvim'
-Plugin 'vim-scripts/VimClojure'
-Plugin 'slim-template/vim-slim'
-Plugin 'vim-perl/vim-perl'
-Plugin 'vim-scripts/perl_synwrite.vim'
-Plugin 'tpope/vim-markdown'
-Plugin 'zaiste/tmux.vim'
-Plugin 'elixir-lang/vim-elixir'
-Plugin 'rhysd/vim-crystal'
-Plugin 'quabug/vim-gdscript'
 
-" Bootstrap vundle
-if exists("s:bootstrap") && s:bootstrap
-    unlet s:bootstrap
-    BundleInstall
-endif
+" Load bundles with vim-plug
+call plug#begin()
+Plug 'avakhov/vim-yaml'
+Plug 'hail2u/vim-css3-syntax'
+Plug 'hinrik/color-scheme-literal-tango'
+Plug 'kchmck/vim-coffee-script'
+Plug 'lfairy/lilyvim'
+Plug 'vim-scripts/VimClojure'
+Plug 'slim-template/vim-slim'
+Plug 'vim-perl/vim-perl'
+Plug 'vim-scripts/perl_synwrite.vim'
+Plug 'tpope/vim-markdown'
+Plug 'zaiste/tmux.vim'
+Plug 'elixir-lang/vim-elixir'
+Plug 'rhysd/vim-crystal'
+Plug 'quabug/vim-gdscript'
+call plug#end()
 
 " General stuff
 set backspace=indent,eol,start     " Allow backspacing over everything
