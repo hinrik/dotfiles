@@ -27,6 +27,8 @@ Plug 'zaiste/tmux.vim'
 Plug 'elixir-lang/vim-elixir'
 Plug 'rhysd/vim-crystal'
 Plug 'quabug/vim-gdscript'
+Plug 'ziglang/zig.vim'
+Plug 'rhysd/vim-llvm'
 call plug#end()
 
 " General stuff

@@ -15,14 +15,12 @@ fi
 maybe_add_path() {
     if test -d $1
     then
-        PATH=$1:$PATH
+        export PATH=$1:$PATH
     fi
 }
 
 # custom binaries
 maybe_add_path $HOME/local/bin
-maybe_add_path $HOME/.gygvenv/bin
-maybe_add_path $HOME/.rvm/bin
 maybe_add_path $HOME/src/crystal/bin
 
 if type luarocks >&/dev/null; then
@@ -94,6 +92,10 @@ then
     elif test -f /etc/bash_completion
     then
         . /etc/bash_completion
+    elif test -f /usr/share/bash-completion/bash_completion
+    then
+        . /usr/share/bash-completion/bash_completion
+
     fi
 fi
 
@@ -251,6 +253,13 @@ export EDITOR="vim"
 
 # run Rubinius in Ruby 1.9 mode
 export RBXOPT="-X19"
+
+if test -d $HOME/.gyg
+then
+    export PATH=$HOME/.gyg/bin:$PATH
+    export CODEARTIFACT_AUTH_TOKEN=$(gygdev --no-init tools get-codeartifact-token 2>/dev/null)
+    export SCHEMAPI_LOGIN=inventory SCHEMAPI_PASSWORD=T5pQa2tuf2Qc
+fi
 
 # do an ls after every successful cd
 function cd {
