@@ -1,6 +1,7 @@
-[user]
-    name = Hinrik Örn Sigurðsson
-    email = hinrik.sig@gmail.com
+[include]
+    path = ~/.gitconfig.personal
+[includeIf "gitdir:**/gyg/**/.git"]
+    path = ~/.gitconfig.work
 [diff]
     renameLimit = 500
 [color]
@@ -24,11 +25,6 @@
     tree = log --graph --pretty=oneline --abbrev-commit --decorate
 [push]
     default = upstream
-[sendemail]
-    smtpserver = smtp.gmail.com
-    smtpssl = 1
-    smtpuser = hinrik.sig@gmail.com
-    from = Hinrik Örn Sigurðsson <hinrik.sig@gmail.com>
 [merge]
     conflictstyle = diff3
 [pull]

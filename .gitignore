@@ -2,6 +2,8 @@
 .vim/.netrwhist
 .irssi/config.autosave
 .vim/bundle/
+.vim/autoload/
+.vim/plugged/
 .emacs.d/state/
 .emacs.d/elpa/
 .emacs.d/server/
