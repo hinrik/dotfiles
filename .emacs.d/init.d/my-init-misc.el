@@ -44,6 +44,7 @@
 
 ;; store list of recently opened files on disk
 (use-package recentf
+  :init (advice-add 'recentf-cleanup :around #'suppress-messages)
   :config (recentf-mode 1))
 
 ;; save minibuffer, search, and kill ring history
@@ -99,6 +100,8 @@
         helm-recentf-fuzzy-match t)
   :config
   (progn
+    ; use completing-read (and therefore helm) for xref
+    (setq xref-show-definitions-function #'xref-show-definitions-completing-read)
     ; use helm for eshell completion and history
     (add-hook 'eshell-mode-hook
               #'(lambda ()

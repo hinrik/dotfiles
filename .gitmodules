@@ -1,0 +1,3 @@
+[submodule ".emacs.d/fennel-mode"]
+	path = .emacs.d/fennel-mode
+	url = https://git.sr.ht/~technomancy/fennel-mode

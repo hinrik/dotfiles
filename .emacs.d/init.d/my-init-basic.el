@@ -1,6 +1,15 @@
 ;;; Basic configuration
 
-;; keep all transient files in ~/.emacs.d/{etc,var}
+(defun suppress-messages (func &rest args)
+  "Suppress message output from FUNC."
+  ;; Some packages are too noisy.
+  ;; https://superuser.com/questions/669701/emacs-disable-some-minibuffer-messages
+  (cl-flet ((silence (&rest args1) (ignore)))
+    (advice-add 'message :around #'silence)
+    (unwind-protect
+        (apply func args)
+      (advice-remove 'message #'silence))))
+
 (use-package no-littering
   :ensure t
   :config

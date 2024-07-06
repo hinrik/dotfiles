@@ -50,15 +50,6 @@
                                                        (projectile-project-root)
                                                        "lib")))))))))
 
-(use-package slime
-  :ensure t
-  :defer t
-  :config
-  (progn
-    (setq slime-net-coding-system 'utf-8-unix)
-    (setq inferior-lisp-program "/usr/bin/sbcl")
-    (slime-setup '(slime-fancy))))
-
 (use-package org
   :ensure t
   :defer t
@@ -93,23 +84,6 @@
     (setq php-template-compatibility nil
           php-lineup-cascaded-calls t)))
 
-(use-package company-php
-  :ensure t
-  :config
-  (progn
-    (ac-php-core-eldoc-setup)
-    (add-to-list 'company-backends 'company-ac-php-backend)))
-
-(use-package geben
-  :ensure t
-  :config
-  (progn
-    (setq geben-path-mappings '(("~/work" "/vagrant")))))
-
-(use-package thrift-mode
-  :ensure thrift
-  :defer t)
-
 (use-package rust-mode
   :ensure t
   :defer t)
@@ -123,7 +97,7 @@
   :bind (("C-c C-d" . dumb-jump-go-current-window)
          ("C-c C-r" . dumb-jump-back)
          ("C-c C-s" . dumb-jump-go-other-window))
-  :hook (prog-mode . dumb-jump-mode)
+  :init (add-hook 'xref-backend-functions #'dumb-jump-xref-activate)
   :config (setq dumb-jump-selector 'helm))
 
 (use-package lilypond-mode
@@ -145,3 +119,13 @@
                 (arglist-cont-nonempty . 4))))
 (setq c-basic-offset 2
       c-default-style "my/k&r")
+
+(use-package fennel-mode
+  :load-path "~/.emacs.d/fennel-mode"
+  :defer t
+  :mode "\\.fnl\\'"
+  :config
+  (progn
+    (setq fennel-program "love .")
+    (require 'fennel-proto-repl))
+  :hook fennel-proto-repl-minor-mode)

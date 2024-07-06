@@ -230,7 +230,7 @@ alias u2d="sed 's/$//'"
 alias lsofnames="lsof | awk '!/^\$/ && /\// { print \$9 }' | sort -u"
 alias myip="wget -q -O- 'http://www.moanmyip.com/' | perl -0777 -pe 's[.*<div class=\"ip\">(.*?)</div>.*][\$1\n]s'"
 alias mmyip="mplayer http://moanmyip.com/output/\$(myip).mp3"
-#alias emacs="~/src/emacs/src/emacs"
+alias emacs="emacs -nw"
 
 # I want to be able to use Ctrl+s and Ctrl+C in rtorrent
 stty start undef

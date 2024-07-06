@@ -29,6 +29,7 @@ Plug 'rhysd/vim-crystal'
 Plug 'quabug/vim-gdscript'
 Plug 'ziglang/zig.vim'
 Plug 'rhysd/vim-llvm'
+Plug 'jaawerth/fennel.vim'
 call plug#end()
 
 " General stuff

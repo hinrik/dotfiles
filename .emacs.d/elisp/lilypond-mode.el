@@ -81,7 +81,7 @@ Finds file lilypond-words.el from load-path."
 	  (progn (setq fn nil) (setq lp (cdr lp)))))
     (if (not fn)
 	(progn (message "Warning: `lilypond-words.el' not found in `load-path'. See `lilypond-init.el'.")
-	       (sit-for 5 0)))
+	       (sit-for 5)))
     fn))
 
 (defun LilyPond-add-dictionary-word (x)
@@ -702,7 +702,7 @@ command."
 			    (LilyPond-command-formatmidi)
 			    (while (LilyPond-running)
 			      (message "Starts playing midi once it is built.")
-			      (sit-for 0 100))))))
+			      (sit-for 0.1))))))
 	      (if (member name (list "LilyPond" "TeX" "2Midi" "2PS"
 				     "Book" "LaTeX"))
 		  (if (setq jobs (LilyPond-running))
@@ -716,7 +716,7 @@ command."
 			      (setq job-string "no jobs")
 			      (LilyPond-kill-jobs)
 			      (while (LilyPond-running)
-				(sit-for 0 100)))
+				(sit-for 0.1)))
 			  (setq job-string nil)))))
 
 	      (setq LilyPond-command-next
@@ -794,13 +794,13 @@ command."
   "Insert notes with fewer key strokes by using a simple keyboard piano."
   (interactive)
   (progn 
-    (message "Invoke (C-c q) from keyboard. If you still see this message,") (sit-for 5 0)
-    (message "then you have not installed LilyPond Quick Insert Mode (lyqi).") (sit-for 5 0)
-    (message "Download lyqi from http://nicolas.sceaux.free.fr/lilypond/lyqi.html,") (sit-for 5 0)
-    (message "see installation instructions from lyqi's README -file.") (sit-for 5 0)
-    (message "You need also eieio (Enhanced Integration of Emacs Interpreted Objects).") (sit-for 5 0)
-    (message "Download eieio from http://cedet.sourceforge.net/eieio.shtml,") (sit-for 5 0)
-    (message "see installation instructions from eieio's INSTALL -file.") (sit-for 5 0)
+    (message "Invoke (C-c q) from keyboard. If you still see this message,") (sit-for 5)
+    (message "then you have not installed LilyPond Quick Insert Mode (lyqi).") (sit-for 5)
+    (message "Download lyqi from http://nicolas.sceaux.free.fr/lilypond/lyqi.html,") (sit-for 5)
+    (message "see installation instructions from lyqi's README -file.") (sit-for 5)
+    (message "You need also eieio (Enhanced Integration of Emacs Interpreted Objects).") (sit-for 5)
+    (message "Download eieio from http://cedet.sourceforge.net/eieio.shtml,") (sit-for 5)
+    (message "see installation instructions from eieio's INSTALL -file.") (sit-for 5)
     (message "")
     ))    
 
@@ -854,7 +854,7 @@ command."
 	  (setq compsstr (concat compsstr "\"" (car complist) "\" "))
 	  (setq complist (cdr complist)))
 	(message compsstr) 
-	(sit-for 0 100)))))
+	(sit-for 0.1)))))
 
 (defun LilyPond-info ()
   "Launch Info for lilypond."
@@ -1070,9 +1070,9 @@ The Insert Tag -menu is split into parts if it is long enough."
   (let ((LilyPond-command-force name))
     (if (eq LilyPond-command-current 'LilyPond-command-region)
 	(if (eq (mark t) nil)
-	    (progn (message "The mark is not set now") (sit-for 0 500))
+	    (progn (message "The mark is not set now") (sit-for 0.5))
 	  (progn (if (not (not (LilyPond-mark-active)))
-		     (progn (message "Region is not active, using region between inactive mark and current point.") (sit-for 0 500)))
+		     (progn (message "Region is not active, using region between inactive mark and current point.") (sit-for 0.5)))
 		 (LilyPond-command-region (mark t) (point))))
       (funcall LilyPond-command-current))))
 

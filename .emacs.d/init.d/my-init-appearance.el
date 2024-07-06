@@ -67,12 +67,14 @@
           (set-frame-position (selected-frame) pos-x pos-y)))))
   (add-hook 'window-setup-hook 'my-window-setup-hook))
 
+(set-frame-font "Mono-10")
+
 ;; GUI font size
 (add-hook 'after-make-frame-functions
   (lambda ()
     (when (display-graphic-p)
-      (let* ((scale-factor (my-gsettings-get-number "org.gnome-desktop.interface" "text-scaling-factor"))
-             (font-size (if (and scale-factor (>= scale-factor 2)) 14 14))
+      (let* ((scale-factor (my-gsettings-get-number "org.gnome.desktop.interface" "text-scaling-factor"))
+             (font-size (if (and scale-factor (>= scale-factor 1.5)) 14 12))
              (font (concat "Mono-" (number-to-string font-size))))
        (set-frame-font font)
        (add-to-list 'default-frame-alist `(font . ,font))))))
