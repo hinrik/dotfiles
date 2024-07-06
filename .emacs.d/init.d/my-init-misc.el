@@ -237,4 +237,4 @@
   :config
   (progn
     (golden-ratio-mode 1)
-   (add-to-list 'window-size-change-functions 'golden-ratio)))
+    (add-to-list 'window-size-change-functions 'golden-ratio)))
