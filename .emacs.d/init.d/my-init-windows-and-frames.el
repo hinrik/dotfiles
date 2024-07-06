@@ -64,7 +64,11 @@
 (global-set-key (kbd "M-k") 'previous-important-buffer)
 
 ;; don't ask, just kill the buffer when I hit C-x k
-(global-set-key (kbd "C-x k") 'kill-this-buffer)
+(if (version< emacs-version "26.3")
+    (global-set-key (kbd "C-x k") 'kill-this-buffer)
+  ;; more effective than kill-this-buffer
+  (global-set-key (kbd "C-x k") 'kill-current-buffer))
+
 
 ;; handle tmux's xterm-keys
 ;; http://unix.stackexchange.com/questions/24414/shift-arrow-not-working-in-emacs-within-tmux

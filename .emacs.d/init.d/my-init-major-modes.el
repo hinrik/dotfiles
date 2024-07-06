@@ -120,12 +120,29 @@
 (setq c-basic-offset 2
       c-default-style "my/k&r")
 
+(defun love-or-fennel-repl (command &optional buffer)
+  (interactive
+   (list (if current-prefix-arg
+             (read-string "Fennel command: " fennel-program)
+           fennel-program)))
+  (let ((root (projectile-project-root))
+        (prev-buffer (current-buffer))
+        (prev-directory default-directory))
+    (if (and root (file-exists-p (concat root "main.lua")))
+        (progn
+          (setq default-directory root)
+          (fennel-repl "love .")
+          (with-current-buffer prev-buffer
+            (setq default-directory prev-directory)))
+      (fennel-repl command buffer))))
+
+
 (use-package fennel-mode
   :load-path "~/.emacs.d/fennel-mode"
   :defer t
   :mode "\\.fnl\\'"
   :config
   (progn
-    (setq fennel-program "love .")
-    (require 'fennel-proto-repl))
-  :hook fennel-proto-repl-minor-mode)
+    (define-key fennel-mode-map (kbd "C-c C-z") 'love-or-fennel-repl)
+    (with-eval-after-load 'eglot
+      (add-to-list 'eglot-server-programs '(fennel-mode . ("fennel-ls"))))))
