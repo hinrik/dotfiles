@@ -120,6 +120,11 @@
 (setq c-basic-offset 2
       c-default-style "my/k&r")
 
+(use-package lua-mode
+  :ensure t
+  :defer t
+  :mode "\\.lua\\'")
+
 (defun love-or-fennel-repl (command &optional buffer)
   (interactive
    (list (if current-prefix-arg
