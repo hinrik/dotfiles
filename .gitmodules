@@ -1,3 +1,6 @@
 [submodule ".emacs.d/fennel-mode"]
 	path = .emacs.d/fennel-mode
 	url = https://git.sr.ht/~technomancy/fennel-mode
+[submodule ".emacs.d/eglot-booster"]
+	path = .emacs.d/eglot-booster
+	url = git@github.com:jdtsmith/eglot-booster.git

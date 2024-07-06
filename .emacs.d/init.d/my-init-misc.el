@@ -66,14 +66,24 @@
     ;; case-insensitive completion
     (setq eshell-cmpl-ignore-case t)))
 
+(use-package eglot
+  :ensure t
+  :defer t
+  :hook (prog-mode . eglot-ensure)
+  :bind (:map eglot-mode-map
+              ("C-c c r" . eglot-rename)))
+
+(use-package eglot-booster
+  :load-path "~/.emacs.d/eglot-booster/"
+ :after eglot
+  :config (eglot-booster-mode))
+
 ;; code/word completion
 (use-package company
   :ensure t
   :config
   (progn
-    ;; don't autocomplete
-    (setq company-idle-delay 1)
-    (define-key company-mode-map (kbd "C-l") 'company-complete-common)
+    (define-key company-active-map (kbd "TAB") 'company-complete-common-or-cycle)
     (global-company-mode t)))
 
 ;; projectile offers fast find-file for project files, git-grep, etc
@@ -193,7 +203,12 @@
     (define-key flycheck-mode-map flycheck-keymap-prefix nil)
     (setq flycheck-keymap-prefix (kbd "C-c f"))
     (define-key flycheck-mode-map flycheck-keymap-prefix
-      flycheck-command-map)))
+                flycheck-command-map)))
+
+(use-package flycheck-eglot
+  :ensure t
+  :after (flycheck eglot)
+  :config (global-flycheck-eglot-mode 1))
 
 ;; check Cask files
 (use-package flycheck-cask
@@ -222,8 +237,4 @@
   :config
   (progn
     (golden-ratio-mode 1)
-    (add-to-list 'window-size-change-functions 'golden-ratio)))
-
-(use-package avy
-  :ensure t
-  :bind ("C-c c" . avy-goto-word-1))
+   (add-to-list 'window-size-change-functions 'golden-ratio)))
